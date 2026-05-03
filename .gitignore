@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# STM32 Build outputs
+STM32_Firmware/Debug/
+STM32_Firmware/**/*.o
+STM32_Firmware/**/*.d
+STM32_Firmware/**/*.su
+STM32_Firmware/**/*.elf
+STM32_Firmware/**/*.bin
+STM32_Firmware/**/*.map
+STM32_Firmware/**/*.list
+
+# Docker image (ใหญ่เกิน)
+Base_System/frontend-image.tar
+
+# macOS
+.DS_Store
+
+# IDE
+.settings/
+.metadata/
