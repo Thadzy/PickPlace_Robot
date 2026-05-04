@@ -1,0 +1,54 @@
+% ============================================================================
+% FILE: sections/08_appendix.tex
+% PURPOSE: รายละเอียดเพิ่มเติมที่ไม่ได้ใส่ในเนื้อหาหลัก
+% ============================================================================
+
+\appendix
+
+\section{รายละเอียดการคำนวณเชิงกล}
+% การคำนวณฉบับเต็ม Shaft, Belt, Bearing, Deflection
+% อ้างอิงไฟล์ PDF ที่มีอยู่แล้วใน Project
+
+\section{รายละเอียดการคำนวณ Motion Profile}
+% การคำนวณ S-Curve ฉบับเต็ม ทุกช่วง (Acceleration, Constant, Deceleration)
+
+\section{Schematic ไฟฟ้าฉบับเต็ม}
+% Schematic ขนาดเต็มอ่านได้ง่าย
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.95\textwidth]{images/schematic_full.png}
+  % [ใส่ภาพ Schematic ขนาดเต็ม]
+  \caption{Electrical Schematic ฉบับเต็ม}
+  \label{fig:schematic_full}
+\end{figure}
+
+\section{Code Snippet หลักของ STM32 Firmware}
+% Code สำคัญ เช่น PID Loop, Encoder Read, S-Curve Generator
+% ใช้ lstlisting environment
+
+\begin{lstlisting}[language=C, caption={ตัวอย่าง PID Control Loop บน STM32}]
+/* [ใส่ Code จริงของ PID Loop] */
+\end{lstlisting}
+
+\section{ผลการ Simulation Simscape ฉบับเต็ม}
+% Plot และผลลัพธ์จาก Simscape ทุก Scenario
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.85\textwidth]{images/simscape_full_result.png}
+  % [ใส่ Plot ทั้งหมดจาก Simscape: Position, Velocity, Control Effort]
+  \caption{ผล Simulation Simscape ฉบับเต็ม}
+  \label{fig:simscape_full}
+\end{figure}
+
+\section{Log การทดสอบ Unit Test}
+% Serial Log, Oscilloscope Screenshot จากการทดสอบต่างๆ
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.80\textwidth]{images/serial_log_encoder.png}
+  % [ใส่ภาพ Serial Monitor Log แสดงค่า Encoder ขณะทดสอบ]
+  \caption{Serial Log ขณะทดสอบการอ่านค่า Encoder}
+  \label{fig:serial_log}
+\end{figure}

@@ -1,0 +1,55 @@
+% ============================================================================
+% FILE: sections/04_integration.tex
+% PURPOSE: การเชื่อมต่อระบบย่อยทั้งหมดเข้าด้วยกัน
+% ============================================================================
+
+\section{การบูรณาการระบบ (System Integration)}
+
+\subsection{สถาปัตยกรรมการบูรณาการ}
+% STM32 <-> Motor Driver <-> Motor/Encoder
+% STM32 <-> Joystick (Bluetooth/UART)
+% STM32 <-> Base System (Modbus)
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.90\textwidth]{images/integration_diagram.png}
+  % [ใส่ Integration Diagram แสดงการเชื่อมต่อทุกระบบย่อย]
+  \caption{Integration Diagram ของระบบทั้งหมด}
+  \label{fig:integration_diagram}
+\end{figure}
+
+\subsection{การเชื่อมต่อ STM32 กับ Motor และ Encoder}
+% สถานะ: ทำสำเร็จแล้ว (Deliverable 2)
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.75\textwidth]{images/encoder_pwm_test.png}
+  % [ใส่ภาพ Serial Monitor หรือ Oscilloscope แสดงค่า Encoder และ PWM Signal]
+  \caption{ผลการทดสอบการอ่านค่า Encoder และสัญญาณ PWM}
+  \label{fig:encoder_pwm}
+\end{figure}
+
+\subsection{การเชื่อมต่อ Joystick}
+% สถานะ: ทำสำเร็จแล้ว ใช้งานได้ทุกโหมด (Deliverable 4)
+
+\begin{table}[H]
+  \centering
+  \caption{ผลการทดสอบ Joystick แต่ละโหมด}
+  \label{tab:joystick_test}
+  % [ตาราง: โหมด | การทดสอบ | ผลลัพธ์ | Pass/Fail]
+\end{table}
+
+\subsection{การเชื่อมต่อ Modbus กับ Base System}
+% สถานะ: กำลังดำเนินการ (Deliverable 5)
+% อ้างอิง E1, A4
+
+\subsection{แผนการทดสอบ End-to-End}
+% Joystick -> STM32 -> Motor -> Encoder Feedback -> Position Reached
+% Base System -> Modbus -> STM32 -> Motor -> Position
+
+\begin{table}[H]
+  \centering
+  \caption{แผนการทดสอบ End-to-End}
+  \label{tab:e2e_plan}
+  % [ตาราง: Scenario | Input | Expected Output | Req ID | สถานะ]
+\end{table}

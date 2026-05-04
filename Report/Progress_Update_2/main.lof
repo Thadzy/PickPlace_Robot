@@ -1,0 +1,15 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces \xpg@aux {}{thai}\ignorespaces System Architecture ของระบบ Circular Pick and Place Robot แสดง Physical Architecture และ Cyber Architecture}}{2}{figure.1}%
+\contentsline {figure}{\numberline {2}{\ignorespaces \xpg@aux {}{thai}\ignorespaces CAD Assembly ของระบบเชิงกล}}{8}{figure.2}%
+\contentsline {figure}{\numberline {3}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล FEA การโก่งตัวของ Arm ที่โหลด 2 kg}}{8}{figure.3}%
+\contentsline {figure}{\numberline {4}{\ignorespaces \xpg@aux {}{thai}\ignorespaces S-Curve Motion Profile ของการเคลื่อนที่ในหนึ่งรอบ}}{8}{figure.4}%
+\contentsline {figure}{\numberline {5}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Block Diagram ของระบบ}}{8}{figure.5}%
+\contentsline {figure}{\numberline {6}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Schematic ของตู้ควบคุม}}{9}{figure.6}%
+\contentsline {figure}{\numberline {7}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Root Locus Plot สำหรับการออกแบบ PID Controller}}{9}{figure.7}%
+\contentsline {figure}{\numberline {8}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Simscape Model ของระบบ Circular Pick and Place Robot}}{9}{figure.8}%
+\contentsline {figure}{\numberline {9}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Step Response จาก Simscape Simulation}}{9}{figure.9}%
+\contentsline {figure}{\numberline {10}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Integration Diagram ของระบบทั้งหมด}}{11}{figure.10}%
+\contentsline {figure}{\numberline {11}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการทดสอบการอ่านค่า Encoder และสัญญาณ PWM}}{11}{figure.11}%
+\contentsline {figure}{\numberline {12}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Step Response เบื้องต้นของระบบ PID ก่อนการ Tune}}{11}{figure.12}%
+\contentsline {figure}{\numberline {13}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Schematic ฉบับเต็ม}}{13}{figure.13}%
+\contentsline {figure}{\numberline {14}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation Simscape ฉบับเต็ม}}{13}{figure.14}%
+\contentsline {figure}{\numberline {15}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Serial Log ขณะทดสอบการอ่านค่า Encoder}}{13}{figure.15}%

@@ -1,0 +1,127 @@
+% ============================================================================
+% FILE: sections/03_implementation.tex
+% PURPOSE: การติดตั้งจริง Mechanical / Electronics / STM32 Firmware
+% ============================================================================
+
+\section{การดำเนินการสร้างและติดตั้งระบบ (Implementation)}
+
+% ============================================================
+\subsection{การประกอบเชิงกล (Mechanical Assembly)}
+% ============================================================
+
+\subsubsection{ลำดับขั้นตอนการประกอบ}
+% อธิบายลำดับการประกอบจากฐานถึง End Effector
+
+\subsubsection{ผลการประกอบชิ้นส่วน}
+
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.75\textwidth]{images/assembly_photo.jpg}
+%   % [ใส่ภาพถ่ายจริงของ Assembly ที่ประกอบเสร็จ --- ด้านหน้า/ด้านข้าง]
+%   \caption{หุ่นยนต์หลังการประกอบเสร็จสมบูรณ์}
+%   \label{fig:assembly_photo}
+% \end{figure}
+
+\subsubsection{การตรวจสอบขนาดจริง}
+% ผลการวัดขนาดฐานจริง เทียบกับ M1 (<= 200x200 mm)
+
+\begin{table}[H]
+  \centering
+  \caption{ผลการตรวจสอบขนาดชิ้นส่วนจริง}
+  \label{tab:mech_dim_check}
+  % [ตาราง: รายการ | ค่าออกแบบ | ค่าวัดจริง | Req ID | Pass/Fail]
+\end{table}
+
+% ============================================================
+\subsection{การประกอบตู้ควบคุมไฟฟ้า (Electrical Cabinet Assembly)}
+% ============================================================
+
+\subsubsection{รายการอุปกรณ์ภายในตู้}
+
+\begin{table}[H]
+  \centering
+  \caption{Bill of Materials (BOM) ของตู้ควบคุม}
+  \label{tab:elec_bom}
+  % [ตาราง: อุปกรณ์ | รุ่น | จำนวน | หน้าที่]
+\end{table}
+
+\subsubsection{ผลการประกอบตู้ควบคุม}
+% สถานะ: กำลังดำเนินการ --- จะอัปเดตหลังประกอบเสร็จ
+
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.70\textwidth]{images/cabinet_interior.jpg}
+%   % [ใส่ภาพถ่ายภายในตู้ควบคุมหลังประกอบเสร็จ]
+%   \caption{ภายในตู้ควบคุมหลังการประกอบ}
+%   \label{fig:cabinet_interior}
+% \end{figure}
+
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.70\textwidth]{images/cabinet_front.jpg}
+%   % [ใส่ภาพถ่ายหน้าตู้ แสดง Power Indicator, E-Stop, Mode Switch]
+%   \caption{หน้าตู้ควบคุมแสดงสวิตช์และไฟแสดงสถานะ}
+%   \label{fig:cabinet_front}
+% \end{figure}
+
+% ============================================================
+\subsection{สถาปัตยกรรม STM32 Firmware (Firmware Architecture)}
+% ============================================================
+
+\subsubsection{ภาพรวมสถาปัตยกรรม Firmware}
+% อธิบายว่า Firmware ทำงานอย่างไรโดยรวม
+% ระบุ Main Loop, Interrupt, Task ต่างๆ
+
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.85\textwidth]{images/firmware_arch_block.png}
+%   % [ใส่ Block Diagram ของ Firmware: Main Loop, ISR, Module ต่างๆ]
+%   \caption{ภาพรวมสถาปัตยกรรม STM32 Firmware}
+%   \label{fig:fw_arch}
+% \end{figure}
+
+\subsubsection{โครงสร้างไฟล์และโมดูล (Code Structure)}
+% Folder Structure และหน้าที่ของแต่ละ Module
+
+\begin{table}[H]
+  \centering
+  \caption{โมดูลหลักใน STM32 Firmware}
+  \label{tab:fw_modules}
+  % [ตาราง: ชื่อไฟล์ | หน้าที่ | Peripheral ที่ใช้ | สถานะ]
+\end{table}
+
+\subsubsection{Interrupt Service Routine (ISR) และ Timing}
+% ISR ที่ใช้ เช่น Encoder ISR, Timer ISR สำหรับ PID Loop
+
+\begin{table}[H]
+  \centering
+  \caption{ISR และ Task Timing ของ Firmware}
+  \label{tab:fw_timing}
+  % [ตาราง: ISR/Task | Trigger | Period/Priority | หน้าที่]
+\end{table}
+
+\subsubsection{การทำงานร่วมกันของโมดูล (Module Interaction)}
+% Encoder -> PID -> PWM Output
+
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.85\textwidth]{images/firmware_dataflow.png}
+%   % [ใส่ Data Flow Diagram ระหว่าง Module ต่างๆ ใน Firmware]
+%   \caption{Data Flow ระหว่างโมดูลใน Firmware}
+%   \label{fig:fw_dataflow}
+% \end{figure}
+
+\subsubsection{การ Implement S-Curve Motion Profile ใน Firmware}
+% วิธีการแปลง S-Curve ที่คำนวณได้มาเป็น Code จริงบน STM32
+% อธิบาย State Machine ของ Motion Profile
+
+\subsubsection{Joystick Mode และการ Map ปุ่ม}
+% โหมดที่ใช้งานได้ทั้งหมด: Manual, Auto, Homing
+% อ้างอิง J1, E8
+
+\begin{table}[H]
+  \centering
+  \caption{การ Map ปุ่ม Joystick กับคำสั่งระบบ}
+  \label{tab:joystick_map}
+  % [ตาราง: ปุ่ม | โหมด | คำสั่งที่ส่ง | Req ID]
+\end{table}

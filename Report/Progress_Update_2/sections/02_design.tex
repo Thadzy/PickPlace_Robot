@@ -1,0 +1,185 @@
+% ============================================================================
+% FILE: sections/02_design.tex
+% PURPOSE: การออกแบบทั้ง 3 ด้าน Mechanical / Electronics / Control
+% ============================================================================
+
+\section{การออกแบบระบบ (System Design)}
+
+% ============================================================
+\subsection{การออกแบบเชิงกล (Mechanical Design)}
+% ============================================================
+
+\subsubsection{สถาปัตยกรรมเชิงกลโดยรวม}
+% อธิบาย Layout ของ Arm, Base, Shaft, Pulley, Belt
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.75\textwidth]{images/mech_cad_overview.png}
+  % [ใส่ภาพ CAD Assembly ด้านข้าง/ด้านบน แสดง Layout ทั้งหมด]
+  \caption{CAD Assembly ของระบบเชิงกล}
+  \label{fig:mech_cad}
+\end{figure}
+
+\subsubsection{การคำนวณเพลา (Shaft Calculation)}
+% สรุปสมการและผลการคำนวณเพลา
+% แรงที่กระทำ, สมการ Bending, Factor of Safety
+% ค่าที่ได้: [ใส่ค่าจริง]
+
+\begin{table}[H]
+  \centering
+  \caption{สรุปผลการคำนวณเพลา}
+  \label{tab:shaft_calc}
+  % [ตาราง: พารามิเตอร์ | สัญลักษณ์ | ค่าที่คำนวณ | หน่วย]
+\end{table}
+
+\subsubsection{การคำนวณสายพาน (Belt Calculation)}
+% แรงดึงสายพาน, Tension Ratio, Belt Life
+% ค่าที่ได้: [ใส่ค่าจริง]
+
+\begin{table}[H]
+  \centering
+  \caption{สรุปผลการคำนวณสายพาน}
+  \label{tab:belt_calc}
+  % [ตาราง: พารามิเตอร์ | สัญลักษณ์ | ค่าที่คำนวณ | หน่วย]
+\end{table}
+
+\subsubsection{การเลือก Bearing}
+% ประเภท Bearing ที่ใช้, Load Rating, Life Calculation (L10)
+% ค่าที่ได้: [ใส่ค่าจริง]
+
+\subsubsection{การวิเคราะห์การโก่งตัว (Deflection Analysis)}
+% ผลการคำนวณ Deflection ทางทฤษฎีและ FEA
+% FEA ได้ $\delta_{\text{total}} = 0.237$ mm (ผ่านเกณฑ์ $< 1$ mm ตาม M3)
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.80\textwidth]{images/fea_result.png}
+  % [ใส่ภาพ FEA จาก SolidWorks แสดง Displacement Contour]
+  \caption{ผล FEA การโก่งตัวของ Arm ที่โหลด 2 kg}
+  \label{fig:fea_deflection}
+\end{figure}
+
+\begin{table}[H]
+  \centering
+  \caption{เปรียบเทียบผลการโก่งตัวจากทฤษฎีและ FEA}
+  \label{tab:deflection_compare}
+  % [ตาราง: วิธี | ค่า delta (mm) | เกณฑ์ | ผลการตรวจสอบ]
+\end{table}
+
+\subsubsection{Motion Profile การเคลื่อนที่ (S-Curve)}
+% การคำนวณ Motion Profile แบบ S-Curve
+% เวลารวม: 34.39 s (ทฤษฎี <= 35 s ตาม P1)
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.85\textwidth]{images/motion_profile_scurve.png}
+  % [ใส่ภาพกราฟ S-Curve: Position, Velocity, Acceleration vs Time]
+  \caption{S-Curve Motion Profile ของการเคลื่อนที่ในหนึ่งรอบ}
+  \label{fig:motion_profile}
+\end{figure}
+
+\begin{table}[H]
+  \centering
+  \caption{สรุปพารามิเตอร์ Motion Profile}
+  \label{tab:motion_profile_params}
+  % [ตาราง: พารามิเตอร์ | ค่าทฤษฎี | ค่าจริง | หน่วย]
+\end{table}
+
+% ============================================================
+\subsection{การออกแบบระบบไฟฟ้าและอิเล็กทรอนิกส์ (Electronics Design)}
+% ============================================================
+
+\subsubsection{สถาปัตยกรรมไฟฟ้าโดยรวม}
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.85\textwidth]{images/electrical_block_diagram.png}
+  % [ใส่ภาพ Electrical Block Diagram แสดงการเชื่อมต่อ Power และ Signal]
+  \caption{Electrical Block Diagram ของระบบ}
+  \label{fig:elec_block}
+\end{figure}
+
+\subsubsection{Schematic ตู้ควบคุม}
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.90\textwidth]{images/electrical_schematic.png}
+  % [ใส่ภาพ Schematic ของตู้ควบคุมทั้งหมด]
+  \caption{Electrical Schematic ของตู้ควบคุม}
+  \label{fig:schematic}
+\end{figure}
+
+\subsubsection{การออกแบบวงจรป้องกัน (Protection Circuit)}
+% Overcurrent, Undervoltage, Surge Protection ที่เลือกใช้
+% อ้างอิง E7
+
+\subsubsection{การออกแบบระบบ Joystick}
+% โปรโตคอลสื่อสาร (Bluetooth/UART), การ Map ปุ่มต่างๆ
+% อ้างอิง J1, E8
+
+% ============================================================
+\subsection{การออกแบบระบบควบคุม (Control Design)}
+% ============================================================
+
+\subsubsection{การสร้างแบบจำลองระบบ (System Modeling)}
+% DC Motor Model และ Transfer Function
+% สมการ Armature และ Mechanical
+
+\subsubsection{การทำ System Identification}
+% วิธีการทำ System ID เพื่อหาค่า $R_m$, $L_m$, $K_e$, $K_m$, $J$, $b$
+% สถานะ: กำลังดำเนินการ
+
+\begin{table}[H]
+  \centering
+  \caption{พารามิเตอร์ที่ได้จาก System Identification}
+  \label{tab:sysid_params}
+  % [ตาราง: พารามิเตอร์ | สัญลักษณ์ | ค่าที่วัดได้ | หน่วย]
+  % R_m, L_m, K_e, K_m, J, b --- [ใส่ค่าจริง]
+\end{table}
+
+\subsubsection{การออกแบบตัวควบคุม PID ด้วย Root Locus}
+% วิธีการออกแบบ PID โดยใช้ Root Locus
+% เป้าหมาย: Settling Time <= 0.5 s, Overshoot <= 1% (P5, P6)
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.75\textwidth]{images/root_locus.png}
+  % [ใส่ภาพ Root Locus Plot จาก MATLAB]
+  \caption{Root Locus Plot สำหรับการออกแบบ PID Controller}
+  \label{fig:root_locus}
+\end{figure}
+
+\begin{table}[H]
+  \centering
+  \caption{ค่า PID Gain เริ่มต้นจากการออกแบบ}
+  \label{tab:pid_initial}
+  % [ตาราง: Gain | ค่า | หมายเหตุ]
+  % Kp: [ใส่ค่าจริง], Ki: [ใส่ค่าจริง], Kd: [ใส่ค่าจริง]
+\end{table}
+
+\subsubsection{การ Simulation ด้วย Simscape (Simulink)}
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.85\textwidth]{images/simscape_model.png}
+  % [ใส่ภาพหน้าจอ Simscape/Simulink Model ทั้งหมด]
+  \caption{Simscape Model ของระบบ Circular Pick and Place Robot}
+  \label{fig:simscape_model}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.85\textwidth]{images/simscape_step_response.png}
+  % [ใส่ภาพ Step Response จาก Simulation แสดง Settling Time และ Overshoot]
+  \caption{ผล Step Response จาก Simscape Simulation}
+  \label{fig:simscape_result}
+\end{figure}
+
+\begin{table}[H]
+  \centering
+  \caption{ผล Simulation เทียบกับ Requirement}
+  \label{tab:sim_vs_req}
+  % [ตาราง: พารามิเตอร์ | ผล Simulation | Requirement | Pass/Fail]
+  % Settling Time: [ใส่ค่าจริง] | <= 0.5 s
+  % Overshoot: [ใส่ค่าจริง]   | <= 1%
+\end{table}

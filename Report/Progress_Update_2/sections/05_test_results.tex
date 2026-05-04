@@ -1,0 +1,75 @@
+% ============================================================================
+% FILE: sections/05_test_results.tex
+% PURPOSE: ผลการทดสอบ Unit Test และ System Test แยกตาม Progress
+% ============================================================================
+
+\section{ผลการทดสอบ (Test Results)}
+
+% ============================================================
+\subsection{ผลการทดสอบ Progress Update 1}
+% ============================================================
+
+\subsubsection{ผล FEA และการคำนวณ Deflection}
+% อ้างอิง M3: $\delta_{\text{total}} = 0.237$ mm $< 1$ mm --- ผ่าน
+
+\begin{table}[H]
+  \centering
+  \caption{ผล FEA เทียบกับเกณฑ์ M3}
+  \label{tab:fea_p1}
+  % [ตาราง: วิธี | delta (mm) | เกณฑ์ | ผล]
+\end{table}
+
+\subsubsection{ผลการคำนวณ Motion Profile (ทฤษฎี)}
+% อ้างอิง P1: เวลารวม = 34.39 s < 35 s --- ผ่านในทฤษฎี
+
+% ============================================================
+\subsection{ผลการทดสอบ Progress Update 2}
+% ============================================================
+
+\subsubsection{Unit Test: การอ่าน Encoder และ PWM (Deliverable 2)}
+% สถานะ: สำเร็จ
+
+\begin{table}[H]
+  \centering
+  \caption{ผล Unit Test การอ่าน Encoder และ PWM}
+  \label{tab:encoder_unit_test}
+  % [ตาราง: Test Case | ค่าที่คาดหวัง | ค่าที่ได้จริง | Pass/Fail]
+\end{table}
+
+\subsubsection{Unit Test: PID Closed-Loop และ S-Curve (Deliverable 3)}
+% สถานะ: ระบบทำงานได้ รอค่า Gain สุดท้าย
+
+\begin{figure}[H]
+  \centering
+%   \includegraphics[width=0.80\textwidth]{images/pid_initial_response.png}
+  % [ใส่ภาพ Step Response จาก STM32 Serial Log ก่อน Tune]
+  \caption{Step Response เบื้องต้นของระบบ PID ก่อนการ Tune}
+  \label{fig:pid_initial}
+\end{figure}
+
+\subsubsection{Unit Test: Joystick ทุกโหมด (Deliverable 4)}
+% สถานะ: สำเร็จทุกโหมด
+
+\begin{table}[H]
+  \centering
+  \caption{ผล Unit Test Joystick แต่ละโหมด}
+  \label{tab:joystick_unit_test}
+  % [ตาราง: โหมด | ปุ่มที่กด | การตอบสนอง | Pass/Fail]
+\end{table}
+
+\subsubsection{Unit Test: ตู้ควบคุมไฟฟ้า (Deliverable 1)}
+% สถานะ: กำลังดำเนินการ --- จะอัปเดต
+
+\subsubsection{การทำ System Identification (Deliverable 6)}
+% สถานะ: กำลังดำเนินการ
+
+\begin{table}[H]
+  \centering
+  \caption{ผล System Identification}
+  \label{tab:sysid_result}
+  % [ตาราง: พารามิเตอร์ | สัญลักษณ์ | ค่าที่วัดได้ | หน่วย]
+  % R_m, L_m, K_e, K_m, J, b --- [ใส่ค่าจริง]
+\end{table}
+
+\subsubsection{ผล Simulation Simscape}
+% ผล Step Response จาก Simscape ที่ปรับแก้แล้ว (P5, P6)

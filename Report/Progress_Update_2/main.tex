@@ -1,0 +1,203 @@
+% ============================================================================
+% File: main.tex
+% Description: Refactored Thai University Lab Report Template
+% Compiler: XeLaTeX (Required for Thai font support)
+% Execution: xelatex -> bibtex -> xelatex -> xelatex
+% ============================================================================
+
+\documentclass[a4paper, 12pt]{article}
+
+% ----------------------------------------------------------------------------
+% 1. Encoding & Language Support
+% ----------------------------------------------------------------------------
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+% Set Thai as primary language, English as secondary
+\setdefaultlanguage{thai}
+\setotherlanguage{english}
+
+% Line breaking for Thai
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+% ----------------------------------------------------------------------------
+% 2. Font Configuration
+% ----------------------------------------------------------------------------
+% Standard Thai Academic Font: TH Sarabun New
+\setmainfont[Scale=1.35, Ligatures=TeX]{TH Sarabun New}
+\newfontfamily\thaifont[Scale=1.35, Ligatures=TeX]{TH Sarabun New}
+\newfontfamily\thaifonttt[Scale=1.35]{TH Sarabun New}
+
+% Monospace font for code blocks
+\setmonofont{Fira Code}[
+    Contextuals = Alternate,
+    Scale       = 0.78
+]
+
+% Fix math font fallback for non-standard font sizes
+\usepackage{anyfontsize}
+\usepackage{lmodern} % Provides scalable CM fonts for math
+
+% Custom font size commands
+\newcommand{\sizeTwentyTwo}{\fontsize{16.30}{19.56}\selectfont}
+\newcommand{\sizeEighteen}{\fontsize{13.33}{16.00}\selectfont}
+
+% ----------------------------------------------------------------------------
+% 3. Layout & Formatting
+% ----------------------------------------------------------------------------
+\usepackage[
+  left   = 1.0in,
+  right  = 1.0in,
+  top    = 1.2in,
+  bottom = 1.2in,
+  footskip = 0.5in
+]{geometry}
+
+\usepackage{indentfirst} % Indent the first paragraph of every section
+\usepackage{titlesec}    % Customizing headings
+\usepackage{setspace}    % Line spacing
+\usepackage{fancyhdr}    % Header/Footer control
+\usepackage{parskip}     % Adds spacing between paragraphs
+
+% Standardize paragraph spacing while keeping indentation
+\setlength{\parindent}{1.5cm}
+\setlength{\parskip}{6pt} 
+
+% ----------------------------------------------------------------------------
+% 4. Mathematics & Science Packages
+% ----------------------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{booktabs}    % High-quality tables
+\usepackage{multirow}    % Multi-row cells in tables
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{images/}}
+
+% ----------------------------------------------------------------------------
+% 5. References & Bibliography
+% ----------------------------------------------------------------------------
+\usepackage[authoryear, round]{natbib}
+\usepackage[colorlinks=true, linkcolor=black, citecolor=black, urlcolor=black]{hyperref}
+
+% cleveref must be loaded AFTER hyperref
+% For Thai: load with 'english' fallback to avoid 'Undefined control sequence'
+\usepackage[english, capitalize]{cleveref} 
+
+% Formatting cleveref for Thai context (Manual Override)
+\crefname{equation}{สมการ}{สมการ}
+\crefname{figure}{รูปที่}{รูปที่}
+\crefname{table}{ตารางที่}{ตารางที่}
+\crefname{section}{หัวข้อ}{หัวข้อ}
+\crefname{subsection}{หัวข้อ}{หัวข้อ}
+\crefname{paragraph}{ข้อ}{ข้อ}
+
+% Fix for Thai language not being recognized by cleveref
+\makeatletter
+\newcommand{\cref@language}{english}
+\makeatother
+
+% ----------------------------------------------------------------------------
+% 6. Code Listing Setup
+% ----------------------------------------------------------------------------
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codebg}     {gray}{0.96}
+\definecolor{codeframe}  {gray}{0.78}
+\definecolor{codecomment}{rgb}{0.45, 0.45, 0.45}
+\definecolor{codekw}     {rgb}{0.13, 0.29, 0.53}
+\definecolor{codestr}    {rgb}{0.63, 0.13, 0.13}
+\definecolor{codenumber} {gray}{0.55}
+
+\lstset{
+    language         = C,
+    basicstyle       = \ttfamily\fontsize{8}{11}\selectfont,
+    breaklines       = true,
+    breakatwhitespace= true,
+    keywordstyle     = \color{codekw}\bfseries,
+    commentstyle     = \color{codecomment}\itshape,
+    stringstyle      = \color{codestr},
+    numberstyle      = \ttfamily\fontsize{6}{8}\selectfont\color{codenumber},
+    backgroundcolor  = \color{codebg},
+    frame            = single,
+    rulecolor        = \color{codeframe},
+    numbers          = left,
+    stepnumber       = 1,
+    numbersep        = 8pt,
+    tabsize          = 4,
+    showstringspaces = false,
+    xleftmargin      = 2.2em,
+    framexleftmargin = 1.8em,
+    captionpos       = b
+}
+
+% ----------------------------------------------------------------------------
+% 7. Global Typography Tweaks
+% ----------------------------------------------------------------------------
+% Handling Overfull/Underfull boxes for mixed Thai-English
+\emergencystretch=1em
+\tolerance=2000
+\hbadness=2000
+\setstretch{1.15} % Slight increase for Thai readability
+
+% ----------------------------------------------------------------------------
+% 8. Page Style & Headings
+% ----------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\renewcommand{\headrulewidth}{0pt} % Remove the header line
+\fancyfoot[R]{\normalsize\thepage} % Set page number to the Right footer
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyfoot[R]{\normalsize\thepage}
+}
+
+\titleformat{\section}{\sizeEighteen\bfseries}{\thesection.}{1ex}{}
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1ex}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+% ============================================================================
+\begin{document}
+% ============================================================================
+
+\input{sections/00_cover.tex}
+
+\newpage
+
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+\pagestyle{plain}
+\setcounter{page}{1}
+ 
+\input{sections/01_introduction.tex}
+\input{sections/02_design.tex}
+\input{sections/03_implementation.tex}
+\input{sections/04_integration.tex}
+\input{sections/05_test_results.tex}
+\input{sections/06_verification.tex}
+\input{sections/07_conclusion.tex}
+\input{sections/08_appendix.tex}
+
+% ----------------------------------------------------------------------------
+% 9. Bibliography
+% ----------------------------------------------------------------------------
+\nocite{*}
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}
+
+\newpage
+\appendix

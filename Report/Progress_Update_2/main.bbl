@@ -1,0 +1,60 @@
+\begin{thebibliography}{}
+
+\bibitem[Al~Tahtawi, 2018]{altahtawi2018kalman}
+Al~Tahtawi, A.~R. (2018).
+\newblock Kalman filter algorithm design for {HC-SR04} ultrasonic sensor data
+  acquisition system.
+\newblock {\em International Journal of Innovative Technology and Exploring
+  Engineering (IJITEE)}, 2(1):15--19.
+
+\bibitem[Devore, 2015]{devore_prob_stat}
+Devore, J.~L. (2015).
+\newblock {\em Probability and Statistics for Engineering and the Sciences}.
+\newblock Cengage Learning.
+
+\bibitem[{Elecfreaks}, 2012]{hcsr04_manual}
+{Elecfreaks} (2012).
+\newblock {\em {HC-SR04} ultrasonic ranging module: User manual}.
+\newblock
+  \url{https://www.elecfreaks.com/estore/download/EF03085-HC-SR04_Ultrasonic_Module_User_Guide.pdf}.
+
+\bibitem[{Massachusetts Institute of Technology}, 2005]{mit_ocw_dynamics}
+{Massachusetts Institute of Technology} (2005).
+\newblock Modeling dynamics and control i (spring 2005) - lecture notes.
+\newblock
+  \url{https://ocw.mit.edu/courses/2-003-modeling-dynamics-and-control-i-spring-2005/57d44d83366ec969c16208c8fac3982d_notesinstalment2.pdf}.
+
+\bibitem[{MathWorks}, 2024a]{mathworks_c2d}
+{MathWorks} (2024a).
+\newblock Continuous-discrete conversion methods.
+\newblock
+  \url{https://www.mathworks.com/help/control/ug/continuous-discrete-conversion-methods.html}.
+
+\bibitem[{MathWorks}, 2024b]{mathworks_statespace}
+{MathWorks} (2024b).
+\newblock State-space models.
+\newblock
+  \url{https://www.mathworks.com/help/control/ug/state-space-models.html}.
+
+\bibitem[{MathWorks}, 2024c]{mathworks_discrete}
+{MathWorks} (2024c).
+\newblock What is discrete-time system?
+\newblock
+  \url{https://www.mathworks.com/help/signal/ug/discrete-time-system-models.html}.
+
+\bibitem[Montgomery and Runger, 2018]{montgomery_applied_stat}
+Montgomery, D.~C. and Runger, G.~C. (2018).
+\newblock {\em Applied Statistics and Probability for Engineers}.
+\newblock John Wiley \& Sons.
+
+\bibitem[{STMicroelectronics}, 2023]{stm32g4_rm0440}
+{STMicroelectronics} (2023).
+\newblock {\em {STM32G4} Series reference manual ({RM0440})}.
+\newblock \url{https://www.st.com/resource/en/reference_manual/rm0440.pdf}.
+
+\bibitem[Walpole et~al., 2016]{walpole_prob_stat}
+Walpole, R.~E., Myers, R.~H., Myers, S.~L., and Ye, K. (2016).
+\newblock {\em Probability and Statistics for Engineers and Scientists}.
+\newblock Pearson.
+
+\end{thebibliography}

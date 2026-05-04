@@ -1,0 +1,230 @@
+\relax 
+\ProvideDocumentCommand \xpg@aux {mm}{}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand*\HyPL@Entry[1]{}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\xpg@aux {}{thai}}
+\HyPL@Entry{1<</S/D>>}
+\HyPL@Entry{6<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}บทนำ}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}ที่มาและความสำคัญของโครงงาน}{1}{subsection.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}วัตถุประสงค์ของโครงงาน}{1}{subsection.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}ขอบเขตของโครงงาน}{1}{subsection.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}ภาพรวมระบบ (System Overview)}{2}{subsection.1.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \xpg@aux {}{thai}\ignorespaces System Architecture ของระบบ Circular Pick and Place Robot แสดง Physical Architecture และ Cyber Architecture}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:system_overview}{{1}{2}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces System Architecture ของระบบ Circular Pick and Place Robot แสดง Physical Architecture และ Cyber Architecture}{figure.1}{}}
+\newlabel{fig:system_overview@cref}{{[figure][1][]1}{[1][2][]2}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Rotating Mechanism (กลไกหมุน)}{2}{paragraph*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Power Management System (PMS)}{3}{paragraph*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Main Controller (STM32G474RE)}{3}{paragraph*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sensor System}{4}{paragraph*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Signal Processing Unit}{4}{paragraph*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Main Compute Program}{5}{paragraph*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Control Program}{5}{paragraph*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Safety Program}{5}{paragraph*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5}สรุป System Requirements}{6}{subsection.1.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุป System Requirements ทั้ง 32 ข้อ}}{7}{table.1}\protected@file@percent }
+\newlabel{tab:req_summary}{{1}{7}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces สรุป System Requirements ทั้ง 32 ข้อ}{table.1}{}}
+\newlabel{tab:req_summary@cref}{{[table][1][]1}{[1][6][]7}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}การออกแบบระบบ (System Design)}{8}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}การออกแบบเชิงกล (Mechanical Design)}{8}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.1}สถาปัตยกรรมเชิงกลโดยรวม}{8}{subsubsection.2.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \xpg@aux {}{thai}\ignorespaces CAD Assembly ของระบบเชิงกล}}{8}{figure.2}\protected@file@percent }
+\newlabel{fig:mech_cad}{{2}{8}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces CAD Assembly ของระบบเชิงกล}{figure.2}{}}
+\newlabel{fig:mech_cad@cref}{{[figure][2][]2}{[1][7][]8}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.2}การคำนวณเพลา (Shaft Calculation)}{8}{subsubsection.2.1.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปผลการคำนวณเพลา}}{8}{table.2}\protected@file@percent }
+\newlabel{tab:shaft_calc}{{2}{8}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces สรุปผลการคำนวณเพลา}{table.2}{}}
+\newlabel{tab:shaft_calc@cref}{{[table][2][]2}{[1][8][]8}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.3}การคำนวณสายพาน (Belt Calculation)}{8}{subsubsection.2.1.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปผลการคำนวณสายพาน}}{8}{table.3}\protected@file@percent }
+\newlabel{tab:belt_calc}{{3}{8}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces สรุปผลการคำนวณสายพาน}{table.3}{}}
+\newlabel{tab:belt_calc@cref}{{[table][3][]3}{[1][8][]8}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.4}การเลือก Bearing}{8}{subsubsection.2.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.5}การวิเคราะห์การโก่งตัว (Deflection Analysis)}{8}{subsubsection.2.1.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล FEA การโก่งตัวของ Arm ที่โหลด 2 kg}}{8}{figure.3}\protected@file@percent }
+\newlabel{fig:fea_deflection}{{3}{8}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผล FEA การโก่งตัวของ Arm ที่โหลด 2 kg}{figure.3}{}}
+\newlabel{fig:fea_deflection@cref}{{[figure][3][]3}{[1][8][]8}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \xpg@aux {}{thai}\ignorespaces เปรียบเทียบผลการโก่งตัวจากทฤษฎีและ FEA}}{8}{table.4}\protected@file@percent }
+\newlabel{tab:deflection_compare}{{4}{8}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces เปรียบเทียบผลการโก่งตัวจากทฤษฎีและ FEA}{table.4}{}}
+\newlabel{tab:deflection_compare@cref}{{[table][4][]4}{[1][8][]8}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.6}Motion Profile การเคลื่อนที่ (S-Curve)}{8}{subsubsection.2.1.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \xpg@aux {}{thai}\ignorespaces S-Curve Motion Profile ของการเคลื่อนที่ในหนึ่งรอบ}}{8}{figure.4}\protected@file@percent }
+\newlabel{fig:motion_profile}{{4}{8}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces S-Curve Motion Profile ของการเคลื่อนที่ในหนึ่งรอบ}{figure.4}{}}
+\newlabel{fig:motion_profile@cref}{{[figure][4][]4}{[1][8][]8}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปพารามิเตอร์ Motion Profile}}{8}{table.5}\protected@file@percent }
+\newlabel{tab:motion_profile_params}{{5}{8}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces สรุปพารามิเตอร์ Motion Profile}{table.5}{}}
+\newlabel{tab:motion_profile_params@cref}{{[table][5][]5}{[1][8][]8}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}การออกแบบระบบไฟฟ้าและอิเล็กทรอนิกส์ (Electronics Design)}{8}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}สถาปัตยกรรมไฟฟ้าโดยรวม}{8}{subsubsection.2.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Block Diagram ของระบบ}}{8}{figure.5}\protected@file@percent }
+\newlabel{fig:elec_block}{{5}{8}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Electrical Block Diagram ของระบบ}{figure.5}{}}
+\newlabel{fig:elec_block@cref}{{[figure][5][]5}{[1][8][]8}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Schematic ตู้ควบคุม}{9}{subsubsection.2.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Schematic ของตู้ควบคุม}}{9}{figure.6}\protected@file@percent }
+\newlabel{fig:schematic}{{6}{9}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Electrical Schematic ของตู้ควบคุม}{figure.6}{}}
+\newlabel{fig:schematic@cref}{{[figure][6][]6}{[1][8][]9}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}การออกแบบวงจรป้องกัน (Protection Circuit)}{9}{subsubsection.2.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.4}การออกแบบระบบ Joystick}{9}{subsubsection.2.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}การออกแบบระบบควบคุม (Control Design)}{9}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}การสร้างแบบจำลองระบบ (System Modeling)}{9}{subsubsection.2.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}การทำ System Identification}{9}{subsubsection.2.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces \xpg@aux {}{thai}\ignorespaces พารามิเตอร์ที่ได้จาก System Identification}}{9}{table.6}\protected@file@percent }
+\newlabel{tab:sysid_params}{{6}{9}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces พารามิเตอร์ที่ได้จาก System Identification}{table.6}{}}
+\newlabel{tab:sysid_params@cref}{{[table][6][]6}{[1][9][]9}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.3}การออกแบบตัวควบคุม PID ด้วย Root Locus}{9}{subsubsection.2.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Root Locus Plot สำหรับการออกแบบ PID Controller}}{9}{figure.7}\protected@file@percent }
+\newlabel{fig:root_locus}{{7}{9}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Root Locus Plot สำหรับการออกแบบ PID Controller}{figure.7}{}}
+\newlabel{fig:root_locus@cref}{{[figure][7][]7}{[1][9][]9}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ค่า PID Gain เริ่มต้นจากการออกแบบ}}{9}{table.7}\protected@file@percent }
+\newlabel{tab:pid_initial}{{7}{9}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ค่า PID Gain เริ่มต้นจากการออกแบบ}{table.7}{}}
+\newlabel{tab:pid_initial@cref}{{[table][7][]7}{[1][9][]9}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.4}การ Simulation ด้วย Simscape (Simulink)}{9}{subsubsection.2.3.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Simscape Model ของระบบ Circular Pick and Place Robot}}{9}{figure.8}\protected@file@percent }
+\newlabel{fig:simscape_model}{{8}{9}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Simscape Model ของระบบ Circular Pick and Place Robot}{figure.8}{}}
+\newlabel{fig:simscape_model@cref}{{[figure][8][]8}{[1][9][]9}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Step Response จาก Simscape Simulation}}{9}{figure.9}\protected@file@percent }
+\newlabel{fig:simscape_result}{{9}{9}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผล Step Response จาก Simscape Simulation}{figure.9}{}}
+\newlabel{fig:simscape_result@cref}{{[figure][9][]9}{[1][9][]9}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation เทียบกับ Requirement}}{9}{table.8}\protected@file@percent }
+\newlabel{tab:sim_vs_req}{{8}{9}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผล Simulation เทียบกับ Requirement}{table.8}{}}
+\newlabel{tab:sim_vs_req@cref}{{[table][8][]8}{[1][9][]9}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}การดำเนินการสร้างและติดตั้งระบบ (Implementation)}{10}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}การประกอบเชิงกล (Mechanical Assembly)}{10}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}ลำดับขั้นตอนการประกอบ}{10}{subsubsection.3.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2}ผลการประกอบชิ้นส่วน}{10}{subsubsection.3.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.3}การตรวจสอบขนาดจริง}{10}{subsubsection.3.1.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการตรวจสอบขนาดชิ้นส่วนจริง}}{10}{table.9}\protected@file@percent }
+\newlabel{tab:mech_dim_check}{{9}{10}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผลการตรวจสอบขนาดชิ้นส่วนจริง}{table.9}{}}
+\newlabel{tab:mech_dim_check@cref}{{[table][9][]9}{[1][9][]10}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}การประกอบตู้ควบคุมไฟฟ้า (Electrical Cabinet Assembly)}{10}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}รายการอุปกรณ์ภายในตู้}{10}{subsubsection.3.2.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Bill of Materials (BOM) ของตู้ควบคุม}}{10}{table.10}\protected@file@percent }
+\newlabel{tab:elec_bom}{{10}{10}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Bill of Materials (BOM) ของตู้ควบคุม}{table.10}{}}
+\newlabel{tab:elec_bom@cref}{{[table][10][]10}{[1][10][]10}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}ผลการประกอบตู้ควบคุม}{10}{subsubsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}สถาปัตยกรรม STM32 Firmware (Firmware Architecture)}{10}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.1}ภาพรวมสถาปัตยกรรม Firmware}{10}{subsubsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.2}โครงสร้างไฟล์และโมดูล (Code Structure)}{10}{subsubsection.3.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces \xpg@aux {}{thai}\ignorespaces โมดูลหลักใน STM32 Firmware}}{10}{table.11}\protected@file@percent }
+\newlabel{tab:fw_modules}{{11}{10}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces โมดูลหลักใน STM32 Firmware}{table.11}{}}
+\newlabel{tab:fw_modules@cref}{{[table][11][]11}{[1][10][]10}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.3}Interrupt Service Routine (ISR) และ Timing}{10}{subsubsection.3.3.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ISR และ Task Timing ของ Firmware}}{10}{table.12}\protected@file@percent }
+\newlabel{tab:fw_timing}{{12}{10}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ISR และ Task Timing ของ Firmware}{table.12}{}}
+\newlabel{tab:fw_timing@cref}{{[table][12][]12}{[1][10][]10}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.4}การทำงานร่วมกันของโมดูล (Module Interaction)}{10}{subsubsection.3.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.5}การ Implement S-Curve Motion Profile ใน Firmware}{10}{subsubsection.3.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.6}Joystick Mode และการ Map ปุ่ม}{10}{subsubsection.3.3.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การ Map ปุ่ม Joystick กับคำสั่งระบบ}}{10}{table.13}\protected@file@percent }
+\newlabel{tab:joystick_map}{{13}{10}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces การ Map ปุ่ม Joystick กับคำสั่งระบบ}{table.13}{}}
+\newlabel{tab:joystick_map@cref}{{[table][13][]13}{[1][10][]10}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}การบูรณาการระบบ (System Integration)}{11}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}สถาปัตยกรรมการบูรณาการ}{11}{subsection.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Integration Diagram ของระบบทั้งหมด}}{11}{figure.10}\protected@file@percent }
+\newlabel{fig:integration_diagram}{{10}{11}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Integration Diagram ของระบบทั้งหมด}{figure.10}{}}
+\newlabel{fig:integration_diagram@cref}{{[figure][10][]10}{[1][10][]11}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}การเชื่อมต่อ STM32 กับ Motor และ Encoder}{11}{subsection.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการทดสอบการอ่านค่า Encoder และสัญญาณ PWM}}{11}{figure.11}\protected@file@percent }
+\newlabel{fig:encoder_pwm}{{11}{11}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผลการทดสอบการอ่านค่า Encoder และสัญญาณ PWM}{figure.11}{}}
+\newlabel{fig:encoder_pwm@cref}{{[figure][11][]11}{[1][11][]11}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}การเชื่อมต่อ Joystick}{11}{subsection.4.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการทดสอบ Joystick แต่ละโหมด}}{11}{table.14}\protected@file@percent }
+\newlabel{tab:joystick_test}{{14}{11}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผลการทดสอบ Joystick แต่ละโหมด}{table.14}{}}
+\newlabel{tab:joystick_test@cref}{{[table][14][]14}{[1][11][]11}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}การเชื่อมต่อ Modbus กับ Base System}{11}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}แผนการทดสอบ End-to-End}{11}{subsection.4.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces \xpg@aux {}{thai}\ignorespaces แผนการทดสอบ End-to-End}}{11}{table.15}\protected@file@percent }
+\newlabel{tab:e2e_plan}{{15}{11}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces แผนการทดสอบ End-to-End}{table.15}{}}
+\newlabel{tab:e2e_plan@cref}{{[table][15][]15}{[1][11][]11}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}ผลการทดสอบ (Test Results)}{11}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}ผลการทดสอบ Progress Update 1}{11}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}ผล FEA และการคำนวณ Deflection}{11}{subsubsection.5.1.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {16}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล FEA เทียบกับเกณฑ์ M3}}{11}{table.16}\protected@file@percent }
+\newlabel{tab:fea_p1}{{16}{11}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผล FEA เทียบกับเกณฑ์ M3}{table.16}{}}
+\newlabel{tab:fea_p1@cref}{{[table][16][]16}{[1][11][]11}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}ผลการคำนวณ Motion Profile (ทฤษฎี)}{11}{subsubsection.5.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}ผลการทดสอบ Progress Update 2}{11}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.1}Unit Test: การอ่าน Encoder และ PWM (Deliverable 2)}{11}{subsubsection.5.2.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {17}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Unit Test การอ่าน Encoder และ PWM}}{11}{table.17}\protected@file@percent }
+\newlabel{tab:encoder_unit_test}{{17}{11}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผล Unit Test การอ่าน Encoder และ PWM}{table.17}{}}
+\newlabel{tab:encoder_unit_test@cref}{{[table][17][]17}{[1][11][]11}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.2}Unit Test: PID Closed-Loop และ S-Curve (Deliverable 3)}{11}{subsubsection.5.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Step Response เบื้องต้นของระบบ PID ก่อนการ Tune}}{11}{figure.12}\protected@file@percent }
+\newlabel{fig:pid_initial}{{12}{11}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Step Response เบื้องต้นของระบบ PID ก่อนการ Tune}{figure.12}{}}
+\newlabel{fig:pid_initial@cref}{{[figure][12][]12}{[1][11][]11}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.3}Unit Test: Joystick ทุกโหมด (Deliverable 4)}{12}{subsubsection.5.2.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {18}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Unit Test Joystick แต่ละโหมด}}{12}{table.18}\protected@file@percent }
+\newlabel{tab:joystick_unit_test}{{18}{12}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผล Unit Test Joystick แต่ละโหมด}{table.18}{}}
+\newlabel{tab:joystick_unit_test@cref}{{[table][18][]18}{[1][11][]12}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.4}Unit Test: ตู้ควบคุมไฟฟ้า (Deliverable 1)}{12}{subsubsection.5.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.5}การทำ System Identification (Deliverable 6)}{12}{subsubsection.5.2.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {19}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล System Identification}}{12}{table.19}\protected@file@percent }
+\newlabel{tab:sysid_result}{{19}{12}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผล System Identification}{table.19}{}}
+\newlabel{tab:sysid_result@cref}{{[table][19][]19}{[1][12][]12}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.6}ผล Simulation Simscape}{12}{subsubsection.5.2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}การตรวจสอบและทวนสอบ (Verification and Validation)}{12}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}ภาพรวม V\&V Framework}{12}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}ตาราง V\&V รวมทั้งหมด (32 Requirements)}{12}{subsection.6.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {20}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ตาราง V\&V รวม ทั้ง 32 Requirements}}{12}{table.20}\protected@file@percent }
+\newlabel{tab:vv_summary}{{20}{12}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ตาราง V\&V รวม ทั้ง 32 Requirements}{table.20}{}}
+\newlabel{tab:vv_summary@cref}{{[table][20][]20}{[1][12][]12}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}ตาราง V\&V แยกตาม Category}{12}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.1}Mechanical Requirements (M1--M10)}{12}{subsubsection.6.3.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {21}{\ignorespaces \xpg@aux {}{thai}\ignorespaces V\&V Table: Mechanical Requirements (M1--M10)}}{12}{table.21}\protected@file@percent }
+\newlabel{tab:vv_mechanical}{{21}{12}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces V\&V Table: Mechanical Requirements (M1--M10)}{table.21}{}}
+\newlabel{tab:vv_mechanical@cref}{{[table][21][]21}{[1][12][]12}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.2}Performance Requirements (P1--P7)}{12}{subsubsection.6.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {22}{\ignorespaces \xpg@aux {}{thai}\ignorespaces V\&V Table: Performance Requirements (P1--P7)}}{12}{table.22}\protected@file@percent }
+\newlabel{tab:vv_performance}{{22}{12}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces V\&V Table: Performance Requirements (P1--P7)}{table.22}{}}
+\newlabel{tab:vv_performance@cref}{{[table][22][]22}{[1][12][]12}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.3}Accuracy Requirements (A1--A5)}{12}{subsubsection.6.3.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {23}{\ignorespaces \xpg@aux {}{thai}\ignorespaces V\&V Table: Accuracy Requirements (A1--A5)}}{12}{table.23}\protected@file@percent }
+\newlabel{tab:vv_accuracy}{{23}{12}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces V\&V Table: Accuracy Requirements (A1--A5)}{table.23}{}}
+\newlabel{tab:vv_accuracy@cref}{{[table][23][]23}{[1][12][]12}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.4}Electrical Requirements (E1--E9)}{12}{subsubsection.6.3.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {24}{\ignorespaces \xpg@aux {}{thai}\ignorespaces V\&V Table: Electrical Requirements (E1--E9)}}{12}{table.24}\protected@file@percent }
+\newlabel{tab:vv_electrical}{{24}{12}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces V\&V Table: Electrical Requirements (E1--E9)}{table.24}{}}
+\newlabel{tab:vv_electrical@cref}{{[table][24][]24}{[1][12][]12}{}{}{}}
+\citation{*}
+\bibstyle{apalike}
+\bibdata{references}
+\bibcite{altahtawi2018kalman}{{1}{2018}{{Al~Tahtawi}}{{}}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.5}Joystick Requirements (J1)}{13}{subsubsection.6.3.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {25}{\ignorespaces \xpg@aux {}{thai}\ignorespaces V\&V Table: Joystick Requirements (J1)}}{13}{table.25}\protected@file@percent }
+\newlabel{tab:vv_joystick}{{25}{13}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces V\&V Table: Joystick Requirements (J1)}{table.25}{}}
+\newlabel{tab:vv_joystick@cref}{{[table][25][]25}{[1][12][]13}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}สรุปสถานะ V\&V ตาม Category}{13}{subsection.6.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {26}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปสถานะ V\&V แยกตาม Category}}{13}{table.26}\protected@file@percent }
+\newlabel{tab:vv_status_summary}{{26}{13}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces สรุปสถานะ V\&V แยกตาม Category}{table.26}{}}
+\newlabel{tab:vv_status_summary@cref}{{[table][26][]26}{[1][13][]13}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}สรุปผลและแนวทางต่อไป (Conclusion)}{13}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}สรุปผลงาน Progress Update 1}{13}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}สรุปผลงาน Progress Update 2}{13}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}แนวทางและแผนงานต่อไป (Future Work)}{13}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}รายละเอียดการคำนวณเชิงกล}{13}{appendix.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B}รายละเอียดการคำนวณ Motion Profile}{13}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C}Schematic ไฟฟ้าฉบับเต็ม}{13}{appendix.C}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Schematic ฉบับเต็ม}}{13}{figure.13}\protected@file@percent }
+\newlabel{fig:schematic_full}{{13}{13}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Electrical Schematic ฉบับเต็ม}{figure.13}{}}
+\newlabel{fig:schematic_full@cref}{{[figure][13][]13}{[1][13][]13}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Code Snippet หลักของ STM32 Firmware}{13}{appendix.D}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}ตัวอย่าง PID Control Loop บน STM32}{13}{lstlisting.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {E}ผลการ Simulation Simscape ฉบับเต็ม}{13}{appendix.E}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation Simscape ฉบับเต็ม}}{13}{figure.14}\protected@file@percent }
+\newlabel{fig:simscape_full}{{14}{13}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces ผล Simulation Simscape ฉบับเต็ม}{figure.14}{}}
+\newlabel{fig:simscape_full@cref}{{[figure][14][]14}{[1][13][]13}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {F}Log การทดสอบ Unit Test}{13}{appendix.F}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Serial Log ขณะทดสอบการอ่านค่า Encoder}}{13}{figure.15}\protected@file@percent }
+\newlabel{fig:serial_log}{{15}{13}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Serial Log ขณะทดสอบการอ่านค่า Encoder}{figure.15}{}}
+\newlabel{fig:serial_log@cref}{{[figure][15][]15}{[1][13][]13}{}{}{}}
+\bibcite{devore_prob_stat}{{2}{2015}{{Devore}}{{}}}
+\bibcite{hcsr04_manual}{{3}{2012}{{Elecfreaks}}{{}}}
+\bibcite{mit_ocw_dynamics}{{4}{2005}{{Massachusetts Institute of Technology}}{{}}}
+\bibcite{mathworks_c2d}{{5}{2024a}{{MathWorks}}{{}}}
+\bibcite{mathworks_statespace}{{6}{2024b}{{MathWorks}}{{}}}
+\bibcite{mathworks_discrete}{{7}{2024c}{{MathWorks}}{{}}}
+\bibcite{montgomery_applied_stat}{{8}{2018}{{Montgomery and Runger}}{{}}}
+\bibcite{stm32g4_rm0440}{{9}{2023}{{STMicroelectronics}}{{}}}
+\bibcite{walpole_prob_stat}{{10}{2016}{{Walpole et~al.}}{{}}}
+\gdef \@abspage@last{20}
