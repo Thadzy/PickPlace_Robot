@@ -1,0 +1,40 @@
+% ดึง theta และ phi ออกจาก Dataset
+theta_ts = test1.getElement('theta');
+phi_ts   = test1.getElement('phi');
+
+% แปลงเป็น array ธรรมดา
+t     = theta_ts.Values.Time;
+theta = theta_ts.Values.Data;
+phi   = phi_ts.Values.Data;
+
+% ตรวจสอบว่าได้ข้อมูลมาถูกต้อง
+fprintf('Time points : %d\n', length(t));
+fprintf('theta range : %.3f to %.3f rad\n', min(theta), max(theta));
+fprintf('phi range   : %.3f to %.3f rad\n', min(phi), max(phi));
+
+% ขยาย mask ให้ครอบคลุม cycle แรกเต็มๆ
+mask1 = t >= 0 & t <= 12;
+
+% target คือ 2*pi (1 รอบเต็ม)
+target = 2 * pi;
+
+info1 = stepinfo(theta(mask1), t(mask1), target, ...
+    'SettlingTimeThreshold', 0.02);
+
+fprintf('=== Cycle 1 ===\n');
+fprintf('Rise Time     : %.4f s\n', info1.RiseTime);
+fprintf('Settling Time : %.4f s\n', info1.SettlingTime);
+fprintf('Overshoot     : %.2f %%\n', info1.Overshoot);
+fprintf('Peak          : %.4f rad (%.2f deg)\n', ...
+    info1.Peak, info1.Peak*180/pi);
+
+% ดู theta ช่วง cycle แรกด้วยตา
+figure;
+plot(t(mask1), theta(mask1)*180/pi, 'b-', 'LineWidth', 1.5);
+hold on;
+yline(360, 'r--', 'Target 360 deg');
+yline(360*1.01, 'r:', '+1% band');
+yline(360*0.99, 'r:', '-1% band');
+xlabel('Time (s)'); ylabel('deg');
+title('Cycle 1 — theta response');
+grid on;
