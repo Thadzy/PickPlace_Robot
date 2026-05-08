@@ -15,8 +15,8 @@ clc;
 % =============================================
 % 1. Motor Parameters (Fix — ไม่ต้อง estimate)
 % =============================================
-R_m     = 1.53982909;    % [Ohm] วัดจาก Locked Rotor Test 9V
-L_m     = 0.00147261;    % [H]   วัดจาก Locked Rotor Test 9V
+R_m     = 1.45336105;    % [Ohm] วัดจาก Locked Rotor Test 9V
+L_m     = 0.00144802;    % [H]   วัดจาก Locked Rotor Test 9V
 N_total = 70;            % [-]   Gear ratio รวม (Planetary x Belt)
 
 % =============================================
@@ -37,8 +37,8 @@ eta = 0.84954;    % [-]         Motor efficiency
 %   chirp1_run1.mat   chirp1_run2.mat   chirp1_run3.mat
 %   ss_run1.mat       ss_run2.mat       ss_run3.mat
 
-preprocess_path = '/Users/thadzy/Documents/01_Projects/PickPlace_Robot/Simulation/System_Identification/Preprocess_Data/';
-filename        = 'chirp05_run1.mat';   % <-- เปลี่ยนตรงนี้
+preprocess_path = '/Users/thadzy/Documents/01_Projects/PickPlace_Robot/Simulation/System_Identification/Data_V2/Preprocess_Data';
+filename        = 'chirp2_run3.mat';   % <-- เปลี่ยนตรงนี้
 
 % โหลด data
 tmp      = load(fullfile(preprocess_path, filename));
@@ -114,16 +114,16 @@ legend('Location', 'best'); grid on;
 % 
 % % แล้วรัน save_result.m เพื่อบันทึก
 
-% =============================================
-% 8. คำนวณ J จริง (รวม Gripper + Rod)
-% =============================================
-J_gripper = 0.16854;   % [kg.m^2] จาก Parallel Axis Theorem
-J_rod     = 0.04093;   % [kg.m^2] จาก Parallel Axis Theorem
+% % =============================================
+% % 8. คำนวณ J จริง (รวม Gripper + Rod)
+% % =============================================
+% J_gripper = 0.16854;   % [kg.m^2] จาก Parallel Axis Theorem
+% J_rod     = 0.04093;   % [kg.m^2] จาก Parallel Axis Theorem
 
-fprintf('\n=== J Correction ===\n');
-fprintf('J_est     = %.5f kg.m^2  (arm only)\n', J);
-fprintf('J_gripper = %.5f kg.m^2\n', J_gripper);
-fprintf('J_rod     = %.5f kg.m^2\n', J_rod);
-fprintf('J_real    = %.5f kg.m^2  (full system)\n', J + J_gripper + J_rod);
+% fprintf('\n=== J Correction ===\n');
+% fprintf('J_est     = %.5f kg.m^2  (arm only)\n', J);
+% fprintf('J_gripper = %.5f kg.m^2\n', J_gripper);
+% fprintf('J_rod     = %.5f kg.m^2\n', J_rod);
+% fprintf('J_real    = %.5f kg.m^2  (full system)\n', J + J_gripper + J_rod);
 
 fprintf('\nSetup complete. เปิด Parameter Estimator App ใน Simulink ได้เลยครับ\n');

@@ -121,65 +121,658 @@
 \subsection{การออกแบบระบบควบคุม (Control Design)}
 % ============================================================
 
+% ------------------------------------------------------------
 \subsubsection{การสร้างแบบจำลองระบบ (System Modeling)}
-% DC Motor Model และ Transfer Function
-% สมการ Armature และ Mechanical
+% ------------------------------------------------------------
 
+\paragraph{แบบจำลองมอเตอร์กระแสตรง}
+
+ระบบขับเคลื่อนประกอบด้วยมอเตอร์กระแสตรงแบบ Brushed DC Motor
+ที่ต่อกับชุดทดรอบแบบ 2 ชั้น ได้แก่ Planetary Gearbox และ Belt Drive
+จากนั้นส่งกำลังไปยัง Arm ของหุ่นยนต์ การสร้างแบบจำลองแบ่งออกเป็น
+2 ส่วน คือ วงจรไฟฟ้า (Electrical Subsystem) และระบบกล (Mechanical Subsystem)
+
+\paragraph{วงจรไฟฟ้า (Electrical Subsystem)}
+
+วงจรสมมูลของ Armature มอเตอร์กระแสตรงประกอบด้วย
+ความต้านทาน $R_a$ ความเหนี่ยวนำ $L_a$ และแรงดันย้อนกลับ (Back-EMF) $e_b$
+ดังแสดงใน\cref{fig:motor_circuit} โดยประยุกต์ใช้ Kirchhoff's Voltage Law (KVL)
+รอบวงจร Armature ได้สมการ
+
+\begin{equation}
+  v_{in}(t) = R_a\, i_a(t) + L_a\, \frac{di_a(t)}{dt} + e_b(t)
+  \label{eq:kvl}
+\end{equation}
+
+โดยที่ $v_{in}$ คือแรงดันไฟฟ้าอินพุต (V), $i_a$ คือกระแส Armature (A),
+$R_a$ คือความต้านทาน Armature ($\Omega$), $L_a$ คือความเหนี่ยวนำ Armature (H)
+และ $e_b$ คือแรงดันย้อนกลับ (V)
+
+แรงดันย้อนกลับมีความสัมพันธ์กับความเร็วเชิงมุมของ Rotor ($\omega_m$) ดังนี้
+
+\begin{equation}
+  e_b(t) = K_b\, \omega_m(t)
+  \label{eq:bemf}
+\end{equation}
+
+โดยที่ $K_b$ คือค่าคงที่ Back-EMF (V$\cdot$s/rad)
+
+\paragraph{ระบบกล (Mechanical Subsystem)}
+
+แรงบิดที่มอเตอร์ผลิตได้สัมพันธ์กับกระแส Armature ดังนี้
+
+\begin{equation}
+  \tau_m(t) = K_t\, i_a(t)
+  \label{eq:torque_motor}
+\end{equation}
+
+โดยที่ $K_t$ คือค่าคงที่แรงบิด (N$\cdot$m/A)
+
+\paragraph{ชุดทดรอบ 2 ชั้น}
+
+ระบบใช้ชุดทดรอบแบบ 2 ชั้น ได้แก่ Planetary Gearbox อัตราทดรอบ
+$N_g = 24$ และ Belt Drive อัตราทดรอบ $N_b = 70/24 = 2.917$
+อัตราทดรอบรวมคือ
+
+\begin{equation}
+  N_{total} = N_g \times N_b = 24 \times \frac{70}{24} = 70
+  \label{eq:gear_ratio}
+\end{equation}
+
+ความสัมพันธ์ระหว่างความเร็วเชิงมุมและแรงบิดที่ด้าน Output shaft
+($\omega_{arm}$, $\tau_{out}$) กับด้าน Motor ($\omega_m$, $\tau_m$) คือ
+
+\begin{equation}
+  \omega_{arm}(t) = \frac{\omega_m(t)}{N_{total}}
+  \label{eq:omega_arm}
+\end{equation}
+
+\begin{equation}
+  \tau_{out}(t) = \eta\, N_{total}\, \tau_m(t)
+  \label{eq:tau_out}
+\end{equation}
+
+โดยที่ $\eta$ คือประสิทธิภาพรวมของชุดทดรอบ
+
+นำ \cref{eq:torque_motor} และ \cref{eq:tau_out} ไปใช้กับ
+Newton's Second Law ที่ Output shaft
+
+\begin{equation}
+  J\, \frac{d\omega_{arm}(t)}{dt} = \tau_{out}(t) - b\, \omega_{arm}(t)
+  \label{eq:newton}
+\end{equation}
+
+\begin{equation}
+  J\, \frac{d\omega_{arm}(t)}{dt} = \eta\, N_{total}\, K_t\, i_a(t) - b\, \omega_{arm}(t)
+  \label{eq:newton_expand}
+\end{equation}
+
+โดยที่ $J$ คือโมเมนต์ความเฉื่อยรวม (kg$\cdot$m$^2$) และ $b$ คือสัมประสิทธิ์การหน่วง
+แบบ Viscous (N$\cdot$m$\cdot$s/rad)
+
+\paragraph{Block Diagram ของระบบ}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      auto,
+      node distance = 1.8cm and 2.2cm,
+      block/.style  = {draw, rectangle, minimum width=2.0cm,
+                       minimum height=0.9cm, align=center, font=\small},
+      sum/.style    = {draw, circle, minimum size=0.7cm, font=\small},
+      gain/.style   = {draw, isosceles triangle, isosceles triangle apex angle=60,
+                       minimum height=0.7cm, minimum width=0.6cm,
+                       shape border rotate=0, font=\scriptsize, inner sep=1pt},
+      >=Latex
+    ]
+
+    % --- Nodes ---
+    \node[sum]   (sum1)                              {$+$};
+    \node[block] (intI)  [right=1.6cm of sum1]       {$\dfrac{1}{L_a}$\\[2pt]$\displaystyle\int$};
+    \node[block] (Kt)    [right=1.8cm of intI]       {$K_t \eta N$};
+    \node[sum]   (sum2)  [right=1.6cm of Kt]         {$+$};
+    \node[block] (intO)  [right=1.6cm of sum2]       {$\dfrac{1}{J}$\\[2pt]$\displaystyle\int$};
+    \node[block] (intTh) [right=1.8cm of intO]       {$\displaystyle\int$};
+
+    % Output labels
+    \node[right=0.8cm of intTh, font=\small] (theta_out) {$\theta_{arm}$};
+
+    % Tap nodes
+    \coordinate (tap_omega) at ($(intO.east)!0.5!(intTh.west)$);
+    \coordinate (tap_ia)    at ($(intI.east)!0.5!(Kt.west)$);
+
+    % --- Feedback: b (viscous damping) ---
+    \node[block] (b_block) [below=1.1cm of intO] {$b$};
+
+    % --- Feedback: K_b * N (back-EMF) ---
+    \node[block] (Kb_block) [below=2.4cm of intI] {$K_b N$};
+
+    % Resistance drop node (between sum1 and intI)
+    \node[block] (Ra_block) [above=1.1cm of intI, xshift=0.4cm] {$R_a$};
+
+    % --- Wires ---
+    % Input
+    \draw[->] (-1.0,0) node[left, font=\small]{$v_{in}$} -- (sum1);
+
+    % sum1 -> 1/La*integral
+    \draw[->] (sum1) -- node[above, font=\scriptsize]{$v_{in}-e_b-R_a i_a$} (intI);
+
+    % 1/La*integral -> Kt*eta*N
+    \draw[->] (intI) -- node[above, font=\scriptsize]{$i_a$} (Kt);
+
+    % Kt*eta*N -> sum2
+    \draw[->] (Kt) -- (sum2);
+
+    % sum2 -> 1/J*integral
+    \draw[->] (sum2) -- node[above, font=\scriptsize]{$\dot{\omega}_{arm}$} (intO);
+
+    % 1/J*integral -> integrate to theta
+    \draw[->] (intO) -- node[above, font=\scriptsize]{$\omega_{arm}$} (intTh);
+
+    % theta output
+    \draw[->] (intTh) -- (theta_out);
+
+    % Feedback: viscous damping b
+    \draw[->] (tap_omega) |- (b_block);
+    \draw[->] (b_block)   -| node[near end, right, font=\scriptsize]{$-$} (sum2);
+
+    % Feedback: back-EMF K_b*N
+    \draw[->] (tap_omega) |- (Kb_block);
+    \draw[->] (Kb_block) -| node[near end, right, font=\scriptsize]{$-$} (sum1);
+
+    % Resistance drop Ra (from ia tap back to sum1)
+    \draw[->] (tap_ia) |- (Ra_block);
+    \draw[->] (Ra_block) -| node[near end, right, font=\scriptsize]{$-$} (sum1);
+
+  \end{tikzpicture}
+  \caption{Block Diagram ของระบบมอเตอร์กระแสตรงพร้อมชุดทดรอบ}
+  \label{fig:motor_block}
+\end{figure}
+
+\paragraph{Transfer Function}
+
+แปลง \cref{eq:kvl,eq:bemf,eq:newton_expand} เป็น Laplace domain
+โดยสมมติเงื่อนไขเริ่มต้นเป็นศูนย์
+
+\begin{align}
+  V_{in}(s) &= (R_a + L_a s)\, I_a(s) + K_b\, N_{total}\, \Omega_{arm}(s)
+  \label{eq:lap_elec} \\
+  (Js + b)\, \Omega_{arm}(s) &= \eta\, N_{total}\, K_t\, I_a(s)
+  \label{eq:lap_mech}
+\end{align}
+
+จาก \cref{eq:lap_mech} แทน $I_a(s)$ ลงใน \cref{eq:lap_elec}
+แล้วจัดรูปได้ Velocity Transfer Function ดังนี้
+
+\begin{equation}
+  G_{vel}(s) = \frac{\Omega_{arm}(s)}{V_{in}(s)}
+             = \frac{\eta K_t N_{total} / (L_a J)}
+                    {s^2 + \left(\dfrac{R_a}{L_a} + \dfrac{b}{J}\right)s
+                         + \dfrac{R_a b + K_b K_t N_{total}^2}{L_a J}}
+  \label{eq:Gvel}
+\end{equation}
+
+สำหรับ Position Transfer Function เพิ่ม Integrator เนื่องจาก
+$\Theta_{arm}(s) = \Omega_{arm}(s)/s$
+
+\begin{equation}
+  G_{pos}(s) = \frac{\Theta_{arm}(s)}{V_{in}(s)}
+             = \frac{\eta K_t N_{total} / (L_a J)}
+                    {s\left[s^2 + \left(\dfrac{R_a}{L_a} + \dfrac{b}{J}\right)s
+                         + \dfrac{R_a b + K_b K_t N_{total}^2}{L_a J}\right]}
+  \label{eq:Gpos}
+\end{equation}
+
+แทนค่าตัวเลขจาก System Identification
+
+\begin{align}
+  K_{num} &= \frac{\eta K_t N_{total}}{L_a J}
+           = \frac{0.836 \times 0.04065 \times 70}{0.001448 \times 0.728}
+           = \frac{2.376}{0.001054} = 2254 \notag \\
+  a_1     &= \frac{R_a}{L_a} + \frac{b}{J}
+           = \frac{1.453}{0.001448} + \frac{0.193}{0.728}
+           = 1003.5 + 0.265 = 1003.8 \notag \\
+  a_0     &= \frac{R_a b + K_b K_t N_{total}^2}{L_a J}
+           = \frac{(1.453)(0.193) + (0.04165)(0.04065)(70)^2}{(0.001448)(0.728)}
+           = \frac{0.280 + 8.297}{0.001054} = 8136 \notag
+\end{align}
+
+ดังนั้น Transfer Function เชิงตัวเลขคือ
+
+\begin{equation}
+  G_{vel}(s) = \frac{2254}{s^2 + 1003.8\,s + 8136}
+  \label{eq:Gvel_num}
+\end{equation}
+
+\begin{equation}
+  G_{pos}(s) = \frac{2254}{s\left(s^2 + 1003.8\,s + 8136\right)}
+  \label{eq:Gpos_num}
+\end{equation}
+
+% ------------------------------------------------------------
 \subsubsection{การทำ System Identification}
-% วิธีการทำ System ID เพื่อหาค่า $R_m$, $L_m$, $K_e$, $K_m$, $J$, $b$
-% สถานะ: กำลังดำเนินการ
+% ------------------------------------------------------------
+
+\paragraph{พารามิเตอร์ที่วัดโดยตรง: Locked Rotor Test}
+
+ค่า $R_a$ และ $L_a$ วัดด้วย Locked Rotor Test โดยจ่ายแรงดัน Step
+ผ่าน Shunt Resistor $R_{sh} = 0.1\,\Omega$ แล้ววัดแรงดันตกคร่อม Shunt
+ด้วย Oscilloscope เพื่อหา $V_{max}$ และค่าคงเวลา $\tau$ สูตรคำนวณคือ
+
+\begin{equation}
+  R_a = R_{sh}\left(\frac{V_{in}}{V_{sh}} - 1\right), \qquad
+  L_a = R_{sh}\left(\tau\,\frac{V_{in}}{V_{sh}}\right)
+  \label{eq:locked_rotor}
+\end{equation}
+
+โดยที่ $V_{sh}$ คือแรงดันตกคร่อม Shunt ที่ Steady State และ
+$\tau$ คือค่าคงเวลาของกระแส ทดสอบที่ $V_{in} = 12$ V จำนวน 3 ครั้ง
+
+\begin{table}[H]
+  \centering
+  \caption{ผลการวัด $R_a$ และ $L_a$ จาก Locked Rotor Test ที่ 12\,V}
+  \label{tab:locked_rotor}
+  \begin{tabular}{lcccc}
+    \toprule
+    Run & $V_{max}$ (V) & $\tau$ (s) & $R_a$ ($\Omega$) & $L_a$ (H) \\
+    \midrule
+    1 & 0.740 & 0.00090 & 1.52162 & 0.00146 \\
+    2 & 0.780 & 0.00090 & 1.43846 & 0.00138 \\
+    3 & 0.800 & 0.00100 & 1.40000 & 0.00150 \\
+    \midrule
+    \textbf{Mean} & & & \textbf{1.45336} & \textbf{0.00145} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{พารามิเตอร์ที่ Estimate: Parameter Estimation}
+
+พารามิเตอร์ $K_b$, $K_t$, $b$, $J$ และ $\eta$ หาได้จาก
+Simulink Parameter Estimator โดยใช้ข้อมูล Chirp Signal
+ที่ความถี่ 0.1--2.0\,Hz บันทึกจาก Hardware จริง
+
+\paragraph{การ Preprocess ข้อมูล}
+
+ข้อมูลดิบจาก Hardware มี High-frequency Noise จาก Encoder
+จึง Filter ด้วย Butterworth Low-pass Filter Order 4
+ที่ Cutoff Frequency $f_c = 10$\,Hz และใช้ \texttt{filtfilt}
+เพื่อให้ Phase Shift เป็นศูนย์ก่อนนำไป Estimate
+
+เหตุผลการเลือก $f_c = 10$\,Hz คือต้องการให้สัญญาณ Chirp
+ที่ความถี่สูงสุด 2\,Hz ผ่านได้โดยไม่ถูกลดทอน
+โดยมี Safety margin 5 เท่า คือ $f_c = 5 \times f_{max} = 5 \times 2 = 10$\,Hz
+
+\paragraph{ผลการ Estimate และ Cross-Validation}
+
+ใช้ข้อมูล Chirp 0.1--1.0\,Hz (3 runs) เป็นชุด Estimation
+และ Cross-validate กับ Step Response และ Stair-Step Response
 
 \begin{table}[H]
   \centering
   \caption{พารามิเตอร์ที่ได้จาก System Identification}
   \label{tab:sysid_params}
-  % [ตาราง: พารามิเตอร์ | สัญลักษณ์ | ค่าที่วัดได้ | หน่วย]
-  % R_m, L_m, K_e, K_m, J, b --- [ใส่ค่าจริง]
+  \begin{tabular}{llccc}
+    \toprule
+    พารามิเตอร์ & สัญลักษณ์ & ค่า & หน่วย & วิธีการ \\
+    \midrule
+    Armature Resistance   & $R_a$ & 1.4534 & $\Omega$           & Locked Rotor Test \\
+    Armature Inductance   & $L_a$ & 0.001448 & H                & Locked Rotor Test \\
+    Back-EMF Constant     & $K_b$ & 0.04165 & V$\cdot$s/rad    & Parameter Estimation \\
+    Torque Constant       & $K_t$ & 0.04065 & N$\cdot$m/A      & Parameter Estimation \\
+    Viscous Damping       & $b$   & 0.19279 & N$\cdot$m$\cdot$s/rad & Parameter Estimation \\
+    Moment of Inertia     & $J$   & 0.72762 & kg$\cdot$m$^2$   & Parameter Estimation \\
+    Gear Ratio (Planetary)& $N_g$ & 24      & --               & Datasheet \\
+    Belt Drive Ratio      & $N_b$ & 2.917   & --               & การออกแบบ \\
+    Total Gear Ratio      & $N$   & 70      & --               & $N_g \times N_b$ \\
+    Efficiency            & $\eta$& 0.836   & --               & Parameter Estimation \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
+\begin{table}[H]
+  \centering
+  \caption{ผลการ Cross-Validation ของ Model กับข้อมูลประเภทต่าง ๆ}
+  \label{tab:cross_val}
+  \begin{tabular}{lccc}
+    \toprule
+    ชุดข้อมูล & Fit Score (\%) & NRMSE (\%) & ผลการประเมิน \\
+    \midrule
+    Chirp 0.1--0.5\,Hz (3 runs) & $92.7 \pm 3.5$ & $8.6 \pm 2.3$ & ผ่าน \\
+    Chirp 0.1--1.0\,Hz (3 runs) & $96.6 \pm 2.2$ & $5.7 \pm 1.8$ & ผ่าน \\
+    Chirp 0.1--2.0\,Hz (3 runs) & $89.9 \pm 7.2$ & $9.4 \pm 3.6$ & ผ่าน \\
+    Step 12\,V (3 runs)          & $83.1 \pm 7.1$ & $17.8 \pm 3.8$& ผ่าน \\
+    Step 24\,V (3 runs)          & $90.5 \pm 5.4$ & $12.8 \pm 3.7$& ผ่าน \\
+    Stair-Step (3 runs)          & $95.6 \pm 0.4$ & $5.8 \pm 0.3$ & ผ่านดีมาก \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ------------------------------------------------------------
 \subsubsection{การออกแบบตัวควบคุม PID ด้วย Root Locus}
-% วิธีการออกแบบ PID โดยใช้ Root Locus
-% เป้าหมาย: Settling Time <= 0.5 s, Overshoot <= 1% (P5, P6)
+% ------------------------------------------------------------
+
+\paragraph{โครงสร้างระบบควบคุม}
+
+ระบบควบคุมใช้โครงสร้าง Cascade PID Control
+ซึ่งประกอบด้วย 2 Loop ซ้อนกัน
+ดังแสดงใน\cref{fig:cascade_block}
 
 \begin{figure}[H]
   \centering
-%   \includegraphics[width=0.75\textwidth]{images/root_locus.png}
-  % [ใส่ภาพ Root Locus Plot จาก MATLAB]
-  \caption{Root Locus Plot สำหรับการออกแบบ PID Controller}
-  \label{fig:root_locus}
+  \begin{tikzpicture}[
+      auto,
+      node distance = 1.4cm and 2.0cm,
+      block/.style  = {draw, rectangle, minimum width=2.2cm,
+                       minimum height=0.85cm, align=center, font=\small},
+      sum/.style    = {draw, circle, minimum size=0.65cm, font=\footnotesize},
+      >=Latex, thick
+    ]
+
+    % Nodes
+    \node[sum]   (s1)                              {$+$};
+    \node[block] (Cpos) [right=1.4cm of s1]        {$C_{pos}(s)$\\{\scriptsize Position PID}};
+    \node[sum]   (s2)   [right=1.6cm of Cpos]      {$+$};
+    \node[block] (Cvel) [right=1.4cm of s2]        {$C_{vel}(s)$\\{\scriptsize Velocity PID}};
+    \node[block] (Gvel) [right=1.6cm of Cvel]      {$G_{vel}(s)$\\{\scriptsize Plant}};
+    \node[block] (intTh)[right=1.6cm of Gvel]      {$\dfrac{1}{s}$};
+
+    % Output
+    \node[right=0.8cm of intTh, font=\small] (out) {$\theta_{arm}$};
+
+    % Feedforward nodes
+    \node[block, below=0.9cm of Cvel] (Kvff) {$K_{vff}$\\{\scriptsize Vel FF}};
+    \node[block, below=0.9cm of s2]   (Kaff) {$K_{aff}$\\{\scriptsize Acc FF}};
+
+    % Taps
+    \coordinate (tap_omega) at ($(Gvel.east)!0.5!(intTh.west)$);
+    \coordinate (tap_theta) at ($(intTh.east)!0.5!(out)$);
+
+    % Lowpass filter
+    \node[block, below=2.2cm of Gvel] (LPF) {LPF\\{\scriptsize $f_c=100$\,Hz}};
+
+    % Wires: main forward path
+    \draw[->] (-1.0,0) node[left,font=\small]{$\theta_{ref}$} -- (s1);
+    \draw[->] (s1)    -- (Cpos);
+    \draw[->] (Cpos)  -- node[above,font=\scriptsize]{$v_{ref}$} (s2);
+    \draw[->] (s2)    -- (Cvel);
+    \draw[->] (Cvel)  -- node[above,font=\scriptsize]{$V_{in}$} (Gvel);
+    \draw[->] (Gvel)  -- node[above,font=\scriptsize]{$\omega_{arm}$} (intTh);
+    \draw[->] (intTh) -- (out);
+
+    % Feedforward paths
+    \node[above=0.7cm of Kvff, font=\scriptsize] (vref_tap) {};
+    \draw[->] (Cpos.east) ++(0.3,0) |- (Kvff);
+    \draw[->] (Kvff) -| (s2);
+    \draw[->] (Cpos.east) ++(0.3,0) |- (Kaff);
+    \draw[->] (Kaff) -| (s2);
+
+    % Feedback: velocity (inner loop)
+    \draw[->] (tap_omega) |- (LPF);
+    \draw[->] (LPF.west)  -| node[near end, font=\scriptsize]{$-$} (s2);
+
+    % Feedback: position (outer loop)
+    \draw[->] (tap_theta)
+        to[out=-90, in=0] ++(0,-3.2)
+        -| node[near end, font=\scriptsize]{$-$} (s1);
+
+  \end{tikzpicture}
+  \caption{Block Diagram ของ Cascade PID Control พร้อม Feedforward}
+  \label{fig:cascade_block}
 \end{figure}
+
+\paragraph{ข้อกำหนดการออกแบบ}
+
+ข้อกำหนดของระบบควบคุมที่ต้องบรรลุ ได้แก่
 
 \begin{table}[H]
   \centering
-  \caption{ค่า PID Gain เริ่มต้นจากการออกแบบ}
-  \label{tab:pid_initial}
-  % [ตาราง: Gain | ค่า | หมายเหตุ]
-  % Kp: [ใส่ค่าจริง], Ki: [ใส่ค่าจริง], Kd: [ใส่ค่าจริง]
+  \caption{ข้อกำหนดของระบบควบคุม}
+  \label{tab:ctrl_req}
+  \begin{tabular}{llcc}
+    \toprule
+    ข้อกำหนด & สัญลักษณ์ & ค่า & รหัส \\
+    \midrule
+    Settling Time & $t_s$ & $\leq 0.5$ s & P5 \\
+    Overshoot     & $\%OS$ & $\leq 1\%$  & P6 \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
-\subsubsection{การ Simulation ด้วย Simscape (Simulink)}
+\paragraph{การออกแบบ Velocity Inner Loop}
 
-\begin{figure}[H]
-  \centering
-%   \includegraphics[width=0.85\textwidth]{images/simscape_model.png}
-  % [ใส่ภาพหน้าจอ Simscape/Simulink Model ทั้งหมด]
-  \caption{Simscape Model ของระบบ Circular Pick and Place Robot}
-  \label{fig:simscape_model}
-\end{figure}
+เป้าหมายการออกแบบ Velocity Loop กำหนดให้
 
-\begin{figure}[H]
-  \centering
-%   \includegraphics[width=0.85\textwidth]{images/simscape_step_response.png}
-  % [ใส่ภาพ Step Response จาก Simulation แสดง Settling Time และ Overshoot]
-  \caption{ผล Step Response จาก Simscape Simulation}
-  \label{fig:simscape_result}
-\end{figure}
+\begin{equation}
+  \omega_{c,vel} = 47\,\text{rad/s}, \qquad PM_{vel} \geq 70°
+  \label{eq:vel_target}
+\end{equation}
+
+โดยที่ $\omega_{c,vel}$ เลือกให้เร็วกว่า Position Loop อย่างน้อย 5 เท่า
+($\omega_{c,vel} \geq 5\,\omega_{c,pos} = 5 \times 9.41 = 47.1$\,rad/s)
+เพื่อให้ Separation of Timescales assumption ใช้งานได้
+
+Phase ของ Plant $G_{vel}(s)$ ที่ $\omega = 47$\,rad/s คือ
+
+\begin{equation}
+  \angle G_{vel}(j47) = -\arctan\!\left(\frac{47 \times 1003.8}{8136 - 47^2}\right)
+                      = -\arctan\!\left(\frac{47156}{5927}\right) = -82.8°
+  \label{eq:vel_phase}
+\end{equation}
+
+ใช้ \texttt{pidtune} ของ MATLAB ออกแบบ PID Controller
+ที่ Crossover Frequency $\omega_c = 47$\,rad/s และ Phase Margin $PM = 70°$
+
+\paragraph{การออกแบบ Position Outer Loop}
+
+เป้าหมายการออกแบบ Position Loop กำหนดจาก Settling Time Requirement
+
+\begin{equation}
+  \omega_{c,pos} = \frac{4}{\zeta\, t_s} = \frac{4}{0.85 \times 0.5} = 9.41\,\text{rad/s},
+  \qquad PM_{pos} \geq 80°
+  \label{eq:pos_target}
+\end{equation}
+
+โดยเลือก $\zeta = 0.85$ เพื่อให้ได้ Overshoot $\leq 1\%$
+เนื่องจาก $\%OS = e^{-\pi\zeta/\sqrt{1-\zeta^2}} \times 100 = 0.43\%$
+
+Position Loop มองเห็น Plant เป็น Integrator $\frac{1}{s}$
+เมื่อ Velocity Loop ปิดแล้ว (Separation of Timescales)
+ใช้ \texttt{pidtune} ออกแบบที่ $\omega_c = 9.41$\,rad/s และ $PM = 80°$
+
+\paragraph{Feedforward Gains}
+
+เพื่อลด Tracking Error ระหว่างการเคลื่อนที่ตาม Trajectory
+เพิ่ม Velocity Feedforward $K_{vff}$ และ Acceleration Feedforward $K_{aff}$
+โดยคำนวณจาก Exact Inverse Model ของ Plant
+
+\begin{equation}
+  K_{vff} = \frac{R_a\, b}{K_t\, \eta\, N} + K_b\, N
+           = \frac{1.453 \times 0.193}{0.04065 \times 0.836 \times 70} + 0.04165 \times 70
+           = 0.118 + 2.916 = 3.034\,\text{V/(rad/s)}
+  \label{eq:Kvff}
+\end{equation}
+
+\begin{equation}
+  K_{aff} = \frac{R_a\, J}{K_t\, \eta\, N}
+           = \frac{1.453 \times 0.728}{0.04065 \times 0.836 \times 70}
+           = \frac{1.057}{2.376} = 0.445\,\text{V/(rad/s}^2\text{)}
+  \label{eq:Kaff}
+\end{equation}
+
+\paragraph{สรุปค่า PID Gains}
 
 \begin{table}[H]
   \centering
-  \caption{ผล Simulation เทียบกับ Requirement}
+  \caption{ค่า PID Gain ของระบบควบคุม}
+  \label{tab:pid_gains}
+  \begin{tabular}{llccc}
+    \toprule
+    Loop & Gain & สัญลักษณ์ & ค่า & หน่วย \\
+    \midrule
+    \multirow{4}{*}{Velocity} & Proportional & $K_{p,vel}$ & 20.036 & V/(rad/s) \\
+                               & Integral     & $K_{i,vel}$ & 376.923 & V/rad \\
+                               & Derivative   & $K_{d,vel}$ & 0.0325 & V$\cdot$s/rad \\
+                               & Filter Coeff & $N_{vel}$   & 100 & -- \\
+    \midrule
+    \multirow{4}{*}{Position} & Proportional & $K_{p,pos}$ & 9.267 & s$^{-1}$ \\
+                               & Integral     & $K_{i,pos}$ & 10.50 & s$^{-2}$ \\
+                               & Derivative   & $K_{d,pos}$ & 0.08 & s \\
+                               & Filter Coeff & $N_{pos}$   & 20 & -- \\
+    \midrule
+    \multirow{2}{*}{Feedforward} & Velocity FF & $K_{vff}$ & 3.034 & V/(rad/s) \\
+                                  & Accel FF   & $K_{aff}$ & 0.445 & V/(rad/s$^2$) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ------------------------------------------------------------
+\subsubsection{Motion Profile แบบ S-Curve}
+% ------------------------------------------------------------
+
+\paragraph{ขีดจำกัดของการเคลื่อนที่}
+
+ขีดจำกัดของ Motion Profile คำนวณจาก Hardware Constraints ได้แก่
+กระแสสูงสุด $i_{max} = 10$\,A และ Back-EMF จากความเร็วสูงสุด
+ที่วัดได้จาก Step 24\,V Test คือ $\omega_{max} = 8.116$\,rad/s
+
+\begin{align}
+  v_{max}  &= 0.9\,\omega_{max} = 0.9 \times 8.116 = 7.304\,\text{rad/s} \label{eq:vmax}\\
+  \tau_{out,max} &= K_t\,\eta\,N\,i_{max} = 0.04065 \times 0.836 \times 70 \times 10 = 23.80\,\text{N$\cdot$m} \label{eq:taumax}\\
+  a_{max}  &= 0.9 \times \frac{\tau_{out,max} - b\,\omega_{max}}{J}
+            = 0.9 \times \frac{23.80 - 0.193 \times 8.116}{0.728} = 27.49\,\text{rad/s}^2 \label{eq:amax}\\
+  j_{max}  &= 0.9\,a_{max}\,\omega_{n,vel} = 0.9 \times 27.49 \times 56.6 = 1400\,\text{rad/s}^3 \label{eq:jmax}
+\end{align}
+
+โดย Safety Factor 0.9 ใช้เพื่อเผื่อ Margin ให้กับ Model Uncertainty
+
+\paragraph{โครงสร้าง S-Curve 7 Phase}
+
+S-Curve Motion Profile แบ่งออกเป็น 7 Phase ดังแสดงใน\cref{fig:scurve_phases}
+
+\begin{table}[H]
+  \centering
+  \caption{โครงสร้าง S-Curve 7 Phase}
+  \label{tab:scurve_phases}
+  \begin{tabular}{clcc}
+    \toprule
+    Phase & ชื่อ & Jerk & ระยะเวลา \\
+    \midrule
+    1 & Jerk Up (Acceleration)   & $+j_{max}$ & $t_j$ \\
+    2 & Constant Acceleration    & $0$        & $t_a$ \\
+    3 & Jerk Down (Acceleration) & $-j_{max}$ & $t_j$ \\
+    4 & Cruise (Constant Velocity)& $0$       & $t_v$ \\
+    5 & Jerk Down (Deceleration) & $-j_{max}$ & $t_j$ \\
+    6 & Constant Deceleration    & $0$        & $t_a$ \\
+    7 & Jerk Up (Deceleration)   & $+j_{max}$ & $t_j$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{การคำนวณเวลาแต่ละ Phase}
+
+\begin{align}
+  t_j &= \frac{a_{max}}{j_{max}} = \frac{27.49}{1400} = 0.01963\,\text{s} \label{eq:tj}\\
+  t_a &= \frac{v_{max}}{a_{max}} - t_j = \frac{7.304}{27.49} - 0.01963 = 0.24607\,\text{s} \label{eq:ta}
+\end{align}
+
+ระยะทางช่วง Acceleration (Phase 1--3) คำนวณแบบ Analytical
+
+\begin{equation}
+  d_{accel} = v_{max}\left(t_a + t_j\right) - \frac{a_{max}\,t_j^2}{2}
+            = 7.304(0.246 + 0.01963) - \frac{27.49 \times 0.01963^2}{2}
+            = 1.042\,\text{rad}
+  \label{eq:daccel}
+\end{equation}
+
+สำหรับการเคลื่อนที่ระยะ $q_{total}$ เวลา Cruise คือ
+
+\begin{equation}
+  t_v = \frac{q_{total} - 2\,d_{accel}}{v_{max}}
+  \label{eq:tv}
+\end{equation}
+
+เวลารวมทั้งหมด
+
+\begin{equation}
+  t_{move} = 4\,t_j + 2\,t_a + t_v
+  \label{eq:tmove}
+\end{equation}
+
+\paragraph{ผลการคำนวณ Motion Profile}
+
+\begin{table}[H]
+  \centering
+  \caption{สรุปพารามิเตอร์ Motion Profile สำหรับระยะทางต่าง ๆ}
+  \label{tab:motion_summary}
+  \begin{tabular}{lcccc}
+    \toprule
+    ระยะทาง & $q_{total}$ (rad) & $t_v$ (s) & $t_{move}$ (s) & หมายเหตุ \\
+    \midrule
+    90°  & $\pi/2 = 1.571$ & 0 (ไม่มี Cruise) & 0.571 & ปรับ $v_{max}$ ลง \\
+    180° & $\pi = 3.142$   & 0.197            & 0.748 & -- \\
+    360° & $2\pi = 6.283$  & 0.575            & 1.146 & Worst Case \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ------------------------------------------------------------
+\subsubsection{การ Simulation ด้วย State Space Model}
+% ------------------------------------------------------------
+
+\paragraph{State Space Model}
+
+สร้างแบบจำลอง State Space 3 State สำหรับ Simulation
+โดยเลือก State Vector $\mathbf{x} = \begin{bmatrix} i_a & \omega_{arm} & \theta_{arm} \end{bmatrix}^T$
+
+\begin{equation}
+  \dot{\mathbf{x}} = A\mathbf{x} + Bu_{in}, \qquad
+  \mathbf{y} = C\mathbf{x}
+  \label{eq:ss}
+\end{equation}
+
+\begin{equation}
+  A = \begin{bmatrix}
+        -R_a/L_a & -K_b N/L_a & 0 \\
+        K_t\eta N/J & -b/J & 0 \\
+        0 & 1 & 0
+      \end{bmatrix}, \quad
+  B = \begin{bmatrix} 1/L_a \\ 0 \\ 0 \end{bmatrix}, \quad
+  C = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}
+  \label{eq:ss_matrices}
+\end{equation}
+
+แทนค่าตัวเลข
+
+\begin{equation}
+  A = \begin{bmatrix}
+        -1003.5 & -2013.0 & 0 \\
+        3.265   & -0.265  & 0 \\
+        0       & 1       & 0
+      \end{bmatrix}, \quad
+  B = \begin{bmatrix} 690.6 \\ 0 \\ 0 \end{bmatrix}
+  \label{eq:ss_num}
+\end{equation}
+
+Discrete ด้วยวิธี Zero-Order Hold (ZOH) ที่ Sampling Period $T_s = 0.1$\,ms
+เพื่อให้ $T_s < \tau_{elec}/10 = 0.001/10 = 0.0001$\,s
+
+\paragraph{ผลการ Simulation}
+
+\begin{table}[H]
+  \centering
+  \caption{ผล Simulation เทียบกับ Requirement (S-curve 360°)}
   \label{tab:sim_vs_req}
-  % [ตาราง: พารามิเตอร์ | ผล Simulation | Requirement | Pass/Fail]
-  % Settling Time: [ใส่ค่าจริง] | <= 0.5 s
-  % Overshoot: [ใส่ค่าจริง]   | <= 1%
+  \begin{tabular}{lcccc}
+    \toprule
+    พารามิเตอร์ & ผล Simulation & Requirement & หน่วย & ผลการตรวจสอบ \\
+    \midrule
+    Settling Time  & 0.001 & $\leq 0.5$ & s   & ผ่าน \\
+    Overshoot      & 0.995 & $\leq 1$   & \%  & ผ่าน \\
+    Steady-state Error & 0.512 & --     & deg & -- \\
+    Max Current    & 10.00 & $\leq 10$  & A   & ผ่าน \\
+    Current Clamp  & 0.71  & --         & \%  & -- \\
+    Move Time (360°)& 1.146 & --        & s   & -- \\
+    Cycle Time (4 pcs)& 22.58 & $\leq 35$ & s & ผ่าน \\
+    \bottomrule
+  \end{tabular}
 \end{table}
