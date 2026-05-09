@@ -19,7 +19,7 @@
 
 % Line breaking for Thai
 \XeTeXlinebreaklocale "th"
-\XeTeXlinebreakskip = 0pt plus 1pt
+\XeTeXlinebreakskip = 0pt plus 2pt
 
 % ----------------------------------------------------------------------------
 % 2. Font Configuration
@@ -38,6 +38,8 @@
 % Fix math font fallback for non-standard font sizes
 \usepackage{anyfontsize}
 \usepackage{lmodern} % Provides scalable CM fonts for math
+\usepackage{xurl}    % Better URL breaking
+\urlstyle{same}
 
 % Custom font size commands
 \newcommand{\sizeTwentyTwo}{\fontsize{16.30}{19.56}\selectfont}
@@ -82,6 +84,8 @@
 \usetikzlibrary{positioning}  % สำหรับ relative positioning
 \usetikzlibrary{shapes.geometric} % สำหรับ block shapes
 \usetikzlibrary{calc}         % สำหรับคำนวณ coordinate
+
+\usepackage{subcaption}
 
 % ----------------------------------------------------------------------------
 % 5. References & Bibliography

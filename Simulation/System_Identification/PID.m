@@ -1,11 +1,11 @@
 % =========================================================
-% simulate_cascade_pid_v3.m
-% Cascade PID + S-curve + State Space (ZOH discretization)
-% - Current-based Vin clamp (predictive)
-% - Derivative filter on both loops
-% - Anti-windup on both loops
+% Script Name: simulate_cascade_pid_v3.m
+% Description: Cascade PID + S-curve + State Space (ZOH discretization)
+%              - Current-based Vin clamp (predictive)
+%              - Derivative filter on both loops
+%              - Anti-windup on both loops
+%              - Configured for strict black font rendering and clean legends.
 % =========================================================
-
 clc; clear; close all;
 
 % =========================================================
@@ -28,12 +28,9 @@ i_max   = 10.0;     % A  -- Cytron MD10C current limit
 A_c = [-R_m/L_m,            -K_e*N_total/L_m,  0;
         K_t*eta*N_total/J,  -B_damp/J,          0;
         0,                   1,                  0];
-
 B_c = [1/L_m; 0; 0];
-
 C_c = [0, 1, 0;    % output 1: omega
        0, 0, 1];   % output 2: theta
-
 D_c = [0; 0];
 
 fprintf('=== Open-loop Eigenvalues (continuous) ===\n');
@@ -47,9 +44,9 @@ end
 % dt must be defined before c2d
 % =========================================================
 dt = 0.0001;    % 10 kHz -- ต้องเล็กกว่า tau_elec = L_m/R_m = 0.001 s
-
 sys_c = ss(A_c, B_c, C_c, D_c);
 sys_d = c2d(sys_c, dt, 'zoh');
+
 Ad    = sys_d.A;   % 3x3 discrete A matrix
 Bd    = sys_d.B;   % 3x1 discrete B matrix
 
@@ -68,7 +65,7 @@ N_vel  = 100;
 
 % --- Position Outer Loop (Loop Shaping: wc=9.41, PM=80 deg) ---
 Kp_pos = 9.2670;
-Ki_pos = 10.5;
+Ki_pos = 8;
 Kd_pos = 0.08;
 N_pos  = 20;
 
@@ -171,7 +168,7 @@ alpha_fb = wc_fb * dt / (1 + wc_fb * dt);
 % =========================================================
 for k = 1:N_sim - 1
     tk = t_sim(k);
-
+    
     % -------------------------------------------------------
     % 6.1 Analytical S-curve reference at time tk
     % -------------------------------------------------------
@@ -200,99 +197,95 @@ for k = 1:N_sim - 1
         j_n=0;      a0=0;    v0=0;              p0=q_total;
         t0=T(8);
     end
-
+    
     tau    = tk - t0;
     traj_p = min(p0 + v0*tau + 0.5*a0*tau^2 + j_n*tau^3/6, q_total);
     traj_v = v0 + a0*tau + 0.5*j_n*tau^2;
     traj_a = a0 + j_n*tau;
-
+    
     theta_r_log(k) = traj_p;
     acc_r_log(k)   = traj_a;
-
+    
     % -------------------------------------------------------
     % 6.2 Feedback lowpass filter (Tustin first-order)
     % -------------------------------------------------------
     omega_f      = alpha_fb * x(2,k) + (1 - alpha_fb) * omega_f_prev;
     theta_f      = alpha_fb * x(3,k) + (1 - alpha_fb) * theta_f_prev;
+    
     omega_f_prev = omega_f;
     theta_f_prev = theta_f;
+    
     omega_f_log(k) = omega_f;
     theta_f_log(k) = theta_f;
-
+    
     % -------------------------------------------------------
     % 6.3 Position PID (Outer loop) --> v_ref
     % -------------------------------------------------------
     err_pos = traj_p - theta_f;
-
+    
     % Derivative with filter: dfilt(k) = (1-N*dt)*dfilt(k-1) + Kd*N*de
     dfilt_pos    = (1 - N_pos*dt) * dfilt_pos + ...
                    Kd_pos * N_pos * (err_pos - err_pos_prev);
     err_pos_prev = err_pos;
-
+    
     % Integral with anti-windup
     int_pos  = int_pos + err_pos * dt + Kaw * aw_pos * dt;
-
+    
     % PID output + trajectory velocity feedforward
     vref_pid = Kp_pos * err_pos + Ki_pos * int_pos + dfilt_pos;
     vref_cmd = vref_pid + traj_v;
     vref_cmd = max(-vref_max, min(vref_max, vref_cmd));
-
+    
     % Anti-windup signal for position
     aw_pos = max(-vref_max, min(vref_max, vref_pid)) - vref_pid;
-
     vref_log(k) = vref_cmd;
-
+    
     % -------------------------------------------------------
     % 6.4 Velocity PID (Inner loop) --> V_pid
     % -------------------------------------------------------
     err_vel = vref_cmd - omega_f;
-
+    
     % Derivative with filter
     dfilt_vel    = (1 - N_vel*dt) * dfilt_vel + ...
                    Kd_vel * N_vel * (err_vel - err_vel_prev);
     err_vel_prev = err_vel;
-
+    
     % Integral with anti-windup
     int_vel = int_vel + err_vel * dt + Kaw * aw_vel * dt;
-
+    
     V_pid = Kp_vel * err_vel + Ki_vel * int_vel + dfilt_vel;
-
+    
     % Trajectory feedforward
     Vff = Kvff * vref_cmd + Kaff * traj_a;
-
+    
     % Total Vin before saturation
     Vin_raw = V_pid + Vff;
-
+    
     % Voltage saturation
     Vin = max(-Vin_max, min(Vin_max, Vin_raw));
-
+    
     % Anti-windup signal for velocity
     aw_vel = Vin - Vin_raw;
-
+    
     % -------------------------------------------------------
     % 6.5 Predictive Current Limit
-    % จาก L_m * di/dt = Vin - R_m*i - K_e*N*omega
-    % ต้องการ i(k+1) <= i_max:
-    % i(k+1) ~ i(k) + dt*(Vin - R_m*i - K_e*N*omega)/L_m
-    % Vin_max_i = L_m*(i_max - i)/dt + R_m*i + K_e*N*omega
     % -------------------------------------------------------
     i_now     = x(1, k);
     omega_now = x(2, k);
     V_bemf    = K_e * N_total * omega_now;
-
+    
     Vin_max_i = L_m * (i_max  - i_now) / dt + R_m * i_now + V_bemf;
     Vin_min_i = L_m * (-i_max - i_now) / dt + R_m * i_now + V_bemf;
-
+    
     Vin_clamped = max(Vin_min_i, min(Vin_max_i, Vin));
-
-    % ยังต้อง clamp ด้วย hardware voltage limit ด้วย
+    
+    % Hardware voltage limit
     Vin_clamped = max(-Vin_max, min(Vin_max, Vin_clamped));
-
-    % Log ว่าถูก current-clamp หรือไม่
+    
+    % Log current clamp status
     i_cut_log(k) = (abs(Vin_clamped) < abs(Vin) - 0.01);
-
     Vin_log(k) = Vin_clamped;
-
+    
     % -------------------------------------------------------
     % 6.6 Plant Integration (ZOH exact discrete)
     % -------------------------------------------------------
@@ -305,9 +298,8 @@ theta_r_log(end) = q_total;
 % =========================================================
 % SECTION 7: Performance Metrics
 % =========================================================
-band     = 0.02 * q_total;     % 2% of 360 deg = 7.2 deg
+band     = 0.01 * q_total;     % 2% of 360 deg = 7.2 deg
 idx_end  = find(t_sim >= T(8), 1);
-
 settled         = false;
 t_settle_actual = NaN;
 t_settle_start  = NaN;
@@ -353,84 +345,137 @@ fprintf('Current-clamp : %.2f %% of time\n', i_cut_pct);
 % SECTION 8: Plots
 % =========================================================
 figure('Name', 'Cascade PID v3', 'NumberTitle', 'off', ...
-    'Position', [50, 50, 1300, 900]);
+    'Position', [50, 50, 1300, 900], ...
+    'Color', 'white');
 
-% Position
+% Set global default colors to black
+set(gcf, 'DefaultTextColor',          'black');
+set(gcf, 'DefaultAxesColor',          'white');
+set(gcf, 'DefaultAxesXColor',         'black');
+set(gcf, 'DefaultAxesYColor',         'black');
+set(gcf, 'DefaultAxesGridColor',      [0.85 0.85 0.85]);
+set(gcf, 'DefaultLegendTextColor',    'black');
+
+% Padding for text alignment at the right edge
+text_x_pos = t_sim(end) * 0.98; 
+
+% --- Position Subplot ---
 subplot(3, 2, 1);
-plot(t_sim, theta_r_log*180/pi, 'b--', 'LineWidth', 1.2, ...
-    'DisplayName', 'Reference');
+plot(t_sim, theta_r_log*180/pi, 'b--', 'LineWidth', 1.2, 'DisplayName', 'Reference');
 hold on;
-plot(t_sim, x(3,:)*180/pi, 'r', 'LineWidth', 1.2, ...
-    'DisplayName', 'Actual');
-xline(T(8), 'k--', 'Traj end', 'LineWidth', 1);
-yline(360, 'm:', '360°', 'LineWidth', 1);
+plot(t_sim, x(3,:)*180/pi, 'r', 'LineWidth', 1.2, 'DisplayName', 'Actual');
+
+% Black lines automatically format their labels as black
+xline(T(8), 'k--', 'Traj end', 'LineWidth', 1, 'HandleVisibility', 'off', 'LabelVerticalAlignment', 'bottom');
+
+% Magenta line: Render line separately, insert black text manually
+yline(360, 'm:', 'LineWidth', 1, 'HandleVisibility', 'off');
+text(text_x_pos, 360, '360°', 'Color', 'k', 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right', 'FontSize', 8);
+
 ylabel('\theta (deg)');
 title('Position');
 legend('Location', 'southeast');
 grid on;
 
-% Position Error
+% --- Position Error Subplot ---
 subplot(3, 2, 2);
 pos_err_deg = (theta_r_log - x(3,:)) * 180/pi;
 plot(t_sim, pos_err_deg, 'r', 'LineWidth', 1.2);
-yline(+0.02*360, 'b--', '+2% band');
-yline(-0.02*360, 'b--', '-2% band');
-xline(T(8), 'k--');
+
+yline(+0.02*360, 'b--', 'HandleVisibility', 'off');
+text(text_x_pos, +0.02*360, '+2% band', 'Color', 'k', 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right', 'FontSize', 8);
+
+yline(-0.02*360, 'b--', 'HandleVisibility', 'off');
+text(text_x_pos, -0.02*360, '-2% band', 'Color', 'k', 'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', 'FontSize', 8);
+
+xline(T(8), 'k--', 'HandleVisibility', 'off');
+
 ylabel('Error (deg)');
 title('Position Error');
 grid on;
 
-% Velocity
+% --- Velocity Subplot ---
 subplot(3, 2, 3);
 plot(t_sim, vref_log, 'b--', 'LineWidth', 1.2, 'DisplayName', 'v_{ref}');
 hold on;
 plot(t_sim, x(2,:), 'r', 'LineWidth', 1.2, 'DisplayName', '\omega actual');
 plot(t_sim, omega_f_log, 'g:', 'LineWidth', 1.0, 'DisplayName', '\omega filtered');
-yline(+v_max, 'k--', 'v_{max}');
-yline(-v_max, 'k--');
+
+yline(+v_max, 'k--', 'v_{max}', 'HandleVisibility', 'off', 'LabelHorizontalAlignment', 'right');
+yline(-v_max, 'k--', 'HandleVisibility', 'off');
+
 ylabel('\omega (rad/s)');
 title('Velocity');
 legend('Location', 'best');
 grid on;
 
-% Velocity Error
+% --- Velocity Error Subplot ---
 subplot(3, 2, 4);
 plot(t_sim, vref_log - omega_f_log, 'r', 'LineWidth', 1.2);
 ylabel('Error (rad/s)');
 title('Velocity Error');
 grid on;
 
-% Motor Voltage
+% --- Motor Voltage Subplot ---
 subplot(3, 2, 5);
 plot(t_sim, Vin_log, 'b', 'LineWidth', 1.2);
-yline(+Vin_max, 'r--', '+24V');
-yline(-Vin_max, 'r--', '-24V');
+
+yline(+Vin_max, 'r--', 'HandleVisibility', 'off');
+text(text_x_pos, +Vin_max, '+24V', 'Color', 'k', 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right', 'FontSize', 8);
+
+yline(-Vin_max, 'r--', 'HandleVisibility', 'off');
+text(text_x_pos, -Vin_max, '-24V', 'Color', 'k', 'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', 'FontSize', 8);
+
 xlabel('Time (s)');
 ylabel('V_{in} (V)');
 title('Motor Voltage');
 grid on;
 
-% Motor Current
+% --- Motor Current Subplot ---
 subplot(3, 2, 6);
 plot(t_sim, x(1,:), 'b', 'LineWidth', 1.2, 'DisplayName', 'Current');
 hold on;
 area(t_sim, double(i_cut_log) * i_max, ...
     'FaceColor', [1 0.5 0.5], 'FaceAlpha', 0.3, ...
     'EdgeColor', 'none', 'DisplayName', 'Clamp zone');
-yline(+i_max, 'r--', '+10A', 'LineWidth', 1.5);
-yline(-i_max, 'r--', '-10A', 'LineWidth', 1.5);
+
+yline(+i_max, 'r--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
+text(text_x_pos, +i_max, '+10A', 'Color', 'k', 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right', 'FontSize', 8);
+
+yline(-i_max, 'r--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
+text(text_x_pos, -i_max, '-10A', 'Color', 'k', 'VerticalAlignment', 'top', 'HorizontalAlignment', 'right', 'FontSize', 8);
+
 xlabel('Time (s)');
 ylabel('Current (A)');
 title(sprintf('Motor Current  (max=%.2f A, clamp=%.1f%%)', max_i, i_cut_pct));
 legend('Location', 'best');
 grid on;
 
-sgtitle('Cascade PID v3 + S-curve + ZOH Plant + Current Limit', ...
+% --- Main Figure Title ---
+st = sgtitle('Cascade PID v3 + S-curve + ZOH Plant + Current Limit', ...
     'FontSize', 13, 'FontWeight', 'bold');
+st.Color = 'black'; 
+
+% --- Final Cleanup Loop ---
+ax_all = findall(gcf, 'Type', 'axes');
+for ax = ax_all'
+    lg = get(ax, 'Legend');
+    if ~isempty(lg)
+        set(lg, 'Color', 'white', 'TextColor', 'black', 'EdgeColor', [0.8 0.8 0.8]);
+    end
+    set(get(ax, 'Title'),  'Color', 'black');
+    set(get(ax, 'XLabel'), 'Color', 'black');
+    set(get(ax, 'YLabel'), 'Color', 'black');
+    set(ax, 'XColor', 'black', 'YColor', 'black', 'GridColor', [0.85 0.85 0.85]);
+end
+
+txt_objs = findall(gcf, 'Type', 'text');
+set(txt_objs, 'Color', 'black');
 
 % =========================================================
 % Helper function
 % =========================================================
+
 function s = pass_fail(cond)
     if cond
         s = 'PASS';
