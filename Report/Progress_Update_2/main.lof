@@ -1,27 +1,24 @@
-\contentsline {figure}{\numberline {1}{\ignorespaces \xpg@aux {}{thai}\ignorespaces System Architecture ของระบบ Circular Pick and Place Robot แสดง Physical Architecture และ Cyber Architecture}}{2}{figure.caption.1}%
-\contentsline {figure}{\numberline {2}{\ignorespaces \xpg@aux {}{thai}\ignorespaces CAD Assembly ของระบบเชิงกล}}{8}{figure.caption.11}%
-\contentsline {figure}{\numberline {3}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล FEA การโก่งตัวของ Arm ที่โหลด 2 kg}}{8}{figure.caption.14}%
-\contentsline {figure}{\numberline {4}{\ignorespaces \xpg@aux {}{thai}\ignorespaces S-Curve Motion Profile ของการเคลื่อนที่ในหนึ่งรอบ}}{8}{figure.caption.16}%
-\contentsline {figure}{\numberline {5}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Block Diagram แสดงการแจกจ่ายกำลังไฟฟ้า และการเชื่อมต่อ Signal ของระบบ}}{9}{figure.caption.18}%
-\contentsline {figure}{\numberline {6}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Schematic ของตู้ควบคุมทั้งระบบ ออกแบบด้วย KiCad 9.0.0}}{10}{figure.caption.19}%
-\contentsline {figure}{\numberline {7}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การออกแบบ PCB สำหรับระบบควบคุม}}{10}{figure.caption.20}%
-\contentsline {figure}{\numberline {8}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการเดินสายภายในตู้ควบคุมไฟฟ้า}}{13}{figure.caption.24}%
-\contentsline {figure}{\numberline {9}{\ignorespaces \xpg@aux {}{thai}\ignorespaces วงจรสมมูลของ Armature มอเตอร์กระแสตรง}}{15}{figure.caption.28}%
-\contentsline {figure}{\numberline {10}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Block Diagram ของระบบมอเตอร์กระแสตรงพร้อมชุดทดรอบใน Simulink}}{16}{figure.caption.32}%
-\contentsline {figure}{\numberline {11}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Oscilloscope Waveform จาก Locked Rotor Test แสดง $V_{max}$ และ $\tau $}}{19}{figure.caption.37}%
-\contentsline {figure}{\numberline {12}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Block Diagram ของ Cascade PID Control พร้อม Feedforward}}{22}{figure.caption.46}%
-\contentsline {figure}{\numberline {13}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Bode Plot ของ Velocity Plant $G_{vel}(s)$ และ Position Plant $G_{pos}(s)$}}{24}{figure.caption.50}%
-\contentsline {figure}{\numberline {14}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Open-loop Bode Plot ของ Velocity Loop และ Position Loop หลัง Design แสดง Crossover Frequency และ Phase Margin}}{26}{figure.caption.53}%
-\contentsline {figure}{\numberline {15}{\ignorespaces \xpg@aux {}{thai}\ignorespaces S-Curve Motion Profile สำหรับการเคลื่อนที่ 360° แสดง Jerk, Acceleration, Velocity และ Position เทียบกับเวลา}}{30}{figure.caption.62}%
-\contentsline {figure}{\numberline {16}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Integration Diagram ของระบบทั้งหมด}}{34}{figure.caption.71}%
-\contentsline {figure}{\numberline {17}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการทดสอบการอ่านค่า Encoder และสัญญาณ PWM}}{34}{figure.caption.72}%
-\contentsline {figure}{\numberline {18}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สัญญาณ Chirp ก่อนและหลัง Filter (chirp1\_run1) แสดง $V_{in}$ และ $\omega _{arm}$}}{35}{figure.caption.76}%
-\contentsline {figure}{\numberline {19}{\ignorespaces \xpg@aux {}{thai}\ignorespaces เปรียบเทียบ Measured กับ Simulated สำหรับ Stair-Step data (3 runs)}}{35}{figure.caption.77}%
-\contentsline {figure}{\numberline {20}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Fit Score จาก Cross-Validation กับข้อมูลประเภทต่าง ๆ ทั้ง 21 runs (เส้นประแดงคือเกณฑ์ 80\%)}}{36}{figure.caption.78}%
-\contentsline {figure}{\numberline {21}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation: Position, Position Error, Velocity, Velocity Error, Motor Voltage และ Motor Current (S-Curve 360°, Cascade PID)}}{37}{figure.caption.80}%
-\contentsline {figure}{\numberline {22}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Motor Current และ Current Clamp Zone ระหว่างการเคลื่อนที่ 360°}}{37}{figure.caption.81}%
-\contentsline {figure}{\numberline {23}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Pareto Front จาก NSGA-II แสดง Trade-off ระหว่าง Max Rod Swing และ Cycle Time}}{38}{figure.caption.83}%
-\contentsline {figure}{\numberline {24}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation ของ Best Compromise Solution จาก NSGA-II (Rod Swing = 19.1°, Cycle Time = 34.3\,s)}}{40}{figure.caption.86}%
-\contentsline {figure}{\numberline {25}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Schematic ฉบับเต็ม}}{42}{figure.caption.96}%
-\contentsline {figure}{\numberline {26}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation Simscape ฉบับเต็ม}}{42}{figure.caption.97}%
-\contentsline {figure}{\numberline {27}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Serial Log ขณะทดสอบการอ่านค่า Encoder}}{42}{figure.caption.98}%
+\contentsline {figure}{\numberline {1}{\ignorespaces \xpg@aux {}{thai}\ignorespaces System Architecture ของระบบ Circular Pick and Place Robot แสดง Physical Architecture และ Cyber Architecture}}{3}{figure.caption.1}%
+\contentsline {figure}{\numberline {2}{\ignorespaces \xpg@aux {}{thai}\ignorespaces CAD Assembly ของระบบเชิงกล}}{7}{figure.caption.8}%
+\contentsline {figure}{\numberline {3}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Block Diagram แสดงการแจกจ่ายกำลังไฟฟ้า และการเชื่อมต่อ Signal ของระบบ}}{14}{figure.caption.24}%
+\contentsline {figure}{\numberline {4}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Schematic ของตู้ควบคุมทั้งระบบ ออกแบบด้วย KiCad 9.0.0}}{17}{figure.caption.32}%
+\contentsline {figure}{\numberline {5}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การออกแบบ PCB สำหรับระบบควบคุม}}{18}{figure.caption.33}%
+\contentsline {figure}{\numberline {6}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการเดินสายภายในตู้ควบคุมไฟฟ้า}}{20}{figure.caption.37}%
+\contentsline {figure}{\numberline {7}{\ignorespaces \xpg@aux {}{thai}\ignorespaces วงจรสมมูลของ Armature มอเตอร์กระแสตรง}}{22}{figure.caption.41}%
+\contentsline {figure}{\numberline {8}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Block Diagram ของระบบมอเตอร์กระแสตรงพร้อมชุดทดรอบใน Simulink}}{23}{figure.caption.45}%
+\contentsline {figure}{\numberline {9}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Oscilloscope Waveform จาก Locked Rotor Test แสดง $V_{max}$ และ $\tau $}}{26}{figure.caption.50}%
+\contentsline {figure}{\numberline {10}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Block Diagram ของ Cascade PID Control พร้อม Feedforward}}{29}{figure.caption.59}%
+\contentsline {figure}{\numberline {11}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Bode Plot ของ Velocity Plant $G_{vel}(s)$ และ Position Plant $G_{pos}(s)$}}{32}{figure.caption.63}%
+\contentsline {figure}{\numberline {12}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Open-loop Bode Plot ของ Velocity Loop และ Position Loop หลัง Design แสดง Crossover Frequency และ Phase Margin}}{34}{figure.caption.66}%
+\contentsline {figure}{\numberline {13}{\ignorespaces \xpg@aux {}{thai}\ignorespaces S-Curve Motion Profile สำหรับการเคลื่อนที่ 360° แสดง Jerk, Acceleration, Velocity และ Position เทียบกับเวลา}}{38}{figure.caption.75}%
+\contentsline {figure}{\numberline {14}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Free Body Diagram ของ Connection Rod จำลองเป็น Simple Pendulum ที่ถูกกระตุ้นด้วย Angular Acceleration $\alpha _{arm}$ ของแขนกล}}{40}{figure.caption.79}%
+\contentsline {figure}{\numberline {15}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สัญญาณ Chirp ก่อนและหลัง Filter (chirp1\_run1) แสดง $V_{in}$ และ $\omega _{arm}$}}{55}{figure.caption.101}%
+\contentsline {figure}{\numberline {16}{\ignorespaces \xpg@aux {}{thai}\ignorespaces เปรียบเทียบ Measured กับ Simulated สำหรับ Stair-Step data (3 runs)}}{56}{figure.caption.102}%
+\contentsline {figure}{\numberline {17}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Fit Score จาก Cross-Validation กับข้อมูลประเภทต่าง ๆ ทั้ง 21 runs (เส้นประแดงคือเกณฑ์ 80\%)}}{56}{figure.caption.103}%
+\contentsline {figure}{\numberline {18}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation: Position, Position Error, Velocity, Velocity Error, Motor Voltage และ Motor Current (S-Curve 360°, Cascade PID)}}{58}{figure.caption.105}%
+\contentsline {figure}{\numberline {19}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Motor Current และ Current Clamp Zone ระหว่างการเคลื่อนที่ 360°}}{58}{figure.caption.106}%
+\contentsline {figure}{\numberline {20}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Pareto Front จาก NSGA-II แสดง Trade-off ระหว่าง Max Rod Swing และ Cycle Time}}{59}{figure.caption.108}%
+\contentsline {figure}{\numberline {21}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation ของ Best Compromise Solution จาก NSGA-II (Rod Swing = 19.1°, Cycle Time = 34.3\,s)}}{61}{figure.caption.111}%
+\contentsline {figure}{\numberline {22}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Electrical Schematic ฉบับเต็ม}}{69}{figure.caption.137}%
+\contentsline {figure}{\numberline {23}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation Simscape ฉบับเต็ม}}{69}{figure.caption.138}%
+\contentsline {figure}{\numberline {24}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Serial Log ขณะทดสอบการอ่านค่า Encoder}}{69}{figure.caption.139}%

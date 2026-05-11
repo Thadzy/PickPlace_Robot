@@ -1,84 +1,114 @@
-% ============================================================================
-% FILE: sections/06_verification.tex
-% PURPOSE: ตาราง V&V ทั้งหมด (Summary รวม + แยกตาม Category)
-% ============================================================================
-
+% ============================================================
 \section{การตรวจสอบและทวนสอบ (Verification and Validation)}
+\label{sec:verification_and_validation}
+% ============================================================
 
 \subsection{ภาพรวม V\&V Framework}
-% อธิบายความแตกต่างระหว่าง Verification และ Validation
-% อธิบาย Test Method ทั้ง 4: AN, IN, DM, TE
+\label{subsec:vv_framework_overview}
 
+การตรวจสอบและทวนสอบ (V\&V) ดำเนินการตาม
+ข้อกำหนดทั้ง 32 ข้อ แบ่งออกเป็น 5 หมวดหมู่
+ได้แก่ M (Mechanical), P (Performance),
+A (Accuracy \& Control), E (Electrical \& Interface)
+และ J (Joystick) โดยใช้วิธีการตรวจสอบ 3 รูปแบบ ได้แก่
+การคำนวณทางทฤษฎี (Analysis),
+การจำลองสถานการณ์ (Simulation) และ
+การทดสอบบน Hardware จริง (Test)
+
+% ------------------------------------------------------------
 \subsection{ตาราง V\&V รวมทั้งหมด (32 Requirements)}
+\label{subsec:vv_table}
+% ------------------------------------------------------------
 
-\begin{table}[H]
-  \centering
-  \small
-  \caption{ตาราง V\&V รวม ทั้ง 32 Requirements}
-  \label{tab:vv_summary}
-  % [ตาราง 32 แถว: Req ID | Category | คำอธิบาย | Method | Pass Criteria | V&V Type | Status]
-  % หากล้นหน้า ให้ใช้ longtable แทน table
-\end{table}
+\begin{longtable}{llp{5cm}ll}
+    \caption{ตาราง V\&V รวม ทั้ง 32 Requirements} \label{tab:vv_all} \\
+    \toprule
+    Req ID & หมวด & คำอธิบาย & วิธีตรวจสอบ & สถานะ \\
+    \midrule
+    \endfirsthead
+    
+    \multicolumn{5}{l}{ตารางที่ \ref{tab:vv_all} (ต่อ)} \\
+    \toprule
+    Req ID & หมวด & คำอธิบาย & วิธีตรวจสอบ & สถานะ \\
+    \midrule
+    \endhead
+    
+    \bottomrule
+    \endfoot
+    
+    M1  & Mechanical & ขนาดฐานไม่เกิน 200$\times$200\,mm          & Test    & \textbf{ผ่าน} \\
+    M2  & Mechanical & Actuator และ Sensor ยื่นนอกฐานได้          & Test    & \textbf{ผ่าน} \\
+    M3  & Mechanical & รับน้ำหนักได้สูงสุด 2\,kg                  & Test    & \textbf{ผ่าน} \\
+    M4  & Mechanical & ใช้ Brushed DC Motor + Incremental Encoder & Test    & \textbf{ผ่าน} \\
+    M5  & Mechanical & อายุใช้งาน $\geq$ 3 รอบทดสอบ              & Test    & \textbf{ผ่าน} \\
+    M6  & Mechanical & ชิ้นส่วนรับแรงห้ามใช้ 3D Print             & Test    & \textbf{ผ่าน} \\
+    M7  & Mechanical & ยึดฐาน AISI304 ด้วยสกรู M8                 & Test    & \textbf{ผ่าน} \\
+    M8  & Mechanical & เพลาต่อ Encoder ลูกค้า $\diameter$8\,mm    & Test    & \textbf{ผ่าน} \\
+    M9  & Mechanical & หมุนต่อเนื่อง $\geq$540° ไม่พันสาย        & Test    & \textbf{รอทดสอบ} \\
+    M10 & Mechanical & Gripper ไม่ชนกับ Connection Rod            & Test    & \textbf{ผ่าน} \\
+    \midrule
+    P1  & Performance & Cycle Time $\leq$35\,s (5 ชิ้น)           & Simulation & \textbf{ผ่าน} \\
+    P2  & Performance & Gripper หยิบ/วาง $\sim$2\,s               & Test       & \textbf{ผ่าน} \\
+    P3  & Performance & $\omega \geq 2.9$ และ $\leq 5.76$\,rad/s  & Simulation & \textbf{ผ่าน} \\
+    P4  & Performance & $\alpha \geq 2.0$ และ $\leq 5$\,rad/s$^2$ & Simulation & \textbf{ผ่าน} \\
+    P5  & Performance & Settling Time $\leq$0.5\,s                 & Simulation & \textbf{ผ่าน} \\
+    P6  & Performance & Overshoot $\leq$1\%                        & Simulation & \textbf{ผ่าน} \\
+    P7  & Performance & ทดสอบทั้งมีโหลด 2\,kg และไม่มีโหลด       & Test       & \textbf{ผ่าน} \\
+    \midrule
+    A1  & Accuracy & สวมเพลา $\diameter$12\,mm เข้ารู $\diameter$14\,mm ได้ & Test     & \textbf{ผ่าน} \\
+    A2  & Accuracy & Precision $\leq \pm$0.1° (100 รอบ)           & Test    & \textbf{รอทดสอบ} \\
+    A3  & Accuracy & ผู้ใช้ Set จุด Homing เองได้                 & Test    & \textbf{รอทดสอบ} \\
+    A4  & Accuracy & สั่งงานได้ 2 แบบ (องศา / ลำดับตำแหน่ง)     & Test    & \textbf{รอทดสอบ} \\
+    A5  & Accuracy & Out-of-Workspace ต้องแจ้ง Error              & Test    & \textbf{รอทดสอบ} \\
+    \midrule
+    E1  & Electrical & สื่อสารผ่าน Modbus                         & Test    & \textbf{ผ่าน} \\
+    E2  & Electrical & ใช้ STM32 เป็น Controller หลัก             & Test    & \textbf{ผ่าน} \\
+    E3  & Electrical & สายต่อตู้ไฟครบตามข้อกำหนด                 & Test    & \textbf{ผ่าน} \\
+    E4  & Electrical & ตู้ไฟมาตรฐานอุตสาหกรรม มี Schematic        & Test    & \textbf{ผ่าน} \\
+    E5  & Electrical & ไฟแสดงสถานะ Power/Emergency ครบ            & Test    & \textbf{ผ่าน} \\
+    E6  & Electrical & E-Stop ตัดมอเตอร์ Controller ยังมีไฟ      & Test    & \textbf{ผ่าน} \\
+    E7  & Electrical & วงจรป้องกัน Surge/Overcurrent/Undervoltage & Analysis & \textbf{ผ่าน (Analysis)} \\
+    E8  & Electrical & สลับโหมด Manual/Auto ได้                   & Test    & \textbf{ผ่าน} \\
+    E9  & Electrical & Feedback Gripper ครบ 4 สถานะ               & Test    & \textbf{ผ่าน} \\
+    \midrule
+    J1  & Joystick & ปุ่ม Homing, Start, E-Stop ครบ               & Test    & \textbf{ผ่าน} \\
+\end{longtable}
 
-\subsection{ตาราง V\&V แยกตาม Category}
-
-\subsubsection{Mechanical Requirements (M1--M10)}
-
-\begin{table}[H]
-  \centering
-  \small
-  \caption{V\&V Table: Mechanical Requirements (M1--M10)}
-  \label{tab:vv_mechanical}
-  % [ตาราง: Req ID | คำอธิบาย | Method | Pass Criteria | V&V Type | Status | หลักฐาน]
-\end{table}
-
-\subsubsection{Performance Requirements (P1--P7)}
-
-\begin{table}[H]
-  \centering
-  \small
-  \caption{V\&V Table: Performance Requirements (P1--P7)}
-  \label{tab:vv_performance}
-\end{table}
-
-\subsubsection{Accuracy Requirements (A1--A5)}
-
-\begin{table}[H]
-  \centering
-  \small
-  \caption{V\&V Table: Accuracy Requirements (A1--A5)}
-  \label{tab:vv_accuracy}
-\end{table}
-
-\subsubsection{Electrical Requirements (E1--E9)}
-
-\begin{table}[H]
-  \centering
-  \small
-  \caption{V\&V Table: Electrical Requirements (E1--E9)}
-  \label{tab:vv_electrical}
-\end{table}
-
-\subsubsection{Joystick Requirements (J1)}
-
-\begin{table}[H]
-  \centering
-  \small
-  \caption{V\&V Table: Joystick Requirements (J1)}
-  \label{tab:vv_joystick}
-\end{table}
-
+% ------------------------------------------------------------
 \subsection{สรุปสถานะ V\&V ตาม Category}
+\label{subsec:vv_status_summary}
+% ------------------------------------------------------------
 
 \begin{table}[H]
   \centering
   \caption{สรุปสถานะ V\&V แยกตาม Category}
-  \label{tab:vv_status_summary}
-  % [ตาราง: Category | Total | VER | VAL | VER+VAL | PASS | FAIL | PENDING | Pass Rate]
-  % Mechanical  | 10 | 8 | 1 | 1 | 0 | 0 | 10 | 0%
-  % Performance |  7 | 6 | 0 | 1 | 0 | 0 |  7 | 0%
-  % Accuracy    |  5 | 5 | 0 | 0 | 0 | 0 |  5 | 0%
-  % Electrical  |  9 | 9 | 0 | 0 | 0 | 0 |  9 | 0%
-  % Joystick    |  1 | 0 | 0 | 1 | 0 | 0 |  1 | 0%
-  % TOTAL       | 32 |28 | 1 | 3 | 0 | 0 | 32 | 0%
+  \label{tab:vv_summary}
+  \begin{tabular}{lccccc}
+    \toprule
+    Category & จำนวนทั้งหมด & ผ่าน & รอทดสอบ & ผ่าน (Analysis) & รวมที่ยังค้าง \\
+    \midrule
+    Mechanical (M)         & 10 & 9 & 1 & 0 & 1 \\
+    Performance (P)        & 7  & 7 & 0 & 0 & 0 \\
+    Accuracy (A)           & 5  & 1 & 4 & 0 & 4 \\
+    Electrical (E)         & 9  & 8 & 0 & 1 & 0 \\
+    Joystick (J)           & 1  & 1 & 0 & 0 & 0 \\
+    \midrule
+    \textbf{รวม}           & \textbf{32} & \textbf{26} & \textbf{5} & \textbf{1} & \textbf{5} \\
+    \bottomrule
+  \end{tabular}
 \end{table}
+
+ณ Progress Update 2 ระบบผ่านข้อกำหนดแล้ว 26 จาก 32 ข้อ
+คิดเป็น 81.25\% โดยข้อที่ยังค้างอยู่ทั้ง 5 ข้อ
+ได้แก่ M9, A2, A3, A4 และ A5
+ซึ่งล้วนเป็นการทดสอบบน Hardware จริงที่ต้องการระบบ
+Closed-Loop Control ที่ผ่านการ Tune แล้ว
+และจะดำเนินการให้เสร็จสิ้นก่อน Final Demo
+
+หมายเหตุ E7 ตรวจสอบด้วย Analysis
+เนื่องจากวงจรป้องกันถูกออกแบบและติดตั้งครบตามข้อกำหนด
+ได้แก่ Circuit Breaker CB1 และ CB2 สำหรับ Overcurrent,
+Optocoupler Module สำหรับ Surge Isolation
+และ Cytron MD10C ที่มีวงจรป้องกัน Overcurrent ในตัว
+การทดสอบ Destructive (จงใจทำให้ Short Circuit)
+ไม่ดำเนินการเพื่อป้องกันความเสียหายต่ออุปกรณ์

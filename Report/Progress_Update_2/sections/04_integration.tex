@@ -1,55 +1,235 @@
-% ============================================================================
-% FILE: sections/04_integration.tex
-% PURPOSE: การเชื่อมต่อระบบย่อยทั้งหมดเข้าด้วยกัน
-% ============================================================================
-
+% ============================================================
 \section{การบูรณาการระบบ (System Integration)}
+\label{sec:system_integration}
+% ============================================================
 
 \subsection{สถาปัตยกรรมการบูรณาการ}
-% STM32 <-> Motor Driver <-> Motor/Encoder
-% STM32 <-> Joystick (Bluetooth/UART)
-% STM32 <-> Base System (Modbus)
+\label{subsec:integration_architecture}
 
-\begin{figure}[H]
-  \centering
-%   \includegraphics[width=0.90\textwidth]{images/integration_diagram.png}
-  % [ใส่ Integration Diagram แสดงการเชื่อมต่อทุกระบบย่อย]
-  \caption{Integration Diagram ของระบบทั้งหมด}
-  \label{fig:integration_diagram}
-\end{figure}
+การบูรณาการระบบเชื่อมต่อ Subsystem ทั้งหมด 4 ส่วน
+ได้แก่ Mechanical, Electrical, Firmware และ
+External Application เข้าด้วยกันผ่าน Interface
+ที่กำหนดไว้ใน System Architecture
 
+% [รูปที่ XX: Integration Diagram ของระบบทั้งหมด]
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.95\textwidth]{images/integration_diagram.png}
+%   \caption{Integration Diagram ของระบบทั้งหมด}
+%   \label{fig:integration_diagram}
+% \end{figure}
+
+% ------------------------------------------------------------
 \subsection{การเชื่อมต่อ STM32 กับ Motor และ Encoder}
-% สถานะ: ทำสำเร็จแล้ว (Deliverable 2)
+\label{subsec:stm32_motor_encoder_connection}
+% ------------------------------------------------------------
 
-\begin{figure}[H]
-  \centering
-%   \includegraphics[width=0.75\textwidth]{images/encoder_pwm_test.png}
-  % [ใส่ภาพ Serial Monitor หรือ Oscilloscope แสดงค่า Encoder และ PWM Signal]
-  \caption{ผลการทดสอบการอ่านค่า Encoder และสัญญาณ PWM}
-  \label{fig:encoder_pwm}
-\end{figure}
+STM32G474RE เชื่อมต่อกับ Motor และ Encoder
+ผ่าน Peripheral ดังนี้
 
+\begin{itemize}
+  \item \textbf{Encoder}: AMT-103 ต่อกับ TIM3
+        ในโหมด \texttt{TIM\_ENCODERMODE\_TI12}
+        (4x Quadrature) ผ่าน Pin PB4 (CH A)
+        และ PB5 (CH B) Counter Range 0--65535
+        Resolution = $2048 \times 4 \times 70
+        = 573{,}440$ counts/rev ที่ Output shaft
+
+  \item \textbf{PWM}: TIM8 CH2 บน Pin PA8
+        Prescaler = 169, Period = 50
+        ได้ $f_{PWM} = 170\,\text{MHz}
+        / (170 \times 51) \approx 19.6\,\text{kHz}$
+        ทิศทางควบคุมผ่าน GPIO PC6 (DIR)
+
+  \item \textbf{Motor Driver}: Cytron MD10C
+        รับ PWM และ DIR จาก STM32 โดยตรง
+        ผ่าน Optocoupler Module เพื่อแยก Ground
+\end{itemize}
+
+ผลการทดสอบการอ่านค่า Encoder และสัญญาณ PWM
+แสดงดังรูปที่~\ref{fig:encoder_pwm_test}
+
+% [รูปที่ XX: ผลการทดสอบการอ่านค่า Encoder และสัญญาณ PWM]
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.88\textwidth]{images/encoder_pwm_test.png}
+%   \caption{ผลการทดสอบการอ่านค่า Encoder และสัญญาณ PWM
+%            แสดง Count และมุมที่คำนวณได้แบบ Real-time}
+%   \label{fig:encoder_pwm_test}
+% \end{figure}
+
+% ------------------------------------------------------------
 \subsection{การเชื่อมต่อ Joystick}
-% สถานะ: ทำสำเร็จแล้ว ใช้งานได้ทุกโหมด (Deliverable 4)
+\label{subsec:joystick_connection}
+% ------------------------------------------------------------
+
+Joystick เชื่อมต่อกับ STM32 ผ่าน ESP32-DEVKIT-V1
+ซึ่งทำหน้าที่เป็น Bluetooth Receiver
+รับสัญญาณจาก Wireless Joystick แล้วแปลงเป็น
+Command Character ส่งต่อผ่าน USART3
+ที่ Baud Rate 115200\,bps, 8N1
+
+การทดสอบครอบคลุมทุกโหมดการทำงาน
+ได้แก่ Manual Mode และ Auto Mode
+โดย E-Stop ทำงานได้ทุกโหมดตามข้อกำหนด J1
 
 \begin{table}[H]
   \centering
   \caption{ผลการทดสอบ Joystick แต่ละโหมด}
   \label{tab:joystick_test}
-  % [ตาราง: โหมด | การทดสอบ | ผลลัพธ์ | Pass/Fail]
+  \begin{tabular}{lllc}
+    \toprule
+    โหมด & ปุ่มที่ทดสอบ & พฤติกรรมที่สังเกตได้ & ผล \\
+    \midrule
+    Manual
+      & หมุนซ้าย (\texttt{L})
+      & แขนหมุนซ้ายตาม Step ที่กำหนด
+      & ผ่าน \\
+    Manual
+      & หมุนขวา (\texttt{R})
+      & แขนหมุนขวาตาม Step ที่กำหนด
+      & ผ่าน \\
+    Manual
+      & Gripper Pick (\texttt{S})
+      & Gripper ทำ Sequence Pick ครบ
+      & ผ่าน \\
+    Manual
+      & Gripper Place (\texttt{G})
+      & Gripper ทำ Sequence Place ครบ
+      & ผ่าน \\
+    ทุกโหมด
+      & Home (\texttt{A} Hold)
+      & แขนเคลื่อนกลับตำแหน่ง 0°
+      & ผ่าน \\
+    ทุกโหมด
+      & E-Stop (\texttt{P})
+      & มอเตอร์หยุดทันที PWM = 0
+      & ผ่าน \\
+    ทุกโหมด
+      & Reset E-Stop (\texttt{P} ซ้ำ)
+      & ระบบกลับสู่ Ready State
+      & ผ่าน \\
+    Manual
+      & สลับ Coarse/Fine (\texttt{M})
+      & Jog Mode สลับระหว่าง Step/Jog
+      & ผ่าน \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
+% ------------------------------------------------------------
 \subsection{การเชื่อมต่อ Modbus กับ Base System}
-% สถานะ: กำลังดำเนินการ (Deliverable 5)
-% อ้างอิง E1, A4
+\label{subsec:modbus_connection}
+% ------------------------------------------------------------
 
+STM32G474RE ทำงานเป็น Modbus RTU Slave
+บน LPUART1 ที่ Slave Address 21,
+Baud Rate 19200\,bps, 8E1
+รองรับ Function Code 0x03 (Read Holding Registers)
+และ 0x06 (Write Single Register)
+ทดสอบการสื่อสารด้วย QModMaster
+
+\paragraph{Modbus Register Map}
+
+\begin{table}[H]
+  \centering
+  \caption{Modbus Register Map (Slave Address 21)}
+  \label{tab:modbus_map}
+  \begin{tabular}{lllp{5.5cm}}
+    \toprule
+    Address (Hex) & ประเภท & ชื่อ & คำอธิบาย \\
+    \midrule
+    \multicolumn{4}{l}{\textit{Write Registers (Master $\rightarrow$ Slave)}} \\
+    \midrule
+    0x00 & R    & Device ID    & ค่าคงที่ 22881 (``YA'') Heartbeat \\
+    0x01 & R/W  & Command Bits &
+      Bit0: Go Home,
+      Bit1: Jog/Gripper Manual,
+      Bit2: Auto Mode,
+      Bit3: Set Home (Reset Encoder),
+      Bit4: Test Mode \\
+    0x02 & R/W  & Gripper Cmd  &
+      0=Up, 1=Down, 2=Open, 4=Close
+      (ใช้คู่กับ Bit1 ของ 0x01) \\
+    0x03 & R/W  & Gripper Seq  & 1=Pick Sequence, 2=Place Sequence \\
+    0x05 & R/W  & Jog Step     & ระยะ Jog (deg, signed int16) \\
+    0x24 & R/W  & Target Pos   & ตำแหน่งเป้าหมาย (deg, signed int16) \\
+    0x25 & R/W  & Safety Bits  & Bit0: E-Stop, Bit1: Reset E-Stop \\
+    \midrule
+    \multicolumn{4}{l}{\textit{Read Registers (Slave $\rightarrow$ Master)}} \\
+    \midrule
+    0x26 & R    & Reed Sensors & สถานะ Reed Switch (ปัจจุบัน = 0) \\
+    0x27 & R    & Task Status  &
+      Bit1: Position Mode Active,
+      Bit2: Ghost Move Active \\
+    0x28 & R    & Current Pos  & ตำแหน่งปัจจุบัน ($\times$10, signed int16) \\
+    0x29 & R    & Current Speed& ความเร็วปัจจุบัน ($\times$10, signed int16) \\
+    0x30 & R    & Acceleration & ความเร่งปัจจุบัน (ปัจจุบัน = 0) \\
+    0x31 & R    & Safety Status& 0=Normal, 1=E-Stop Active \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+หมายเหตุ: ค่าตำแหน่งที่ Register 0x28 สเกล $\times 10$
+เพื่อให้ส่งค่า Decimal ได้ผ่าน Integer Register
+เช่น ตำแหน่ง 90.5° ส่งเป็น 905
+
+% ------------------------------------------------------------
 \subsection{แผนการทดสอบ End-to-End}
-% Joystick -> STM32 -> Motor -> Encoder Feedback -> Position Reached
-% Base System -> Modbus -> STM32 -> Motor -> Position
+\label{subsec:end_to_end_test_plan}
+% ------------------------------------------------------------
 
 \begin{table}[H]
   \centering
   \caption{แผนการทดสอบ End-to-End}
   \label{tab:e2e_plan}
-  % [ตาราง: Scenario | Input | Expected Output | Req ID | สถานะ]
+  \begin{tabular}{clp{4.5cm}lc}
+    \toprule
+    \# & Test Case & เกณฑ์วัดผลสำเร็จ & Requirements & สถานะ \\
+    \midrule
+    1 & Encoder + PWM Verification
+      & อ่านค่ามุมได้ถูกต้อง $\pm$[THRESH]°,
+        PWM ควบคุมความเร็วได้
+      & M4, A2
+      & ผ่าน \\
+    2 & E-Stop Hardware Interlock
+      & กด E-Stop มอเตอร์หยุดทันที,
+        STM32 ยังมีไฟ
+      & E6, E7
+      & ผ่าน \\
+    3 & Joystick Manual Control
+      & ควบคุมทุกปุ่มได้ถูกต้อง
+        Response Time $<$100\,ms
+      & E8, J1
+      & ผ่าน \\
+    4 & Modbus Read/Write
+      & QModMaster อ่าน 0x28 ได้ค่าตำแหน่งจริง,
+        เขียน 0x24 แล้วแขนเคลื่อนที่
+      & E1
+      & ผ่าน \\
+    5 & PID Closed-Loop (No Load)
+      & Settling Time $\leq$0.5\,s,
+        Overshoot $\leq$1\%
+      & P5, P6
+      & รอ Tune \\
+    6 & PID Closed-Loop (2\,kg Load)
+      & Settling Time $\leq$0.5\,s,
+        Overshoot $\leq$1\%
+      & P5, P6, P7
+      & รอ Tune \\
+    7 & Full Auto Sequence (4 ชิ้น)
+      & Cycle Time $\leq$35\,s
+        ครบ 4 ชิ้นใน 1 รอบ
+      & P1, P2
+      & รอ Demo \\
+    8 & Precision Test (100 รอบ)
+      & Repeatability $\leq \pm$0.1°
+      & A2
+      & รอ Demo \\
+    9 & Continuous Rotation 540°
+      & สายไม่พันกัน ระบบทำงานปกติ
+      & M9
+      & รอ Demo \\
+    \bottomrule
+  \end{tabular}
 \end{table}

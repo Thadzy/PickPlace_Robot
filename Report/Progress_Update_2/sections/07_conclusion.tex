@@ -1,32 +1,239 @@
-% ============================================================================
-% FILE: sections/07_conclusion.tex
-% PURPOSE: สรุปผล แยกตาม Progress 1 / Progress 2 / Future Work
-% ============================================================================
-
+% ============================================================
 \section{สรุปผลและแนวทางต่อไป (Conclusion)}
+\label{sec:conclusion}
+% ============================================================
 
+% ------------------------------------------------------------
 \subsection{สรุปผลงาน Progress Update 1}
-% สิ่งที่ทำสำเร็จใน P1 และปัญหาที่พบ
-% - ผล FEA และการคำนวณ Mechanical (Shaft, Belt, Bearing, Deflection)
-% - Motion Profile ทฤษฎี 34.39 s ผ่านเกณฑ์ P1
-% - ปัญหาที่พบและวิธีแก้ไข
+\label{subsec:progress_update_1}
+% ------------------------------------------------------------
 
+Progress Update 1 มุ่งเน้นงานออกแบบเชิงกล
+การคำนวณ Motion Profile เชิงทฤษฎี
+และการออกแบบระบบไฟฟ้า
+ผลที่ได้สรุปแยกตามด้านหลัก 3 ด้าน ดังนี้
+
+\paragraph{ด้านการออกแบบเชิงกล}
+
+การออกแบบโครงสร้างแขนกลบน Galvanized Steel
+Square Tube ขนาด 25$\times$25\,mm ยาว 500\,mm
+ผ่านการวิเคราะห์ครบทั้ง Shaft Calculation,
+Belt Calculation, การเลือก Bearing
+และ Deflection Analysis
+
+ผลที่สำคัญคือ FEA ด้วย SolidWorks
+ให้ค่าการโก่งตัวรวม $\delta_{total} = 0.237$\,mm
+ซึ่งต่ำกว่าเกณฑ์ M3 ที่กำหนดไว้ที่ 1\,mm
+และโครงสร้างสามารถรองรับโหลด 2\,kg
+ตามที่ข้อกำหนด M3 ระบุไว้
+
+\paragraph{ด้าน Motion Profile}
+
+คำนวณ S-Curve Motion Profile
+สำหรับการหยิบวางชิ้นงาน 4 ชิ้นต่อรอบ
+ได้ Cycle Time ทฤษฎีเท่ากับ 22.58\,s
+ซึ่งต่ำกว่าเกณฑ์ P1 ที่กำหนดไว้ที่ $\leq$35\,s
+เมื่อพิจารณาถึงการทำงานจริงผ่าน NSGA-II
+Multi-objective Optimization
+ค่าที่ใช้งานจริง (Best Compromise Solution)
+คือ $v_{max} = 4.856$\,rad/s
+และ $a_{max} = 5.960$\,rad/s$^2$
+ซึ่งสอดคล้องกับข้อกำหนด P3 และ P4
+
+\paragraph{ด้านการออกแบบระบบไฟฟ้า}
+
+ออกแบบ Electrical Block Diagram และ Schematic
+ด้วย KiCad 9.0.0 แบ่งวงจรออกเป็น 2 Bus
+ที่แยกกันอย่างชัดเจน ได้แก่
+High Power Bus 24\,V/10\,A สำหรับขับมอเตอร์
+ซึ่งอยู่หลัง Magnetic Contactor
+และ Logic Power Bus 5\,V/5\,A
+ซึ่งต่อก่อน Contactor
+เพื่อให้ STM32 และ Sensor มีไฟเลี้ยงต่อเนื่อง
+แม้กด E-Stop ตามข้อกำหนด E6
+นอกจากนี้ยังออกแบบ PCB
+สำหรับรวมวงจรควบคุมทั้งหมดไว้ใน Board เดียว
+
+\paragraph{ปัญหาที่พบและวิธีแก้ไขใน Progress Update 1}
+
+\begin{itemize}
+  \item ค่า $\omega_{n,rod}$ ที่คำนวณจากทฤษฎี
+        ไม่ตรงกับค่าจริง ส่งผลให้ ZV Input Shaper
+        ด้วยพารามิเตอร์เดิมยับยั้ง Residual Vibration
+        ได้ไม่สมบูรณ์ (Rod Swing = 84.4°)
+        วิธีแก้ไขคือใช้ NSGA-II Optimization
+        หา $\omega_{n,shaper}$ และ $\zeta_{shaper}$
+        ที่เหมาะสมแทน ซึ่งได้ค่า
+        $\omega_{n,shaper} = 12.386$\,rad/s
+        และ $\zeta_{shaper} = 0.0984$
+\end{itemize}
+
+% ------------------------------------------------------------
 \subsection{สรุปผลงาน Progress Update 2}
-% สิ่งที่ทำสำเร็จใน P2 และปัญหาที่พบ
-% - STM32 อ่าน Encoder, ส่ง PWM สำเร็จ (Deliverable 2)
-% - PID Closed-Loop + S-Curve ทำงานได้ (Deliverable 3) รอ Tune
-% - Joystick ทุกโหมดสำเร็จ (Deliverable 4)
-% - ตู้ไฟ กำลังดำเนินการ (Deliverable 1)
-% - Modbus กำลังดำเนินการ (Deliverable 5)
-% - System ID กำลังดำเนินการ (Deliverable 6)
-% - ปัญหาที่พบและวิธีแก้ไข
+\label{subsec:progress_update_2}
+% ------------------------------------------------------------
 
+Progress Update 2 มุ่งเน้นการพัฒนา Firmware
+บน STM32G474RE, การทำ System Identification,
+การออกแบบ Cascade PID Controller
+และการทดสอบการทำงานร่วมกันของระบบย่อยต่างๆ
+สรุปผลตาม Deliverable แต่ละข้อดังนี้
+
+\paragraph{Deliverable 1 --- ตู้ควบคุมไฟฟ้า}
+
+ประกอบตู้ควบคุมไฟฟ้าเสร็จสมบูรณ์
+ทดสอบ E-Stop Hardware Interlock,
+Pilot Lamp ทั้ง 3 สี และการแยกวงจร
+Motor Bus ออกจาก Logic Bus ผ่านทุก Test Case
+ตามข้อกำหนด E4--E7
+
+\paragraph{Deliverable 2 --- การอ่านค่า Encoder และส่งสัญญาณ PWM}
+
+STM32G474RE อ่านค่า Quadrature Encoder
+(AMT-103) ผ่าน TIM3 ในโหมด QEI
+และส่งสัญญาณ PWM ความถี่ 19.6\,kHz
+ไปยัง Motor Driver Cytron MD10C
+ได้อย่างถูกต้อง Unit Test ผ่านทุกกรณี
+
+\paragraph{Deliverable 3 --- Cascade PID + S-Curve Closed-Loop}
+
+ออกแบบ Cascade PID Controller
+ประกอบด้วย Position Loop ชั้นนอก
+และ Velocity Loop ชั้นใน
+ทำงานร่วมกับ S-Curve Motion Profile
+บน State Space Model
+ผล Simulation ด้วย Best Compromise Solution
+แสดงสมรรถนะที่ผ่านข้อกำหนดทุกข้อ
+ได้แก่ Settling Time = 0.0198\,s ($\leq$0.5\,s),
+Overshoot = 0.9948\% ($\leq$1\%)
+และ Cycle Time = 22.58\,s ($\leq$35\,s)
+
+\paragraph{Deliverable 4 --- ระบบ Joystick ทุกโหมด}
+
+เชื่อมต่อ Joystick ผ่าน ESP32-DEVKIT-V1
+ด้วย Bluetooth ส่งต่อคำสั่งผ่าน USART3
+ที่ Baud Rate 115200\,bps ไปยัง STM32
+ทดสอบครบทุกโหมดได้แก่
+Manual (หมุนซ้าย/ขวา, Pick, Place, Home)
+และ Auto (Start Sequence, E-Stop)
+ผ่านทุก Test Case
+
+\paragraph{Deliverable 5 --- การเชื่อมต่อ Modbus}
+
+Implement Modbus RTU Protocol
+บน STM32G474RE ที่ Slave Address 21,
+Baud Rate 19200\,bps, 8E1
+รองรับ FC03 และ FC06
+ทดสอบด้วย QModMaster ได้ผล
+อ่านค่าตำแหน่งจาก Register 0x28
+และสั่งเคลื่อนที่ผ่าน Register 0x24 สำเร็จ
+
+\paragraph{Deliverable 6 --- System Identification}
+
+ทำ Locked Rotor Test วัด $R_a = 1.4534\,\Omega$
+และ $L_a = 0.001448$\,H
+จากนั้นประมาณพารามิเตอร์เชิงกล
+ด้วย MATLAB Parameter Estimator
+ผล Cross-Validation กับข้อมูล 21 runs
+ให้ Fit Score $>$80\% ทุกชุด
+ยกเว้น Step 6\,V (46.3\%)
+ซึ่งเกิดจาก Static Friction
+มีนัยสำคัญที่แรงดันต่ำ
+แบบจำลองจึงเพียงพอสำหรับย่านใช้งานจริงที่ 24\,V
+
+\paragraph{ปัญหาที่พบและวิธีแก้ไขใน Progress Update 2}
+
+\begin{itemize}
+  \item \textbf{Fit Score ต่ำที่ Step 6\,V}:
+        Static Friction ของ Bearing และ Belt Drive
+        มีผลมากกว่า Viscous Damping ที่แรงดันต่ำ
+        วิธีแก้ไขคือจำกัดย่านการใช้งานของแบบจำลอง
+        ที่แรงดัน 24\,V ซึ่ง Fit Score = 90.5\%
+  \item \textbf{Cycle Time Margin ต่ำ}:
+        Best Compromise Solution ให้ Cycle Time
+        = 34.3\,s เหลือ Margin เพียง 0.7\,s
+        ก่อนถึงเกณฑ์ P1 (35\,s)
+        จึงกำหนดให้การ Tune PID บน Hardware
+        เป็นงานสำคัญสูงสุดในขั้นต่อไป
+  \item \textbf{ปัญหาเชิงกลระหว่างการประกอบ}:
+        รู Proximity Sensor ต้องขยายจาก
+        $\diameter$8\,mm เป็น $\diameter$12\,mm,
+        รู Pulley และ Arm เบี้ยวจากการผลิต
+        ภายนอก และชิ้นแผ่นรอง Pulley
+        ไม่ได้รับการปาดและร่องตามแบบ
+        แก้ไขโดยดำเนินการเพิ่มเติมใน Lab
+\end{itemize}
+
+% ------------------------------------------------------------
 \subsection{แนวทางและแผนงานต่อไป (Future Work)}
-% สิ่งที่ต้องทำก่อน Final Demo (Demo 1: 1 มิ.ย. / Demo 2: 8 มิ.ย.)
-% - ทำ System ID ให้เสร็จ รับค่าพารามิเตอร์จริง
-% - ออกแบบ PID จาก Root Locus รับค่า Kp, Ki, Kd
-% - Tune PID บน Hardware จริง
-% - เชื่อมต่อ Modbus กับ Base System
-% - ประกอบตู้ไฟให้เสร็จและทำ Unit Test
-% - End-to-End Test ทั้งระบบ
-% - ทดสอบ V&V ทั้ง 32 Requirement
+\label{subsec:future_work}
+% ------------------------------------------------------------
+
+เพื่อให้โครงการพร้อมสำหรับการทดสอบจริง
+และผ่านเกณฑ์ V\&V ครบทั้ง 32 ข้อกำหนด
+มีงานที่ต้องดำเนินการดังต่อไปนี้
+
+\begin{enumerate}
+  \item \textbf{Tune PID บน Hardware จริง (Deliverable 3)}:
+        นำ PID Gain จาก Loop Shaping ไป Deploy
+        บน STM32G474RE และ Tune ค่า $K_p$, $K_i$, $K_d$
+        ของทั้ง Velocity Loop และ Position Loop
+        จนได้สมรรถนะ Settling Time $\leq$0.5\,s
+        และ Overshoot $\leq$1\% บน Hardware จริง
+        ตามข้อกำหนด P5 และ P6
+
+  \item \textbf{ทดสอบ End-to-End ทั้งระบบ}:
+        ทดสอบ Scenario ครบวงจรทั้ง
+        Joystick $\rightarrow$ STM32
+        $\rightarrow$ Motor $\rightarrow$
+        Encoder Feedback $\rightarrow$ Position Reached
+        และ Base System $\rightarrow$ Modbus
+        $\rightarrow$ STM32 $\rightarrow$ Auto Sequence
+
+  \item \textbf{วัด Cycle Time บน Hardware จริง}:
+        ทดสอบวนซ้ำ 100 รอบด้วยโหลด 2\,kg
+        บันทึก Cycle Time จริงเทียบกับเกณฑ์ P1
+        ($\leq$35\,s) และตรวจสอบ Precision
+        ที่ $\leq \pm$0.1° ตามข้อกำหนด A2
+
+  \item \textbf{ทดสอบ Continuous Rotation 540°}:
+        ตรวจสอบว่าสายไฟไม่พันกัน
+        และระบบทำงานปกติตลอดการหมุน
+        ตามข้อกำหนด M9
+
+  \item \textbf{ทำ V\&V ครบ 32 ข้อกำหนด}:
+        ดำเนินการทดสอบตาม V\&V Framework
+        ที่วางแผนไว้ในบทที่ 6 ครอบคลุม
+        Requirements ที่ยังค้างอยู่ 5 ข้อ
+        ได้แก่ M9, A2, A3, A4 และ A5
+\end{enumerate}
+
+\begin{table}[H]
+  \centering
+  \caption{กำหนดการงานสำคัญก่อน Final Demo}
+  \label{tab:schedule}
+  \begin{tabular}{lcc}
+    \toprule
+    งาน & กำหนดเสร็จ & สถานะ \\
+    \midrule
+    Progress Update 2 Presentation
+      & 11--13 พ.ค. 2568
+      & \textbf{เสร็จสิ้น} \\
+    Tune PID บน Hardware จริง
+      & 25 พ.ค. 2568
+      & กำลังดำเนินการ \\
+    End-to-End Integration Test
+      & 28 พ.ค. 2568
+      & รอ PID Tune \\
+    Demo 1
+      & 1 มิ.ย. 2568
+      & รอ Integration \\
+    V\&V ครบ 32 ข้อกำหนด
+      & 5 มิ.ย. 2568
+      & รอ Demo 1 \\
+    Demo 2 (Final Demo)
+      & 8 มิ.ย. 2568
+      & รอ V\&V \\
+    \bottomrule
+  \end{tabular}
+\end{table}

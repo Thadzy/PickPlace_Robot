@@ -1,37 +1,53 @@
-\contentsline {table}{\numberline {1}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุป System Requirements ทั้ง 32 ข้อ}}{7}{table.caption.10}%
-\contentsline {table}{\numberline {2}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปผลการคำนวณเพลา}}{8}{table.caption.12}%
-\contentsline {table}{\numberline {3}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปผลการคำนวณสายพาน}}{8}{table.caption.13}%
-\contentsline {table}{\numberline {4}{\ignorespaces \xpg@aux {}{thai}\ignorespaces เปรียบเทียบผลการโก่งตัวจากทฤษฎีและ FEA}}{8}{table.caption.15}%
-\contentsline {table}{\numberline {5}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปพารามิเตอร์ Motion Profile}}{8}{table.caption.17}%
-\contentsline {table}{\numberline {6}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Optocoupler Module Channel Mapping}}{11}{table.caption.21}%
-\contentsline {table}{\numberline {7}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Relay Module Channel Mapping}}{12}{table.caption.22}%
-\contentsline {table}{\numberline {8}{\ignorespaces \xpg@aux {}{thai}\ignorespaces STM32G474RE Pin Assignment ของระบบ}}{13}{table.caption.23}%
-\contentsline {table}{\numberline {9}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การ Map ปุ่ม Joystick กับคำสั่งระบบ}}{14}{table.caption.25}%
-\contentsline {table}{\numberline {10}{\ignorespaces \xpg@aux {}{thai}\ignorespaces เปรียบเทียบผลการวัด $R_a$ และ $L_a$ จาก Locked Rotor Test ทั้ง 3 แรงดัน}}{19}{table.caption.39}%
-\contentsline {table}{\numberline {11}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการวัด $R_a$ และ $L_a$ จาก Locked Rotor Test ที่ 12\,V}}{20}{table.caption.40}%
-\contentsline {table}{\numberline {12}{\ignorespaces \xpg@aux {}{thai}\ignorespaces พารามิเตอร์ที่ได้จาก System Identification}}{21}{table.caption.44}%
-\contentsline {table}{\numberline {13}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ข้อกำหนดของระบบควบคุม}}{22}{table.caption.48}%
-\contentsline {table}{\numberline {14}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ค่า PID Gain ของระบบควบคุม}}{28}{table.caption.57}%
-\contentsline {table}{\numberline {15}{\ignorespaces \xpg@aux {}{thai}\ignorespaces โครงสร้าง S-Curve 7 Phase}}{29}{table.caption.61}%
-\contentsline {table}{\numberline {16}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปพารามิเตอร์ Motion Profile สำหรับระยะทางต่าง ๆ}}{31}{table.caption.63}%
-\contentsline {table}{\numberline {17}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการตรวจสอบขนาดชิ้นส่วนจริง}}{33}{table.caption.66}%
-\contentsline {table}{\numberline {18}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Bill of Materials (BOM) ของตู้ควบคุม}}{33}{table.caption.67}%
-\contentsline {table}{\numberline {19}{\ignorespaces \xpg@aux {}{thai}\ignorespaces โมดูลหลักใน STM32 Firmware}}{33}{table.caption.68}%
-\contentsline {table}{\numberline {20}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ISR และ Task Timing ของ Firmware}}{33}{table.caption.69}%
-\contentsline {table}{\numberline {21}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การ Map ปุ่ม Joystick กับคำสั่งระบบ}}{33}{table.caption.70}%
-\contentsline {table}{\numberline {22}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการทดสอบ Joystick แต่ละโหมด}}{34}{table.caption.73}%
-\contentsline {table}{\numberline {23}{\ignorespaces \xpg@aux {}{thai}\ignorespaces แผนการทดสอบ End-to-End}}{34}{table.caption.74}%
-\contentsline {table}{\numberline {24}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล FEA เทียบกับเกณฑ์ M3}}{34}{table.caption.75}%
-\contentsline {table}{\numberline {25}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการ Cross-Validation ของ Model กับข้อมูลประเภทต่าง ๆ}}{36}{table.caption.79}%
-\contentsline {table}{\numberline {26}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation เทียบกับ Requirement (S-Curve 360°)}}{38}{table.caption.82}%
-\contentsline {table}{\numberline {27}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุป Solution บน Pareto Front ที่น่าสนใจ}}{39}{table.caption.84}%
-\contentsline {table}{\numberline {28}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ค่าพารามิเตอร์ที่ Optimal จาก NSGA-II (Best Compromise)}}{39}{table.caption.85}%
-\contentsline {table}{\numberline {29}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Unit Test Joystick แต่ละโหมด}}{40}{table.caption.87}%
-\contentsline {table}{\numberline {30}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล System Identification}}{40}{table.caption.88}%
-\contentsline {table}{\numberline {31}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ตาราง V\&V รวม ทั้ง 32 Requirements}}{41}{table.caption.89}%
-\contentsline {table}{\numberline {32}{\ignorespaces \xpg@aux {}{thai}\ignorespaces V\&V Table: Mechanical Requirements (M1--M10)}}{41}{table.caption.90}%
-\contentsline {table}{\numberline {33}{\ignorespaces \xpg@aux {}{thai}\ignorespaces V\&V Table: Performance Requirements (P1--P7)}}{41}{table.caption.91}%
-\contentsline {table}{\numberline {34}{\ignorespaces \xpg@aux {}{thai}\ignorespaces V\&V Table: Accuracy Requirements (A1--A5)}}{41}{table.caption.92}%
-\contentsline {table}{\numberline {35}{\ignorespaces \xpg@aux {}{thai}\ignorespaces V\&V Table: Electrical Requirements (E1--E9)}}{41}{table.caption.93}%
-\contentsline {table}{\numberline {36}{\ignorespaces \xpg@aux {}{thai}\ignorespaces V\&V Table: Joystick Requirements (J1)}}{41}{table.caption.94}%
-\contentsline {table}{\numberline {37}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปสถานะ V\&V แยกตาม Category}}{41}{table.caption.95}%
+\contentsline {table}{\numberline {1}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุป Subsystem หลักของระบบ}}{4}{table.caption.6}%
+\contentsline {table}{\numberline {2}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุป System Requirements ทั้ง 32 ข้อ}}{6}{table.caption.7}%
+\contentsline {table}{\numberline {3}{\ignorespaces \xpg@aux {}{thai}\ignorespaces พารามิเตอร์ภาระโหลดของระบบเพลา}}{7}{table.caption.9}%
+\contentsline {table}{\numberline {4}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การประเมินความปลอดภัยของ Step Shaft แต่ละช่วง}}{9}{table.caption.15}%
+\contentsline {table}{\numberline {5}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปผลการคำนวณเพลา}}{9}{table.caption.16}%
+\contentsline {table}{\numberline {6}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ค่าเริ่มต้นของระบบสายพาน HTD5M}}{10}{table.caption.17}%
+\contentsline {table}{\numberline {7}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปผลการคำนวณสายพาน HTD5M}}{12}{table.caption.18}%
+\contentsline {table}{\numberline {8}{\ignorespaces \xpg@aux {}{thai}\ignorespaces คุณสมบัติวัสดุที่ใช้ใน FEA (Galvanized Steel)}}{13}{table.caption.20}%
+\contentsline {table}{\numberline {9}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการวิเคราะห์ FEA เทียบกับเกณฑ์ M3}}{13}{table.caption.23}%
+\contentsline {table}{\numberline {10}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การคำนวณกำลังไฟฟ้าของ 24V Motor Bus (ค่าอัปเดต)}}{15}{table.caption.26}%
+\contentsline {table}{\numberline {11}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การคำนวณกำลังไฟฟ้าของ 5V Logic Bus (ค่าอัปเดต)}}{16}{table.caption.27}%
+\contentsline {table}{\numberline {12}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การคำนวณกำลังไฟฟ้าของ 5V Logic Bus}}{16}{table.caption.29}%
+\contentsline {table}{\numberline {13}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การเลือกขนาด Circuit Breaker}}{17}{table.caption.30}%
+\contentsline {table}{\numberline {14}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การเลือกขนาด Fuse}}{17}{table.caption.31}%
+\contentsline {table}{\numberline {15}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Optocoupler Module Channel Mapping}}{19}{table.caption.34}%
+\contentsline {table}{\numberline {16}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Relay Module Channel Mapping}}{19}{table.caption.35}%
+\contentsline {table}{\numberline {17}{\ignorespaces \xpg@aux {}{thai}\ignorespaces STM32G474RE Pin Assignment ของระบบ}}{20}{table.caption.36}%
+\contentsline {table}{\numberline {18}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การ Map ปุ่ม Joystick กับคำสั่งระบบ}}{21}{table.caption.38}%
+\contentsline {table}{\numberline {19}{\ignorespaces \xpg@aux {}{thai}\ignorespaces เปรียบเทียบผลการวัด $R_a$ และ $L_a$ จาก Locked Rotor Test ทั้ง 3 แรงดัน}}{26}{table.caption.52}%
+\contentsline {table}{\numberline {20}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ขอบเขตของพารามิเตอร์ที่ใช้ใน Parameter Estimation}}{28}{table.caption.56}%
+\contentsline {table}{\numberline {21}{\ignorespaces \xpg@aux {}{thai}\ignorespaces พารามิเตอร์ที่ได้จาก System Identification (สรุปจากบทที่ 5)}}{29}{table.caption.57}%
+\contentsline {table}{\numberline {22}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ข้อกำหนดของระบบควบคุม}}{30}{table.caption.61}%
+\contentsline {table}{\numberline {23}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ค่า PID Gain ของระบบควบคุม}}{36}{table.caption.70}%
+\contentsline {table}{\numberline {24}{\ignorespaces \xpg@aux {}{thai}\ignorespaces โครงสร้าง S-Curve 7 Phase}}{37}{table.caption.74}%
+\contentsline {table}{\numberline {25}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปพารามิเตอร์ Motion Profile สำหรับระยะทางต่าง ๆ}}{39}{table.caption.76}%
+\contentsline {table}{\numberline {26}{\ignorespaces \xpg@aux {}{thai}\ignorespaces รายการชิ้นส่วนสำหรับประกอบส่วนฐาน (Base Sub-assembly)}}{42}{table.caption.81}%
+\contentsline {table}{\numberline {27}{\ignorespaces \xpg@aux {}{thai}\ignorespaces รายการชิ้นส่วนสำหรับประกอบส่วนแขนกลและข้อต่อ}}{43}{table.caption.83}%
+\contentsline {table}{\numberline {28}{\ignorespaces \xpg@aux {}{thai}\ignorespaces รายการชิ้นส่วนสำหรับประกอบชุดเอ็นโค้ดเดอร์}}{44}{table.caption.85}%
+\contentsline {table}{\numberline {29}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการตรวจสอบขนาดชิ้นส่วนจริง}}{46}{table.caption.86}%
+\contentsline {table}{\numberline {30}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Bill of Materials (BOM) ของตู้ควบคุม}}{47}{table.caption.87}%
+\contentsline {table}{\numberline {31}{\ignorespaces \xpg@aux {}{thai}\ignorespaces โมดูลหลักใน STM32 Firmware}}{48}{table.caption.88}%
+\contentsline {table}{\numberline {32}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ISR และ Task Timing ของ Firmware}}{48}{table.caption.89}%
+\contentsline {table}{\numberline {33}{\ignorespaces \xpg@aux {}{thai}\ignorespaces การ Map Command Character กับคำสั่งระบบ (\texttt {Motor\_ProcessCommand})}}{50}{table.caption.90}%
+\contentsline {table}{\numberline {34}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการทดสอบ Joystick แต่ละโหมด}}{51}{table.caption.91}%
+\contentsline {table}{\numberline {35}{\ignorespaces \xpg@aux {}{thai}\ignorespaces Modbus Register Map (Slave Address 21)}}{52}{table.caption.93}%
+\contentsline {table}{\numberline {36}{\ignorespaces \xpg@aux {}{thai}\ignorespaces แผนการทดสอบ End-to-End}}{53}{table.caption.94}%
+\contentsline {table}{\numberline {37}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล FEA เทียบกับเกณฑ์ M3}}{53}{table.caption.95}%
+\contentsline {table}{\numberline {38}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการคำนวณ Motion Profile เทียบกับ Requirement P1--P4}}{54}{table.caption.96}%
+\contentsline {table}{\numberline {39}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการวัด $R_a$ และ $L_a$ จาก Locked Rotor Test ที่ 12\,V}}{54}{table.caption.98}%
+\contentsline {table}{\numberline {40}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปพารามิเตอร์ทั้งหมดจากการทำ System Identification}}{55}{table.caption.100}%
+\contentsline {table}{\numberline {41}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการ Cross-Validation ของ Model กับข้อมูลประเภทต่าง ๆ}}{57}{table.caption.104}%
+\contentsline {table}{\numberline {42}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Simulation เทียบกับ Requirement (S-Curve 360°)}}{59}{table.caption.107}%
+\contentsline {table}{\numberline {43}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุป Solution บน Pareto Front ที่น่าสนใจ}}{60}{table.caption.109}%
+\contentsline {table}{\numberline {44}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ค่าพารามิเตอร์ที่ Optimal จาก NSGA-II (Best Compromise)}}{60}{table.caption.110}%
+\contentsline {table}{\numberline {45}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการทดสอบความถูกต้องของ Encoder}}{62}{table.caption.114}%
+\contentsline {table}{\numberline {46}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการทดสอบ PWM และการตอบสนองของมอเตอร์}}{62}{table.caption.116}%
+\contentsline {table}{\numberline {47}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการวัดแรงดันที่จุดจ่ายไฟหลัก}}{63}{table.caption.118}%
+\contentsline {table}{\numberline {48}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการทดสอบ E-Stop Hardware Interlock}}{63}{table.caption.120}%
+\contentsline {table}{\numberline {49}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผลการทดสอบ Pilot Lamp แต่ละสถานะ}}{63}{table.caption.122}%
+\contentsline {table}{\numberline {50}{\ignorespaces \xpg@aux {}{thai}\ignorespaces ผล Unit Test Joystick แต่ละโหมด}}{63}{table.caption.123}%
+\contentsline {table}{\numberline {51}{\ignorespaces ตาราง V\&V รวม ทั้ง 32 Requirements}}{64}{table.51}%
+\contentsline {table}{\numberline {52}{\ignorespaces \xpg@aux {}{thai}\ignorespaces สรุปสถานะ V\&V แยกตาม Category}}{66}{table.caption.124}%
+\contentsline {table}{\numberline {53}{\ignorespaces \xpg@aux {}{thai}\ignorespaces กำหนดการงานสำคัญก่อน Final Demo}}{69}{table.caption.136}%

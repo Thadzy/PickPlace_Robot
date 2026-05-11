@@ -4,9 +4,11 @@
 % ============================================================================
 
 \section{บทนำ}
+\label{sec:introduction}
 
 % ---------------------------------------------------------------------------
 \subsection{ที่มาและความสำคัญของโครงงาน}
+\label{subsec:project_background}
 
 บริษัท FIBO จำกัด มีความต้องการจัดสร้างเครื่องจักรสำหรับกระบวนการผลิตในอุตสาหกรรม
 เพื่อใช้ในการหยิบจับชิ้นงาน (Connection Rod) โดยมีข้อจำกัดด้านพื้นที่และการทำงานที่ชัดเจน
@@ -21,6 +23,7 @@
 
 % ---------------------------------------------------------------------------
 \subsection{วัตถุประสงค์ของโครงงาน}
+\label{subsec:project_objectives}
 
 โครงการนี้มีวัตถุประสงค์หลัก 4 ประการ ดังนี้
 
@@ -41,6 +44,7 @@
 
 % ---------------------------------------------------------------------------
 \subsection{ขอบเขตของโครงงาน}
+\label{subsec:project_scope}
 
 โครงการนี้มุ่งเน้นการสร้างระบบหุ่นยนต์หยิบจับชิ้นงานแบบหมุน
 โดยมีขอบเขตการดำเนินงานหลัก 4 ด้าน ดังนี้
@@ -73,261 +77,427 @@
         ไม่ได้อยู่ในขอบเขตการออกแบบและสร้างของโครงการนี้
 \end{itemize}
 
-% ---------------------------------------------------------------------------
-% ---------------------------------------------------------------------------
-\subsection{ภาพรวมระบบ (System Overview)}
+% ใส่ต่อจาก \subsection{ขอบเขตของโครงงาน} 
+% และก่อน \subsection{ภาพรวมระบบ}
 
-ระบบ Circular Pick and Place Robot ออกแบบโดยแบ่งสถาปัตยกรรมออกเป็น 2 ระดับ
-ได้แก่ Physical Architecture ซึ่งอธิบายฮาร์ดแวร์จริงของระบบ
-และ Cyber Architecture ซึ่งอธิบายโครงสร้างซอฟต์แวร์ภายใน STM32G474RE
-ดังแสดงในรูปที่~\ref{fig:system_overview}
+% ------------------------------------------------------------
+\subsection{ข้อจำกัดของโครงงาน (Limitations)}
+\label{subsec:limitations}
+% ------------------------------------------------------------
+
+โครงงานนี้มีขอบเขตที่ชัดเจนโดยไม่ครอบคลุมส่วนประกอบ
+ที่อยู่ภายใต้ความรับผิดชอบของลูกค้า ได้แก่
+
+\begin{itemize}
+  \item \textbf{Base System ของลูกค้า}:
+        ซอฟต์แวร์และฮาร์ดแวร์ของระบบควบคุมหลัก
+        ที่ส่งคำสั่งผ่าน Modbus ไม่ได้อยู่ในขอบเขต
+        การออกแบบและทดสอบของโครงงานนี้
+        โครงงานรับประกันเฉพาะด้าน Interface
+        ของ Modbus RTU ฝั่ง Slave เท่านั้น
+
+  \item \textbf{End Effector (Gripper)}:
+        ชุดหัวจับที่ลูกค้ากำหนดไม่ได้อยู่ในขอบเขต
+        การออกแบบ โครงงานนี้รับผิดชอบเฉพาะ
+        End Effector Housing และสัญญาณควบคุม
+        Solenoid Valve สำหรับ Gripper เท่านั้น
+
+  \item \textbf{ระบบสายพานลำเลียง}:
+        สายพานลำเลียงชิ้นงานต้นทางและปลายทาง
+        ไม่ได้อยู่ในขอบเขต โครงงานสมมติว่า
+        Connection Rod อยู่ที่ตำแหน่ง Pick/Place
+        ที่กำหนดไว้แล้วก่อนสั่งงาน
+
+  \item \textbf{การควบคุมแกนแนวดิ่ง (Z-axis)}:
+        ระบบนี้เป็นหุ่นยนต์ 1 แกน (Rotary)
+        การเคลื่อนที่แนวดิ่งของ Gripper
+        ดำเนินการโดย Pneumatic Actuator
+        ของลูกค้าโดยตรง ไม่ใช่โดย Controller
+        ของโครงงานนี้
+
+  \item \textbf{การทดสอบอายุการใช้งานระยะยาว}:
+        ข้อกำหนด M5 กำหนดอายุใช้งาน
+        $\geq 3$ รอบทดสอบ (รอบละ 1 ชั่วโมง)
+        การทดสอบ Fatigue และ Wear
+        ในระยะยาวเกินขอบเขตของโครงงานนี้
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{ภาพรวมโครงสร้างรายงาน (Report Organization)}
+\label{subsec:report_org}
+% ------------------------------------------------------------
+
+รายงานฉบับนี้จัดแบ่งเนื้อหาออกเป็น 7 บทหลัก เพื่อให้ครอบคลุมการดำเนินงานตั้งแต่การออกแบบจนถึงการทวนสอบระบบ ดังนี้
+
+\begin{enumerate}
+    \item \textbf{บทที่ 1 บทนำ (Introduction):} อธิบายที่มาและความสำคัญ วัตถุประสงค์ ขอบเขตของโครงงาน และข้อกำหนดของระบบ (System Requirements) ทั้ง 32 ข้อ
+    \item \textbf{บทที่ 2 การออกแบบระบบ (System Design):} นำเสนอรายละเอียดการออกแบบเชิงกล (Mechanical Design) ระบบไฟฟ้า (Electrical Design) และระบบควบคุม (Control System Design) รวมถึงการวิเคราะห์ผลกระทบของ Connection Rod ต่อการคำนวณ Cycle Time
+    \item \textbf{บทที่ 3 การดำเนินการสร้างและติดตั้งระบบ (Implementation):} บันทึกขั้นตอนการประกอบจริงของโครงสร้างเชิงกล การจัดทำตู้ควบคุมไฟฟ้า และโครงสร้างสถาปัตยกรรม Firmware
+    \item \textbf{บทที่ 4 การบูรณาการระบบ (System Integration):} อธิบายการเชื่อมต่อระบบย่อยทั้งหมดเข้าด้วยกัน รายละเอียด Modbus Register Map และแผนการทดสอบระบบแบบ End-to-End
+    \item \textbf{บทที่ 5 ผลการทดสอบ (Test Results):} รวบรวมและรายงานผลการทดสอบเชิงประจักษ์ โดยแบ่งตามระยะการดำเนินงานใน Progress Update 1 และ Progress Update 2
+    \item \textbf{บทที่ 6 การตรวจสอบและทวนสอบ (Verification and Validation):} นำเสนอกรอบการ V\&V ที่ครอบคลุมข้อกำหนดของระบบทั้ง 32 Requirements เพื่อยืนยันความถูกต้องของคุณลักษณะหุ่นยนต์
+    \item \textbf{บทที่ 7 สรุปผลและแนวทางต่อไป (Conclusion and Future Work):} สรุปภาพรวมความสำเร็จของโครงงาน ปัญหาที่พบ และแผนการดำเนินงานต่อเนื่องก่อนถึงการนำเสนอ Final Demo
+\end{enumerate}
+
+% ---------------------------------------------------------------------------
+% ---------------------------------------------------------------------------
+% \subsection{ภาพรวมระบบ (System Overview)}
+
+% ระบบ Circular Pick and Place Robot ออกแบบโดยแบ่งสถาปัตยกรรมออกเป็น 2 ระดับ
+% ได้แก่ Physical Architecture ซึ่งอธิบายฮาร์ดแวร์จริงของระบบ
+% และ Cyber Architecture ซึ่งอธิบายโครงสร้างซอฟต์แวร์ภายใน STM32G474RE
+% ดังแสดงในรูปที่~\ref{fig:system_overview}
+
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.95\textwidth]{images/System_Architecture.png}
+%   \caption{System Architecture ของระบบ Circular Pick and Place Robot
+%            แสดง Physical Architecture และ Cyber Architecture}
+%   \label{fig:system_overview}
+% \end{figure}
+
+% % --- Physical Architecture ---
+% \subsubsection*{Physical Architecture}
+
+% Physical Architecture อธิบายถึงฮาร์ดแวร์จริงของระบบและความสัมพันธ์ระหว่างชิ้นส่วนต่าง ๆ
+% โดยแบ่งออกเป็น 4 ส่วนหลัก ดังนี้
+
+% \paragraph{Rotating Mechanism (กลไกหมุน)}
+% คือส่วนที่แปลงพลังงานไฟฟ้าจากมอเตอร์ให้กลายเป็นการเคลื่อนที่เชิงมุมของแขนกล
+% โดยมีลำดับการส่งกำลังดังนี้
+
+% \begin{itemize}
+%   \item \textbf{มอเตอร์ต้นกำลัง:}
+%         ใช้ ZGX60RMM DC Brushed Motor ขนาด 24V 250 RPM
+%         ซึ่งเป็นชุด Gearmotor ที่มี Planetary Gearbox ในตัว
+%         เมื่อจ่ายไฟ 24V มอเตอร์จะหมุนและส่งแรงบิดออกมาที่เพลา Output
+
+%   \item \textbf{ระบบสายพาน HTD5M:}
+%         แรงบิดจากเพลา Output ของ Gearmotor ถูกส่งต่อผ่านสายพาน HTD5M (Timing Belt)
+%         ซึ่งมีการกำหนดอัตราทดเพิ่มเติมอีก 3:1 โดยใช้ Driver Pulley 24 ฟัน
+%         ขับ Driven Pulley 70 ฟัน สายพานชนิดนี้มีฟันที่ขบกับพูลเลย์โดยตรง
+%         จึงไม่เกิดการ Slip ไม่ว่าจะรับโหลดเท่าใด
+%         และมี Idler Pulley ด้านข้าง Slack Side เพื่อรักษาแรงดึงสายพานให้คงที่ตลอดการทำงาน
+
+%   \item \textbf{Azimuth Joint และแขนกล:}
+%         กำลังจากสายพานถูกส่งเข้าสู่ Azimuth Joint ซึ่งเป็นแกนหมุนหลักของระบบ
+%         ติดตั้ง Taper Bearing และ Single Row Deep Groove Bearing
+%         เพื่อรับทั้ง Radial Load จากน้ำหนักแขนกล และ Axial Load จากการหมุน
+%         แขนกลที่ยื่นออกจาก Azimuth Joint ทำจาก Galvanized Steel Square Tube
+%         ขนาด $25 \times 25$ mm ยาว 500 mm เชื่อมต่อกับ End Effector Housing
+%         ที่ปลาย ซึ่งรองรับ Gripper ของลูกค้า
+
+%   \item \textbf{Encoder ที่ปลายเพลา:}
+%         ที่ปลายเพลาหลักด้านบนมีการติดตั้ง Encoder Housing
+%         ไว้รองรับ Incremental Encoder (AMT-103)
+%         ซึ่งวัดตำแหน่งเชิงมุมโดยตรงที่แกนหมุนหลัก ทำให้ไม่มี Backlash Error
+%         สะสมจากระบบส่งกำลัง
+% \end{itemize}
+
+% \paragraph{Power Management System (PMS)}
+% ทำหน้าที่รับไฟฟ้ากระแสสลับจากระบบ และแปลงแจกจ่ายเป็นแรงดันกระแสตรง
+% ที่เหมาะสมสำหรับแต่ละส่วนของระบบ โดยแบ่งออกเป็น 2 วงจรที่แยกจากกันอย่างชัดเจน
+
+% \begin{itemize}
+%   \item \textbf{วงจรป้องกัน AC Input:}
+%         ไฟ AC 220V เข้ามาผ่านขั้วต่อ IEC 60320-C14
+%         จากนั้นผ่านฟิวส์และ Circuit Breaker ก่อนถึง Magnetic Contactor
+%         ซึ่งเป็นหัวใจของระบบ E-Stop ทางฮาร์ดแวร์
+%         เมื่อกด E-Stop Contactor จะ De-energize
+%         และตัดไฟ AC ที่จะไปยัง PSU 24V ทันที ทำให้มอเตอร์หยุดทำงานสมบูรณ์
+
+%   \item \textbf{วงจร 24V Power Bus สำหรับมอเตอร์:}
+%         PSU 24V/10A แปลงไฟ AC เป็น DC 24V
+%         จ่ายตรงไปยัง Motor Driver (Cytron MD10C)
+%         ซึ่งจะส่งกำลังต่อไปยังมอเตอร์
+%         วงจรนี้อยู่หลัง Contactor ดังนั้นเมื่อ E-Stop ถูกกด วงจรนี้จะถูกตัดทันที
+
+%   \item \textbf{วงจร 5V Logic Power สำหรับ Controller และ Sensor:}
+%         PSU 5V/5A แปลงไฟ AC เป็น DC 5V
+%         จ่ายให้ STM32 Nucleo Board, ESP32, Encoder, Proximity Sensor
+%         และ Relay Module วงจรนี้ต่อตรงจาก AC Input ก่อน Contactor
+%         ทำให้เมื่อกด E-Stop ตัว Controller ยังคงมีไฟเลี้ยงอยู่ตามข้อกำหนด E6
+%         และสามารถรับคำสั่ง Reset ได้
+
+%   \item \textbf{DC-DC Step-down Converter:}
+%         แปลงแรงดันลงมาสำหรับอุปกรณ์ที่ต้องการแรงดันพิเศษ
+%         เช่น 3.3V สำหรับ Logic Level บางส่วน หรือ 12V สำหรับอุปกรณ์เสริม
+%         ผ่าน Noise Filter ก่อนเข้า Controller
+%         เพื่อให้แรงดันสะอาดไม่มีสัญญาณรบกวนจากมอเตอร์
+% \end{itemize}
+
+% \paragraph{Main Controller (STM32G474RE)}
+% บน Nucleo Board ทำหน้าที่เป็นศูนย์กลางในการประมวลผลทั้งหมด
+% โดยเชื่อมต่อกับอุปกรณ์รอบข้างผ่าน Peripheral ต่าง ๆ ดังนี้
+
+% \begin{itemize}
+%   \item \textbf{Timer (Quadrature Mode):}
+%         รับสัญญาณ A, B จาก Encoder นับ Pulse
+%         เพื่อคำนวณตำแหน่งเชิงมุมและความเร็ว
+
+%   \item \textbf{Timer (PWM Mode):}
+%         สร้างสัญญาณ PWM ส่งไปยัง Motor Driver
+%         เพื่อควบคุมความเร็วและทิศทางของมอเตอร์
+
+%   \item \textbf{ADC:}
+%         อ่านค่าแรงดันจาก Current Sensor
+%         เพื่อตรวจสอบกระแสมอเตอร์แบบ Real-time
+
+%   \item \textbf{EXTI (External Interrupt):}
+%         รับสัญญาณจาก Proximity Sensor
+%         เมื่อแขนกลผ่านตำแหน่ง Home Reference
+
+%   \item \textbf{UART:}
+%         รับ Data Packet จาก ESP32
+%         ที่ถอดรหัสคำสั่งจาก Joystick มาแล้ว
+
+%   \item \textbf{GPIO:}
+%         ควบคุม Relay Module สำหรับ Solenoid Valve ของ Gripper
+%         และอ่านสถานะ Mode Selector Switch
+% \end{itemize}
+
+% \paragraph{Sensor System}
+% ทำหน้าที่เป็นตา-หูของระบบควบคุม ให้ข้อมูล Feedback
+% ที่จำเป็นสำหรับการทำงานแบบ Closed-Loop
+
+% \begin{itemize}
+%   \item \textbf{AMT-103 Incremental Encoder:}
+%         ติดตั้งโดยตรงที่เพลาหลักของ Azimuth Joint
+%         ให้ค่า Resolution สูง ใช้สำหรับ Position Feedback
+%         และ Velocity Estimation ใน Control Loop
+
+%   \item \textbf{Proximity Sensor (Inductive Type):}
+%         ติดตั้งที่ฐานของ Rotating Mechanism
+%         ตรวจจับ Metal Flag บนแขนกลเมื่อผ่านตำแหน่ง Home Reference
+%         ใช้สำหรับการ Homing ครั้งแรกและการ Reset ตำแหน่งอ้างอิง
+
+%   \item \textbf{Current Sensor:}
+%         ต่ออยู่ในวงจร 24V ของมอเตอร์
+%         อ่านค่ากระแสแบบ Real-time ส่งให้ Fault Handling Unit
+%         ตรวจสอบว่ากระแสเกินพิกัดหรือไม่
+%         ซึ่งอาจเป็นสัญญาณของการชนหรือ Mechanical Jam
+% \end{itemize}
+
+% % --- Cyber Architecture ---
+% \subsubsection*{Cyber Architecture}
+
+% Cyber Architecture อธิบายโครงสร้างซอฟต์แวร์ภายใน STM32G474RE
+% ซึ่งทำงานแบบ Real-time Closed-Loop แบ่งออกเป็น 4 โมดูลที่ทำงานสัมพันธ์กัน
+
+% \paragraph{Signal Processing Unit}
+% คือชั้นแรกที่รับข้อมูลดิบจากฮาร์ดแวร์และแปลงให้อยู่ในรูปแบบที่โมดูลอื่นนำไปใช้ได้ทันที
+% ประกอบด้วย 4 ส่วนย่อย
+
+% \begin{itemize}
+%   \item \textbf{Encoding Processing:}
+%         รับสัญญาณ Quadrature A และ B จาก Encoder ผ่าน Timer ของ STM32
+%         นับ Pulse และแปลงเป็นค่ามุม $\theta$ (องศาหรือ Radian)
+%         และความเร็วเชิงมุม $\omega$ โดยใช้การคำนวณ Differentiation
+%         ของตำแหน่ง ค่า $\theta_{\text{actual}}$ ที่ได้นี้จะถูกส่งไปยัง
+%         Summing Junction ของ Control Program เพื่อใช้เป็น Position Feedback
+
+%   \item \textbf{Current Sensor Processing:}
+%         อ่านค่า ADC จาก Current Sensor แปลงเป็นค่ากระแส (Ampere)
+%         และกรองสัญญาณรบกวนด้วย Moving Average Filter
+%         ก่อนส่งต่อไปยัง Fault Handling Unit ใน Safety Program
+
+%   \item \textbf{Joystick / Command Processing:}
+%         รับ Data Packet จาก ESP32 ผ่าน UART ตรวจสอบ Checksum ของ Packet
+%         ถอดรหัสออกเป็นคำสั่งแต่ละประเภท เช่น หมุนซ้าย หมุนขวา Pick Place Home Emergency
+%         แล้วส่งต่อไปยัง Command Parser ใน Main Compute Program
+
+%   \item \textbf{Digital Input Processing:}
+%         อ่านและ Debounce สัญญาณดิจิทัลทั้งหมด ได้แก่ Proximity Sensor (EXTI Interrupt),
+%         Mode Selector Switch และ Encoder Index Pulse
+%         เพื่อป้องกัน False Trigger จาก Contact Bounce
+% \end{itemize}
+
+% \paragraph{Main Compute Program}
+% คือ Logic หลักของระบบ ทำหน้าที่ตัดสินใจว่าระบบจะทำอะไรในแต่ละขณะ
+
+% \begin{itemize}
+%   \item \textbf{Mode Selector:}
+%         อ่านสถานะจาก Mode Selector Switch และคำสั่งจาก Joystick หรือ Modbus
+%         เพื่อตัดสินใจว่าระบบอยู่ในโหมด Manual หรือ Auto
+%         ในโหมด Manual คำสั่งจะมาจาก Joystick โดยตรง
+%         ในโหมด Auto คำสั่งจะมาจาก Base System ผ่าน Modbus
+
+%   \item \textbf{Velocity Profile (S-Curve):}
+%         เมื่อได้รับคำสั่งให้เคลื่อนที่ไปยังตำแหน่งเป้าหมาย
+%         โมดูลนี้จะสร้าง Trajectory ที่กำหนดว่าแต่ละช่วงเวลา
+%         ควรอยู่ที่ตำแหน่งใด โดยใช้ S-Curve Profile ที่จำกัด Jerk
+%         ทำให้ความเร็วเพิ่มและลดแบบค่อยเป็นค่อยไป
+%         ลด Mechanical Shock และควบคุม Overshoot
+%         ค่าที่ Output ออกมาจาก Velocity Profile คือ $\theta_{\text{reference}}$
+%         ณ แต่ละ Timestep ซึ่งถูกส่งไปยัง Summing Junction เป็น Set Point
+
+%   \item \textbf{Set Home Control:}
+%         เมื่อได้รับคำสั่ง Set Home ระบบจะบันทึกค่า Encoder Count ปัจจุบันลงใน
+%         Calibration Storage และกำหนดให้ตำแหน่งนั้นเป็นจุดอ้างอิง (Zero Point)
+%         สำหรับการคำนวณตำแหน่งทั้งหมดต่อจากนั้น
+%         เมื่อได้รับคำสั่ง Reset Home ระบบจะหมุนแขนกลจนกว่า Proximity Sensor
+%         จะตรวจจับ Metal Flag แล้วกำหนดตำแหน่งนั้นเป็น Home
+
+%   \item \textbf{Command Parser และ Auto Sequence:}
+%         ในโหมด Auto รับคำสั่งจาก Base System ผ่าน Modbus
+%         แล้วแปลงเป็น Task ลำดับการทำงาน คือ
+%         ตรวจสอบ Home $\rightarrow$ เคลื่อนที่ไปจุดหยิบ $\rightarrow$ Pick
+%         $\rightarrow$ เคลื่อนที่ไปจุดวาง $\rightarrow$ Place $\rightarrow$ ทำซ้ำ
+%         จนครบ 5 รอบ $\rightarrow$ กลับ Home $\rightarrow$ ส่งสถานะ Complete
+%         ไปยัง Base System
+% \end{itemize}
+
+% \paragraph{Control Program}
+% รับ Set Point จาก Main Compute Program และ Feedback จาก Signal Processing Unit
+% เพื่อคำนวณ Output ที่จะส่งไปควบคุมมอเตอร์
+
+% \begin{itemize}
+%   \item \textbf{PID Control:}
+%         คำนวณ Error ระหว่าง $\theta_{\text{reference}}$ และ $\theta_{\text{actual}}$
+%         แล้วคำนวณ Control Output ด้วยอัลกอริทึม PID
+%         ที่ออกแบบให้ได้ Settling Time $\leq 0.5$ s และ Overshoot $\leq 1\%$
+%         ตามข้อกำหนด P5 และ P6
+
+%   \item \textbf{PWM Generator:}
+%         แปลงค่า Control Output จาก PID เป็น Duty Cycle
+%         ของสัญญาณ PWM ที่ส่งไปยัง Motor Driver
+%         เพื่อควบคุมความเร็วและทิศทางการหมุนของมอเตอร์
+% \end{itemize}
+
+% \paragraph{Safety Program}
+% ทำงานอยู่เบื้องหลังตลอดเวลา มีสิทธิ์ Override คำสั่งจากทุกโมดูล
+% เพื่อปกป้องทั้งตัวเครื่องและผู้ปฏิบัติงาน
+
+% \begin{itemize}
+%   \item \textbf{Watchdog Timer (WDT):}
+%         WDT เป็น Timer ฮาร์ดแวร์ภายใน STM32 ที่ต้องได้รับการ Reset (Kick)
+%         ภายในระยะเวลาที่กำหนดทุก ๆ Cycle ของโปรแกรม
+%         หากโปรแกรมหยุดทำงาน ค้าง หรือเข้าสู่ Infinite Loop ด้วยเหตุใดก็ตาม
+%         WDT จะหมดเวลาและทำการ Reset STM32 ทั้งระบบโดยอัตโนมัติ
+%         ทำให้ระบบกลับสู่สถานะเริ่มต้นที่ปลอดภัย
+
+%   \item \textbf{Fault Handling Unit:}
+%         ตรวจสอบค่ากระแสจาก Current Sensor Processing ทุก Cycle
+%         หากกระแสเกิน Threshold ที่กำหนดไว้ เช่น เกิดการชนหรือ Mechanical Jam
+%         จะส่งสัญญาณ Fault ไปยัง Emergency Interlock ทันที
+%         พร้อมบันทึกรหัส Error ลงใน Storage เพื่อให้ผู้ปฏิบัติงานสามารถตรวจสอบสาเหตุ
+%         ในภายหลัง
+
+%   \item \textbf{Emergency Interlock:}
+%         เป็นจุดรวมของสัญญาณ Fault ทุกประเภท ไม่ว่าจะมาจาก Fault Handling Unit
+%         (Overcurrent), WDT Timeout หรือคำสั่ง E-Stop จาก Joystick หรือปุ่มบนตู้ไฟ
+%         เมื่อได้รับสัญญาณจากแหล่งใดก็ตาม Emergency Interlock จะบังคับให้
+%         PWM Generator ส่งสัญญาณ Force PWM = 0 ทันที
+%         ทำให้มอเตอร์หยุดทำงานโดยไม่รับคำสั่งอื่นใดอีก
+%         จนกว่าจะได้รับการ Reset อย่างถูกต้อง
+% \end{itemize}
+
+% ------------------------------------------------------------
+\subsection{ภาพรวมระบบ (System Overview)}
+\label{subsec:system_overview}
+% ------------------------------------------------------------
+
+ระบบ Circular Pick and Place Robot ออกแบบโดยแบ่ง
+สถาปัตยกรรมออกเป็น 2 ระดับ ได้แก่
+Physical Architecture ซึ่งอธิบายฮาร์ดแวร์จริงของระบบ
+และ Cyber Architecture ซึ่งอธิบายโครงสร้างซอฟต์แวร์
+ภายใน STM32G474RE ดังแสดงในรูปที่~\ref{fig:sys_arch}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{images/System_Architecture.png}
-  \caption{System Architecture ของระบบ Circular Pick and Place Robot
-           แสดง Physical Architecture และ Cyber Architecture}
-  \label{fig:system_overview}
+  \includegraphics[width=0.95\textwidth]{images/system_architecture.png}
+  \caption{System Architecture ของระบบ
+           Circular Pick and Place Robot
+           แสดง Physical Architecture
+           และ Cyber Architecture}
+  \label{fig:sys_arch}
 \end{figure}
 
-% --- Physical Architecture ---
-\subsubsection*{Physical Architecture}
+ระบบแบ่งออกเป็น 4 Subsystem หลักที่ทำงานร่วมกัน
+ดังนี้
 
-Physical Architecture อธิบายถึงฮาร์ดแวร์จริงของระบบและความสัมพันธ์ระหว่างชิ้นส่วนต่าง ๆ
-โดยแบ่งออกเป็น 4 ส่วนหลัก ดังนี้
+\paragraph{Rotating Mechanism}
+เป็นส่วนที่แปลงพลังงานไฟฟ้าจาก DC Motor
+ให้กลายเป็นการเคลื่อนที่เชิงมุมของแขนกล
+กำลังถูกส่งผ่าน Planetary Gearbox (อัตราทด 24)
+ต่อด้วย Belt Drive HTD5M (อัตราทด 4.5)
+รวมอัตราทดทั้งหมด 70 ก่อนถึงแขนกลรัศมี 500\,mm
+ตำแหน่งเชิงมุมวัดโดย Encoder AMT-103
+ที่ติดตั้งโดยตรงที่ Output Shaft
+เพื่อหลีกเลี่ยง Backlash Error จากระบบส่งกำลัง
 
-\paragraph{Rotating Mechanism (กลไกหมุน)}
-คือส่วนที่แปลงพลังงานไฟฟ้าจากมอเตอร์ให้กลายเป็นการเคลื่อนที่เชิงมุมของแขนกล
-โดยมีลำดับการส่งกำลังดังนี้
+\paragraph{Power Management System}
+จ่ายพลังงานแก่ทุก Subsystem โดยแบ่งเป็น 2 Bus
+ที่แยกจากกันอย่างชัดเจน
+High Power Bus (24\,V/10\,A) จ่ายให้มอเตอร์
+ผ่าน Magnetic Contactor ที่ถูกควบคุมโดย E-Stop
+และ Logic Bus (5\,V/5\,A) จ่ายให้ STM32,
+ESP32 และ Sensor โดยต่อก่อน Contactor
+ทำให้ Controller ยังมีไฟเลี้ยงแม้กด E-Stop
+ตามข้อกำหนด E6
 
-\begin{itemize}
-  \item \textbf{มอเตอร์ต้นกำลัง:}
-        ใช้ ZGX60RMM DC Brushed Motor ขนาด 24V 250 RPM
-        ซึ่งเป็นชุด Gearmotor ที่มี Planetary Gearbox ในตัว
-        เมื่อจ่ายไฟ 24V มอเตอร์จะหมุนและส่งแรงบิดออกมาที่เพลา Output
+\paragraph{Main Controller}
+STM32G474RE ทำหน้าที่เป็นศูนย์กลางประมวลผล
+ทั้งหมด รัน Cascade PID Control Loop
+ที่ความถี่ 100\,Hz ประกอบด้วย Velocity Inner Loop
+และ Position Outer Loop
+พร้อม S-Curve Trajectory Generator
+ที่จำกัด Jerk เพื่อลด Mechanical Shock
+และรับส่งข้อมูลกับ Base System
+ผ่าน Modbus RTU บน LPUART1
 
-  \item \textbf{ระบบสายพาน HTD5M:}
-        แรงบิดจากเพลา Output ของ Gearmotor ถูกส่งต่อผ่านสายพาน HTD5M (Timing Belt)
-        ซึ่งมีการกำหนดอัตราทดเพิ่มเติมอีก 3:1 โดยใช้ Driver Pulley 24 ฟัน
-        ขับ Driven Pulley 70 ฟัน สายพานชนิดนี้มีฟันที่ขบกับพูลเลย์โดยตรง
-        จึงไม่เกิดการ Slip ไม่ว่าจะรับโหลดเท่าใด
-        และมี Idler Pulley ด้านข้าง Slack Side เพื่อรักษาแรงดึงสายพานให้คงที่ตลอดการทำงาน
+\paragraph{External Interface}
+รองรับการสั่งงาน 2 โหมด ได้แก่
+Manual Mode ผ่าน Wireless Joystick
+ที่รับสัญญาณ Bluetooth ด้วย ESP32
+และส่งต่อผ่าน USART3 มายัง STM32
+และ Auto Mode ผ่าน Base System ของลูกค้า
+โดยรับคำสั่งผ่าน Modbus RTU
+(Slave Address 21, 19200\,bps, 8E1)
 
-  \item \textbf{Azimuth Joint และแขนกล:}
-        กำลังจากสายพานถูกส่งเข้าสู่ Azimuth Joint ซึ่งเป็นแกนหมุนหลักของระบบ
-        ติดตั้ง Taper Bearing และ Single Row Deep Groove Bearing
-        เพื่อรับทั้ง Radial Load จากน้ำหนักแขนกล และ Axial Load จากการหมุน
-        แขนกลที่ยื่นออกจาก Azimuth Joint ทำจาก Galvanized Steel Square Tube
-        ขนาด $25 \times 25$ mm ยาว 500 mm เชื่อมต่อกับ End Effector Housing
-        ที่ปลาย ซึ่งรองรับ Gripper ของลูกค้า
+\begin{table}[H]
+  \centering
+  \caption{สรุป Subsystem หลักของระบบ}
+  \label{tab:subsystem_summary}
+  \begin{tabular}{lp{4.2cm}p{4cm}}
+    \toprule
+    Subsystem & องค์ประกอบหลัก & รายละเอียดใน \\
+    \midrule
+    Rotating Mechanism
+      & DC Motor, Planetary Gearbox ($N_g$=24),
+        Belt HTD5M ($N_b$=4.5),
+        Azimuth Joint, Encoder AMT-103
+      & Section~\ref{subsec:mechanical_design} \\
+    Power Management
+      & PSU 24V/10A, PSU 5V/5A,
+        Magnetic Contactor, E-Stop,
+        Circuit Breaker, Fuse
+      & Section~\ref{subsec:electronics_design} \\
+    Main Controller
+      & STM32G474RE, Cascade PID (100\,Hz),
+        S-Curve Trajectory,
+        Modbus RTU Slave
+      & Section~\ref{subsec:control_design},
+        Section~\ref{subsec:firmware_architecture} \\
+    External Interface
+      & Joystick + ESP32 (Bluetooth),
+        Base System (Modbus RTU,
+        Slave Address 21)
+      & Section~\ref{subsec:joystick_connection},
+        Section~\ref{subsec:modbus_connection} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-  \item \textbf{Encoder ที่ปลายเพลา:}
-        ที่ปลายเพลาหลักด้านบนมีการติดตั้ง Encoder Housing
-        ไว้รองรับ Incremental Encoder (AMT-103)
-        ซึ่งวัดตำแหน่งเชิงมุมโดยตรงที่แกนหมุนหลัก ทำให้ไม่มี Backlash Error
-        สะสมจากระบบส่งกำลัง
-\end{itemize}
-
-\paragraph{Power Management System (PMS)}
-ทำหน้าที่รับไฟฟ้ากระแสสลับจากระบบ และแปลงแจกจ่ายเป็นแรงดันกระแสตรง
-ที่เหมาะสมสำหรับแต่ละส่วนของระบบ โดยแบ่งออกเป็น 2 วงจรที่แยกจากกันอย่างชัดเจน
-
-\begin{itemize}
-  \item \textbf{วงจรป้องกัน AC Input:}
-        ไฟ AC 220V เข้ามาผ่านขั้วต่อ IEC 60320-C14
-        จากนั้นผ่านฟิวส์และ Circuit Breaker ก่อนถึง Magnetic Contactor
-        ซึ่งเป็นหัวใจของระบบ E-Stop ทางฮาร์ดแวร์
-        เมื่อกด E-Stop Contactor จะ De-energize
-        และตัดไฟ AC ที่จะไปยัง PSU 24V ทันที ทำให้มอเตอร์หยุดทำงานสมบูรณ์
-
-  \item \textbf{วงจร 24V Power Bus สำหรับมอเตอร์:}
-        PSU 24V/10A แปลงไฟ AC เป็น DC 24V
-        จ่ายตรงไปยัง Motor Driver (Cytron MD10C)
-        ซึ่งจะส่งกำลังต่อไปยังมอเตอร์
-        วงจรนี้อยู่หลัง Contactor ดังนั้นเมื่อ E-Stop ถูกกด วงจรนี้จะถูกตัดทันที
-
-  \item \textbf{วงจร 5V Logic Power สำหรับ Controller และ Sensor:}
-        PSU 5V/5A แปลงไฟ AC เป็น DC 5V
-        จ่ายให้ STM32 Nucleo Board, ESP32, Encoder, Proximity Sensor
-        และ Relay Module วงจรนี้ต่อตรงจาก AC Input ก่อน Contactor
-        ทำให้เมื่อกด E-Stop ตัว Controller ยังคงมีไฟเลี้ยงอยู่ตามข้อกำหนด E6
-        และสามารถรับคำสั่ง Reset ได้
-
-  \item \textbf{DC-DC Step-down Converter:}
-        แปลงแรงดันลงมาสำหรับอุปกรณ์ที่ต้องการแรงดันพิเศษ
-        เช่น 3.3V สำหรับ Logic Level บางส่วน หรือ 12V สำหรับอุปกรณ์เสริม
-        ผ่าน Noise Filter ก่อนเข้า Controller
-        เพื่อให้แรงดันสะอาดไม่มีสัญญาณรบกวนจากมอเตอร์
-\end{itemize}
-
-\paragraph{Main Controller (STM32G474RE)}
-บน Nucleo Board ทำหน้าที่เป็นศูนย์กลางในการประมวลผลทั้งหมด
-โดยเชื่อมต่อกับอุปกรณ์รอบข้างผ่าน Peripheral ต่าง ๆ ดังนี้
-
-\begin{itemize}
-  \item \textbf{Timer (Quadrature Mode):}
-        รับสัญญาณ A, B จาก Encoder นับ Pulse
-        เพื่อคำนวณตำแหน่งเชิงมุมและความเร็ว
-
-  \item \textbf{Timer (PWM Mode):}
-        สร้างสัญญาณ PWM ส่งไปยัง Motor Driver
-        เพื่อควบคุมความเร็วและทิศทางของมอเตอร์
-
-  \item \textbf{ADC:}
-        อ่านค่าแรงดันจาก Current Sensor
-        เพื่อตรวจสอบกระแสมอเตอร์แบบ Real-time
-
-  \item \textbf{EXTI (External Interrupt):}
-        รับสัญญาณจาก Proximity Sensor
-        เมื่อแขนกลผ่านตำแหน่ง Home Reference
-
-  \item \textbf{UART:}
-        รับ Data Packet จาก ESP32
-        ที่ถอดรหัสคำสั่งจาก Joystick มาแล้ว
-
-  \item \textbf{GPIO:}
-        ควบคุม Relay Module สำหรับ Solenoid Valve ของ Gripper
-        และอ่านสถานะ Mode Selector Switch
-\end{itemize}
-
-\paragraph{Sensor System}
-ทำหน้าที่เป็นตา-หูของระบบควบคุม ให้ข้อมูล Feedback
-ที่จำเป็นสำหรับการทำงานแบบ Closed-Loop
-
-\begin{itemize}
-  \item \textbf{AMT-103 Incremental Encoder:}
-        ติดตั้งโดยตรงที่เพลาหลักของ Azimuth Joint
-        ให้ค่า Resolution สูง ใช้สำหรับ Position Feedback
-        และ Velocity Estimation ใน Control Loop
-
-  \item \textbf{Proximity Sensor (Inductive Type):}
-        ติดตั้งที่ฐานของ Rotating Mechanism
-        ตรวจจับ Metal Flag บนแขนกลเมื่อผ่านตำแหน่ง Home Reference
-        ใช้สำหรับการ Homing ครั้งแรกและการ Reset ตำแหน่งอ้างอิง
-
-  \item \textbf{Current Sensor:}
-        ต่ออยู่ในวงจร 24V ของมอเตอร์
-        อ่านค่ากระแสแบบ Real-time ส่งให้ Fault Handling Unit
-        ตรวจสอบว่ากระแสเกินพิกัดหรือไม่
-        ซึ่งอาจเป็นสัญญาณของการชนหรือ Mechanical Jam
-\end{itemize}
-
-% --- Cyber Architecture ---
-\subsubsection*{Cyber Architecture}
-
-Cyber Architecture อธิบายโครงสร้างซอฟต์แวร์ภายใน STM32G474RE
-ซึ่งทำงานแบบ Real-time Closed-Loop แบ่งออกเป็น 4 โมดูลที่ทำงานสัมพันธ์กัน
-
-\paragraph{Signal Processing Unit}
-คือชั้นแรกที่รับข้อมูลดิบจากฮาร์ดแวร์และแปลงให้อยู่ในรูปแบบที่โมดูลอื่นนำไปใช้ได้ทันที
-ประกอบด้วย 4 ส่วนย่อย
-
-\begin{itemize}
-  \item \textbf{Encoding Processing:}
-        รับสัญญาณ Quadrature A และ B จาก Encoder ผ่าน Timer ของ STM32
-        นับ Pulse และแปลงเป็นค่ามุม $\theta$ (องศาหรือ Radian)
-        และความเร็วเชิงมุม $\omega$ โดยใช้การคำนวณ Differentiation
-        ของตำแหน่ง ค่า $\theta_{\text{actual}}$ ที่ได้นี้จะถูกส่งไปยัง
-        Summing Junction ของ Control Program เพื่อใช้เป็น Position Feedback
-
-  \item \textbf{Current Sensor Processing:}
-        อ่านค่า ADC จาก Current Sensor แปลงเป็นค่ากระแส (Ampere)
-        และกรองสัญญาณรบกวนด้วย Moving Average Filter
-        ก่อนส่งต่อไปยัง Fault Handling Unit ใน Safety Program
-
-  \item \textbf{Joystick / Command Processing:}
-        รับ Data Packet จาก ESP32 ผ่าน UART ตรวจสอบ Checksum ของ Packet
-        ถอดรหัสออกเป็นคำสั่งแต่ละประเภท เช่น หมุนซ้าย หมุนขวา Pick Place Home Emergency
-        แล้วส่งต่อไปยัง Command Parser ใน Main Compute Program
-
-  \item \textbf{Digital Input Processing:}
-        อ่านและ Debounce สัญญาณดิจิทัลทั้งหมด ได้แก่ Proximity Sensor (EXTI Interrupt),
-        Mode Selector Switch และ Encoder Index Pulse
-        เพื่อป้องกัน False Trigger จาก Contact Bounce
-\end{itemize}
-
-\paragraph{Main Compute Program}
-คือ Logic หลักของระบบ ทำหน้าที่ตัดสินใจว่าระบบจะทำอะไรในแต่ละขณะ
-
-\begin{itemize}
-  \item \textbf{Mode Selector:}
-        อ่านสถานะจาก Mode Selector Switch และคำสั่งจาก Joystick หรือ Modbus
-        เพื่อตัดสินใจว่าระบบอยู่ในโหมด Manual หรือ Auto
-        ในโหมด Manual คำสั่งจะมาจาก Joystick โดยตรง
-        ในโหมด Auto คำสั่งจะมาจาก Base System ผ่าน Modbus
-
-  \item \textbf{Velocity Profile (S-Curve):}
-        เมื่อได้รับคำสั่งให้เคลื่อนที่ไปยังตำแหน่งเป้าหมาย
-        โมดูลนี้จะสร้าง Trajectory ที่กำหนดว่าแต่ละช่วงเวลา
-        ควรอยู่ที่ตำแหน่งใด โดยใช้ S-Curve Profile ที่จำกัด Jerk
-        ทำให้ความเร็วเพิ่มและลดแบบค่อยเป็นค่อยไป
-        ลด Mechanical Shock และควบคุม Overshoot
-        ค่าที่ Output ออกมาจาก Velocity Profile คือ $\theta_{\text{reference}}$
-        ณ แต่ละ Timestep ซึ่งถูกส่งไปยัง Summing Junction เป็น Set Point
-
-  \item \textbf{Set Home Control:}
-        เมื่อได้รับคำสั่ง Set Home ระบบจะบันทึกค่า Encoder Count ปัจจุบันลงใน
-        Calibration Storage และกำหนดให้ตำแหน่งนั้นเป็นจุดอ้างอิง (Zero Point)
-        สำหรับการคำนวณตำแหน่งทั้งหมดต่อจากนั้น
-        เมื่อได้รับคำสั่ง Reset Home ระบบจะหมุนแขนกลจนกว่า Proximity Sensor
-        จะตรวจจับ Metal Flag แล้วกำหนดตำแหน่งนั้นเป็น Home
-
-  \item \textbf{Command Parser และ Auto Sequence:}
-        ในโหมด Auto รับคำสั่งจาก Base System ผ่าน Modbus
-        แล้วแปลงเป็น Task ลำดับการทำงาน คือ
-        ตรวจสอบ Home $\rightarrow$ เคลื่อนที่ไปจุดหยิบ $\rightarrow$ Pick
-        $\rightarrow$ เคลื่อนที่ไปจุดวาง $\rightarrow$ Place $\rightarrow$ ทำซ้ำ
-        จนครบ 5 รอบ $\rightarrow$ กลับ Home $\rightarrow$ ส่งสถานะ Complete
-        ไปยัง Base System
-\end{itemize}
-
-\paragraph{Control Program}
-รับ Set Point จาก Main Compute Program และ Feedback จาก Signal Processing Unit
-เพื่อคำนวณ Output ที่จะส่งไปควบคุมมอเตอร์
-
-\begin{itemize}
-  \item \textbf{PID Control:}
-        คำนวณ Error ระหว่าง $\theta_{\text{reference}}$ และ $\theta_{\text{actual}}$
-        แล้วคำนวณ Control Output ด้วยอัลกอริทึม PID
-        ที่ออกแบบให้ได้ Settling Time $\leq 0.5$ s และ Overshoot $\leq 1\%$
-        ตามข้อกำหนด P5 และ P6
-
-  \item \textbf{PWM Generator:}
-        แปลงค่า Control Output จาก PID เป็น Duty Cycle
-        ของสัญญาณ PWM ที่ส่งไปยัง Motor Driver
-        เพื่อควบคุมความเร็วและทิศทางการหมุนของมอเตอร์
-\end{itemize}
-
-\paragraph{Safety Program}
-ทำงานอยู่เบื้องหลังตลอดเวลา มีสิทธิ์ Override คำสั่งจากทุกโมดูล
-เพื่อปกป้องทั้งตัวเครื่องและผู้ปฏิบัติงาน
-
-\begin{itemize}
-  \item \textbf{Watchdog Timer (WDT):}
-        WDT เป็น Timer ฮาร์ดแวร์ภายใน STM32 ที่ต้องได้รับการ Reset (Kick)
-        ภายในระยะเวลาที่กำหนดทุก ๆ Cycle ของโปรแกรม
-        หากโปรแกรมหยุดทำงาน ค้าง หรือเข้าสู่ Infinite Loop ด้วยเหตุใดก็ตาม
-        WDT จะหมดเวลาและทำการ Reset STM32 ทั้งระบบโดยอัตโนมัติ
-        ทำให้ระบบกลับสู่สถานะเริ่มต้นที่ปลอดภัย
-
-  \item \textbf{Fault Handling Unit:}
-        ตรวจสอบค่ากระแสจาก Current Sensor Processing ทุก Cycle
-        หากกระแสเกิน Threshold ที่กำหนดไว้ เช่น เกิดการชนหรือ Mechanical Jam
-        จะส่งสัญญาณ Fault ไปยัง Emergency Interlock ทันที
-        พร้อมบันทึกรหัส Error ลงใน Storage เพื่อให้ผู้ปฏิบัติงานสามารถตรวจสอบสาเหตุ
-        ในภายหลัง
-
-  \item \textbf{Emergency Interlock:}
-        เป็นจุดรวมของสัญญาณ Fault ทุกประเภท ไม่ว่าจะมาจาก Fault Handling Unit
-        (Overcurrent), WDT Timeout หรือคำสั่ง E-Stop จาก Joystick หรือปุ่มบนตู้ไฟ
-        เมื่อได้รับสัญญาณจากแหล่งใดก็ตาม Emergency Interlock จะบังคับให้
-        PWM Generator ส่งสัญญาณ Force PWM = 0 ทันที
-        ทำให้มอเตอร์หยุดทำงานโดยไม่รับคำสั่งอื่นใดอีก
-        จนกว่าจะได้รับการ Reset อย่างถูกต้อง
-\end{itemize}
+รายละเอียดการออกแบบของแต่ละ Subsystem
+แสดงในบทที่~\ref{sec:system_design}
+การ Implement จริงในบทที่~\ref{sec:implementation}
+และการบูรณาการระหว่าง Subsystem
+ในบทที่~4
 
 % ---------------------------------------------------------------------------
 \subsection{สรุป System Requirements}
+\label{subsec:system_requirements}
 
 เพื่อให้สอดคล้องกับขอบเขตโครงการในหัวข้อ 2.2 คณะผู้จัดทำได้กำหนดข้อกำหนดความต้องการ
 ทางเทคนิคสำหรับใช้อ้างอิงในการออกแบบและทดสอบระบบ ดังตารางต่อไปนี้
